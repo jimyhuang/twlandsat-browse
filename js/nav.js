@@ -108,6 +108,7 @@ jQuery(document).ready(function($){
 
     // chanage action
     $($area).change(function(){
+      ga('send', 'event', 'nav', 'click', 'select-change');
       $before.find('option[value!=0]').remove();
       $after.find('option[value!=0]').remove();
       if(nav[$(this).val()] !== 'undefined'){
@@ -121,6 +122,7 @@ jQuery(document).ready(function($){
       }
     });
     $("#select-before, #select-after").change(function(){
+      ga('send', 'event', 'nav', 'click', 'select-change');
       var $other = $(this).attr("id") == 'select-before' ? $after : $before;
       var value = $(this).val();
       if($other.val() != value){
@@ -160,6 +162,7 @@ jQuery(document).ready(function($){
    * Help function for leaflet drag event
    */
   var mapMove = function(){
+    ga('send', 'event', 'nav', 'click', 'map-move');
     var latlng = mapa.getCenter()
     var hash = [];
     hash[3] = mapa.getZoom();
