@@ -123,7 +123,7 @@ jQuery(document).ready(function($){
     $("#select-before, #select-after").change(function(){
       var $other = $(this).attr("id") == 'select-before' ? $after : $before;
       var value = $(this).val();
-      if($(this).val() != value){
+      if($other.val() != value){
         var latlng = mapa.getCenter()
         var hash = [
           $area.val(),
