@@ -28,7 +28,7 @@ $date = $availabe[$landsat];
     h1, h2, h3, h4, h5, h6 { margin: 0; }
     #page { width: 100%; }
     main { height: 100%; }
-    main #map { height: auto; min-height: 550px; }
+    .map { height: auto; min-height: 550px; }
   </style>
   <script src='http://maps.google.com/maps/api/js?sensor=false&v=3.7'></script>
   <script src="http://www.openlayers.org/api/2.12/OpenLayers.js"></script>
@@ -37,49 +37,91 @@ $date = $availabe[$landsat];
 
   <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script type="text/javascript" src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
-  <script type="text/javascript" src="js/jquery.ui.touch-punch.min.js"></script> 
-  <script type="text/javascript" src="js/jquery.beforeafter-map-0.11.js"></script>
+  <script type="text/javascript" src="/js/jquery.ui.touch-punch.min.js"></script> 
+  <script type="text/javascript" src="/js/jquery.beforeafter-map-0.11.js"></script>
 </head>
 <body>
   <div id="page">
     <header id="header">
       <h1>賽豬公上太空 <sup style="font-size: 13px;"><a href="https://github.com/jimyhuang/twlandsat">計畫說明</a></sup></h1>
-      <nav><?php echo implode(' | ', $available); ?></nav>
     </header>
     <main>
       <h3>現正瀏覽：<?php echo $date ?> 衛星空照圖</h3>
-      <div id="map"></div>
+      <div id="map-diff">
+        <div id="before" class="map"></div>
+        <div id="after" class="map"></div>
+      </div>
     </main>
   </div> <!--/page-->
 <script>
 var landsat = '<?php echo $landsat; ?>';
-var date = '<?php echo $date; ?>';
+var b, a;
+if(landsat.indexOf('|')){
+  var landsats = landsat.split('|');
+  var b = landsats[0];
+  var a = landsats[1];
+}
+else{
+  var b = landsat;
+}
 
-var osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-  attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-});
-var layer = L.tileLayer(
-  'http://twlandsat.jimmyhub.net/processed/'+landsat+'/tiles/{z}/{x}/{y}.png',
-  {
-    id: date,
-    attribution: 'Map data &copy; <a href="http://landsat.gsfc.nasa.gov/">USGS/NASA Landsat</a> in <a href="http://landsat.gsfc.nasa.gov/?page_id=2339">Public Domain</a>. Images hosted by <a href="http://twlandsat.jimmyhub.net">TW Landsat</a>',
-    tms: true,
-    maxZoom: 18
-  }
-);
-var map = L.map('map', {
-  center: [23.955259, 120.687062],
-  zoom: 7,
-  maxZoom: 13,
-  layers: [osm, layer]
-});
-var baseMaps = {
-  OSM: osm,
-};
-var overlays = {
-  date: layer,
-};
-L.control.layers(baseMaps, overlays).addTo(map);
+// create base params
+var attribution = 'Data &copy; <a href="http://landsat.gsfc.nasa.gov/">USGS/NASA Landsat</a> in <a href="http://landsat.gsfc.nasa.gov/?page_id=2339">Public Domain</a>. Images <a href="http://twlandsat.jimmyhub.net">TWLandsat</a>';
+var maxZoom = 13;
+
+// create layers
+
+// before and after layer
+if(b){
+  var before = L.tileLayer(
+    'http://twlandsat.jimmyhub.net/processed/'+b+'/tiles/{z}/{x}/{y}.png',
+    {
+      tms: true,
+      attribution: attribution,
+      maxZoom: maxZoom,
+    }
+  );
+  var osmb = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+  });
+  var mapb = L.map('before', {
+    center: [23.955259, 120.687062],
+    zoom: 7,
+    maxZoom: 13,
+    layers: [osmb, before]
+  });
+}
+if(a){
+  var after = L.tileLayer(
+    'http://twlandsat.jimmyhub.net/processed/'+a+'/tiles/{z}/{x}/{y}.png',
+    {
+      tms: true,
+      attribution: attribution,
+      maxZoom: maxZoom,
+    }
+  );
+  var osma = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+  });
+  var mapa = L.map('after', {
+    center: [23.955259, 120.687062],
+    zoom: 7,
+    maxZoom: 13,
+    layers: [osma, after]
+  });
+}
+if(a && b && mapa && mapb){
+  jQuery('#map-diff').beforeAfter(mapb, mapa, {
+    imagePath: './css/images/',
+    animateIntro : true,
+    introDelay : 1000,
+    introDuration : 1000,
+    introPosition : .5,
+    showFullLinks : true,
+    beforeLinkText: '顯示過去',
+    afterLinkText: '顯示未來',
+  });
+}
 </script>
 </body>
 </html>
