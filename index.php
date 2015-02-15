@@ -2,19 +2,25 @@
 $base = './processed/';
 $dirs = scandir('./processed/');
 $available = $nav = array();
+$location = array(
+  '117043' => '北部(117/43)',
+  '117044' => '東部(117/44)',
+  '117045' => '桃竹苗(117/45)',
+  '118044' => '西南沿海(118/44)',
+);
 foreach($dirs as $d){
   $file = 'processed/'.$d.'/tiles/openlayers.html';
   if($d[0] === 'L' && is_dir($base.$d) && is_file($file)){
+    $rawpath = substr($d, 4, 6);
     $day = substr($d, 9, 7);
     $year = substr($day, 0, 4);
     $day = substr($day, 4);
     $date = strtotime($year.'-01-01') + 86400*($day-1);
     $date = date('Y-m-d', $date);
-    $available[$d] = $date;
+    $available[$location[$rawpath]][$d] = $date;
   }
 }
-$landsat = !empty($_GET['landsat']) && $_GET['landsat'][0] === 'L' ? $_GET['landsat'] : key($available);
-$date = $availabe[$landsat];
+$landsat = !empty($_GET['landsat']) && $_GET['landsat'][0] === 'L' ? $_GET['landsat'] : '';
 ?>
 <!DOCTYPE html>
 <html>
@@ -46,7 +52,23 @@ $date = $availabe[$landsat];
       <h1>賽豬公上太空 <sup style="font-size: 13px;"><a href="https://github.com/jimyhuang/twlandsat">計畫說明</a></sup></h1>
     </header>
     <main>
-      <h3>現正瀏覽：<?php echo $date ?> 衛星空照圖</h3>
+      <form>
+        <select id="area">
+          <option value=""> -- 請選擇區域 -- </option>
+          <?php
+            foreach($location as $v => $name){
+              echo '<option value="'.$v.'">'.$name.'</option>';
+            }
+          ?>
+        </select>
+        <select>
+          <option value=""> -- 請選擇日期 -- </option>
+        </select>
+         比較 
+        <select>
+          <option value=""> -- 日期 -- </option>
+        </select>
+      </form>
       <div id="map-diff">
         <div id="before" class="map"></div>
         <div id="after" class="map"></div>
