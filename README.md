@@ -1,2 +1,1 @@
-# twlandsat-browse
-Browsing processed map by map viewer.
+Please read https://github.com/jimyhuang/twlandsat first.
