@@ -78,9 +78,7 @@ jQuery(document).ready(function($){
         introDelay : 1000,
         introDuration : 1000,
         introPosition : .5,
-        showFullLinks : true,
-        beforeLinkText: '顯示左側',
-        afterLinkText: '顯示右側',
+        showFullLinks : false
       });
     }
   }
@@ -96,10 +94,13 @@ jQuery(document).ready(function($){
     var $after = $('<select id="select-after">');
     $("#nav")
       .append($area)
-      .append('<span> &raquo; </span>')
+      .append('<span class="label"> &raquo; </span>')
       .append($before)
-      .append('<span class="vs"> vs </span>')
-      .append($after);
+      .append('<span class="label"> vs </span>')
+      .append($after)
+    var $copy = $('<input type="text" name="copy" id="copy" size="100" />');
+    $("footer").append('<div id="permalink"><label for="copy"> Copy link </label> </div>');
+    $("#permalink").append($copy);
 
     // setup options
     $.each(nav, function( key, value ) {
@@ -107,6 +108,9 @@ jQuery(document).ready(function($){
     });
 
     // chanage action
+    $copy.click(function(){
+      $(this).select();
+    });
     $($area).change(function(){
       ga('send', 'event', 'nav', 'click', 'select-change');
       $before.find('option[value!=0]').remove();
@@ -137,7 +141,7 @@ jQuery(document).ready(function($){
         ];
         hashChange(hash);
         if($before.val() != '0' && $after.val() != '0'){
-          ga('send', 'pageview', {'page': p, 'title': document.title});
+          ga('send', 'pageview', {'page': '/', 'title': document.title});
           mapReset();
         }
       }
@@ -191,6 +195,7 @@ jQuery(document).ready(function($){
       + '/'
       + nav[h[0]][h[2]];
     window.location.hash = h.join(',');
+    $("input#copy").val(window.location);
     hashResolv(); 
   }
 
@@ -213,9 +218,16 @@ jQuery(document).ready(function($){
   if (window.location.hash){
     hashResolv(); 
   }
-
+  
+  var resizing = 0;
   $(window).resize(function(){
-    mapReset();
+    if(!resizing){
+      resizing = 1;
+      window.setTimeout(function(){
+        resizing = 0;
+        mapReset();
+      }, 600);
+    }
   });
 
   var init = [area, b, a, z, c[0], c[1]];

@@ -1,0 +1,7 @@
+body { margin:0; background: #EFEFEF;}
+h1, h2, h3, h4, h5, h6 { margin: 0; }
+#page { width: 100%; margin: 10px;}
+main { height: 100%;}
+.map { height: 560px; }
+input { width: 80%;}
+#nav { font-size: 1.15em;}

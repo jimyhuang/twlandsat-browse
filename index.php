@@ -38,13 +38,7 @@ list($before, $after) = explode('|', $landsat);
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta property="og:image" content="https://farm3.staticflickr.com/2876/12199837206_100507b5d4_z.jpg" />
   <!-- Meta image from https://www.flickr.com/photos/t_zero/12199837206 cc by-nc-sa -->
-  <style type="text/css">
-    body { margin:0; background: #EFEFEF;}
-    h1, h2, h3, h4, h5, h6 { margin: 0; }
-    #page { width: 100%; }
-    main { height: 100%; }
-    .map { height: auto; min-height: 550px; }
-  </style>
+  <link rel="stylesheet" href="//twlandsat.jimmyhub.net/css/style.css" />
   <script src='http://maps.google.com/maps/api/js?sensor=false&v=3.7'></script>
   <script src="http://www.openlayers.org/api/2.12/OpenLayers.js"></script>
   <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
@@ -52,8 +46,8 @@ list($before, $after) = explode('|', $landsat);
 
   <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script type="text/javascript" src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
-  <script type="text/javascript" src="/js/jquery.ui.touch-punch.min.js"></script> 
-  <script type="text/javascript" src="/js/jquery.beforeafter-map-0.11.js"></script>
+  <script type="text/javascript" src="//twlandsat.jimmyhub.net/js/jquery.ui.touch-punch.min.js"></script> 
+  <script type="text/javascript" src="//twlandsat.jimmyhub.net/js/jquery.beforeafter-map-0.11.js"></script>
   <script type="text/javascript">
     var nav = <?php echo json_encode($nav); ?>;
   </script>
@@ -71,6 +65,8 @@ list($before, $after) = explode('|', $landsat);
         <div id="after" class="map"></div>
       </div>
     </main>
+    <footer>
+    </footer>
   </div> <!--/page-->
 <script>
 var landsat = '<?php echo $landsat; ?>';
