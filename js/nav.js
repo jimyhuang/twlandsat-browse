@@ -48,6 +48,8 @@ jQuery(document).ready(function($){
         maxZoom: 13,
         layers: [osmb, before]
       });
+      mapb.on('zoomend', mapMove);
+      mapb.on('dragend', mapMove);
     }
     if(a){
       var after = L.tileLayer(
@@ -67,8 +69,6 @@ jQuery(document).ready(function($){
         maxZoom: 13,
         layers: [osma, after]
       });
-      var hash = [];
-      mapa.on('zoomend', mapMove);
       mapa.on('dragend', mapMove);
     }
     if(a && b && mapa && mapb){
@@ -135,6 +135,7 @@ jQuery(document).ready(function($){
         ];
         hashChange(hash);
         if($before.val() != '0' && $after.val() != '0'){
+          ga('send', 'pageview', {'page': p, 'title': document.title});
           mapReset();
         }
       }
@@ -178,6 +179,14 @@ jQuery(document).ready(function($){
         h[i] = v;
       }
     });
+    document.title =
+      '賽豬公上太空計畫'
+      + '|' 
+      + nav[h[0]].name
+      + ' '
+      + nav[h[0]][h[1]]
+      + '/'
+      + nav[h[0]][h[2]];
     window.location.hash = h.join(',');
     hashResolv(); 
   }
