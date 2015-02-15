@@ -11,13 +11,16 @@ $location = array(
 foreach($dirs as $d){
   $file = 'processed/'.$d.'/tiles/openlayers.html';
   if($d[0] === 'L' && is_dir($base.$d) && is_file($file)){
-    $rawpath = substr($d, 4, 6);
+    $rawpath = substr($d, 3, 6);
     $day = substr($d, 9, 7);
     $year = substr($day, 0, 4);
     $day = substr($day, 4);
     $date = strtotime($year.'-01-01') + 86400*($day-1);
     $date = date('Y-m-d', $date);
-    $nav[$location[$rawpath]][$d] = $date;
+    if(empty($nav[$rawpath]['name'])){
+      $nav[$rawpath]['name'] = $location[$rawpath];
+    }
+    $nav[$rawpath][$d] = $date;
     $list[$d] = array(
       'date' => $date,
       'location' => $location[$rawpath],
@@ -51,30 +54,18 @@ list($before, $after) = explode('|', $landsat);
   <script type="text/javascript" src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
   <script type="text/javascript" src="/js/jquery.ui.touch-punch.min.js"></script> 
   <script type="text/javascript" src="/js/jquery.beforeafter-map-0.11.js"></script>
+  <script type="text/javascript">
+    var nav = <?php echo json_encode($nav); ?>;
+  </script>
 </head>
 <body>
   <div id="page">
     <header id="header">
       <h1>賽豬公上太空 <sup style="font-size: 13px;"><a href="https://github.com/jimyhuang/twlandsat">計畫說明</a></sup></h1>
+      <nav id="nav">
+      </nav>
     </header>
     <main>
-      <form>
-        <select id="area">
-          <option value=""> -- 請選擇區域 -- </option>
-          <?php
-            foreach($location as $v => $name){
-              echo '<option value="'.$v.'">'.$name.'</option>';
-            }
-          ?>
-        </select>
-        <select>
-          <option value=""> <?php echo $list[$before]['date']; ?> </option>
-        </select>
-         比較 
-        <select>
-          <option value=""> <?php echo $list[$after]['date']; ?> </option>
-        </select>
-      </form>
       <div id="map-diff">
         <div id="before" class="map"></div>
         <div id="after" class="map"></div>
@@ -83,73 +74,7 @@ list($before, $after) = explode('|', $landsat);
   </div> <!--/page-->
 <script>
 var landsat = '<?php echo $landsat; ?>';
-var b, a;
-if(landsat.indexOf('|')){
-  var landsats = landsat.split('|');
-  var b = landsats[0];
-  var a = landsats[1];
-}
-else{
-  var b = landsat;
-}
-
-// create base params
-var attribution = 'Data &copy; <a href="http://landsat.gsfc.nasa.gov/">USGS/NASA Landsat</a> in <a href="http://landsat.gsfc.nasa.gov/?page_id=2339">Public Domain</a>. Images <a href="http://twlandsat.jimmyhub.net">TWLandsat</a>';
-var maxZoom = 13;
-
-// create layers
-
-// before and after layer
-if(b){
-  var before = L.tileLayer(
-    'http://twlandsat.jimmyhub.net/processed/'+b+'/tiles/{z}/{x}/{y}.png',
-    {
-      tms: true,
-      attribution: attribution,
-      maxZoom: maxZoom,
-    }
-  );
-  var osmb = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-  });
-  var mapb = L.map('before', {
-    center: [23.955259, 120.687062],
-    zoom: 7,
-    maxZoom: 13,
-    layers: [osmb, before]
-  });
-}
-if(a){
-  var after = L.tileLayer(
-    'http://twlandsat.jimmyhub.net/processed/'+a+'/tiles/{z}/{x}/{y}.png',
-    {
-      tms: true,
-      attribution: attribution,
-      maxZoom: maxZoom,
-    }
-  );
-  var osma = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-  });
-  var mapa = L.map('after', {
-    center: [23.955259, 120.687062],
-    zoom: 7,
-    maxZoom: 13,
-    layers: [osma, after]
-  });
-}
-if(a && b && mapa && mapb){
-  jQuery('#map-diff').beforeAfter(mapb, mapa, {
-    imagePath: './css/images/',
-    animateIntro : true,
-    introDelay : 1000,
-    introDuration : 1000,
-    introPosition : .5,
-    showFullLinks : true,
-    beforeLinkText: '顯示左側',
-    afterLinkText: '顯示右側',
-  });
-}
 </script>
+<script type="text/javascript" src="/js/nav.js"></script>
 </body>
 </html>
