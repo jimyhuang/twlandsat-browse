@@ -1,7 +1,7 @@
 <?php
 $base = './processed/';
 $dirs = scandir('./processed/');
-$available = $nav = array();
+$nav = $list = array();
 $location = array(
   '117043' => '北部(117/43)',
   '117044' => '東部(117/44)',
@@ -17,10 +17,16 @@ foreach($dirs as $d){
     $day = substr($day, 4);
     $date = strtotime($year.'-01-01') + 86400*($day-1);
     $date = date('Y-m-d', $date);
-    $available[$location[$rawpath]][$d] = $date;
+    $nav[$location[$rawpath]][$d] = $date;
+    $list[$d] = array(
+      'date' => $date,
+      'location' => $location[$rawpath],
+      'rawpath' => $rawpath,
+    );
   }
 }
 $landsat = !empty($_GET['landsat']) && $_GET['landsat'][0] === 'L' ? $_GET['landsat'] : '';
+list($before, $after) = explode('|', $landsat);
 ?>
 <!DOCTYPE html>
 <html>
@@ -62,11 +68,11 @@ $landsat = !empty($_GET['landsat']) && $_GET['landsat'][0] === 'L' ? $_GET['land
           ?>
         </select>
         <select>
-          <option value=""> -- 請選擇日期 -- </option>
+          <option value=""> <?php echo $list[$before]['date']; ?> </option>
         </select>
          比較 
         <select>
-          <option value=""> -- 日期 -- </option>
+          <option value=""> <?php echo $list[$after]['date']; ?> </option>
         </select>
       </form>
       <div id="map-diff">
@@ -140,8 +146,8 @@ if(a && b && mapa && mapb){
     introDuration : 1000,
     introPosition : .5,
     showFullLinks : true,
-    beforeLinkText: '顯示過去',
-    afterLinkText: '顯示未來',
+    beforeLinkText: '顯示左側',
+    afterLinkText: '顯示右側',
   });
 }
 </script>
