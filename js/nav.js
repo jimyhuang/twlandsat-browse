@@ -111,7 +111,9 @@ jQuery(document).ready(function($){
     $copy.click(function(){
       $(this).select();
     });
-    $($area).change(function(){
+    $($area).change(function(e, context){
+      console.log(e);
+      console.log(context);
       ga('send', 'event', 'nav', 'click', 'select-change');
       $before.find('option[value!=0]').remove();
       $after.find('option[value!=0]').remove();
@@ -119,6 +121,7 @@ jQuery(document).ready(function($){
         var maps = nav[$(this).val()];
         var ll = maps.latlng.split(',');
         mapb.setView(ll, 9);
+        mapa.setView(ll, 9);
         $.each(maps, function(key, value) {
           if(key !== 'name' && key !== 'latlng'){
             $before.append('<option value="'+key+'">'+value+'</option>');
@@ -127,7 +130,7 @@ jQuery(document).ready(function($){
         });
       }
     });
-    $("#select-before, #select-after").change(function(){
+    $("#select-before, #select-after").change(function(e, context){
       ga('send', 'event', 'nav', 'click', 'select-change');
       var $other = $(this).attr("id") == 'select-before' ? $after : $before;
       var value = $(this).val();
@@ -233,9 +236,6 @@ jQuery(document).ready(function($){
   });
 
 
-  // setup option default
-  // this need to be trigger before hashChange
-  $("#select-area").val(area).trigger('change');
 
   // setup map
   var init = [area, b, a, z, c[0], c[1]];
@@ -244,8 +244,9 @@ jQuery(document).ready(function($){
   mapSetup(0);
 
   // this need to be trigger after mapSetup
-  $("#select-before").val(b).trigger('change');
-  $("#select-after").val(a).trigger('change');
+  $("#select-area").val(area).trigger('change', 'init');
+  $("#select-before").val(b).trigger('change', 'init');
+  $("#select-after").val(a).trigger('change', 'init');
 
 });
 
