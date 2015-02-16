@@ -1,8 +1,8 @@
 // global vars
 var 
   area = '118044',
-  b = 'LC81180442014276LGN00',
-  a = 'LC81180442015023LGN00',
+  b = 'LC81180442015023LGN00',
+  a = 'LC81180442014292LGN00',
   z = 12,
   c = [23.42513365687343,120.34612655639648];
 
@@ -219,6 +219,7 @@ jQuery(document).ready(function($){
 
   // main
   if (window.location.hash){
+    console.log(window.location.hash);
     hashResolv(); 
   }
   
@@ -233,8 +234,9 @@ jQuery(document).ready(function($){
     }
   });
 
-  navSetup();
   var init = [area, b, a, z, c[0], c[1]];
+  navSetup();
+  console.log(init);
   hashChange(init);
   mapSetup(0);
 
