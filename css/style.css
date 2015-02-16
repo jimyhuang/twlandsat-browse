@@ -13,7 +13,7 @@ body {
 h1, h2, h3, h4, h5, h6 { margin: 0; }
 a, a:link, a:visited { color: #86ba41 }
 a, a:hover { color: #629437; }
-#page { width: 100%; margin: 10px;}
+#page { margin: 10px auto; width: 95%; margin: 10px; background: rgba(100%, 100%, 100%, 0.85); }
 main { height: 100%;}
 
 #share { font-size: 0.96em; position: absolute; right: 10px; top: 5px; }
