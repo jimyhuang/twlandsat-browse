@@ -219,7 +219,6 @@ jQuery(document).ready(function($){
 
   // main
   if (window.location.hash){
-    console.log(window.location.hash);
     hashResolv(); 
   }
   
@@ -234,16 +233,17 @@ jQuery(document).ready(function($){
     }
   });
 
-  var init = [area, b, a, z, c[0], c[1]];
-  navSetup();
-  console.log(init);
-  hashChange(init);
-  mapSetup(0);
 
   // setup option default
   $("#select-area").val(area).trigger('change');
   $("#select-before").val(b).trigger('change');
   $("#select-after").val(a).trigger('change');
+
+  // setup map
+  var init = [area, b, a, z, c[0], c[1]];
+  navSetup();
+  hashChange(init);
+  mapSetup(0);
 
 });
 
