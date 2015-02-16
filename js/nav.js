@@ -233,10 +233,10 @@ jQuery(document).ready(function($){
     }
   });
 
+  navSetup();
   var init = [area, b, a, z, c[0], c[1]];
   hashChange(init);
   mapSetup(0);
-  navSetup();
 
   // setup option default
   $("#select-area").val(area).trigger('change');
