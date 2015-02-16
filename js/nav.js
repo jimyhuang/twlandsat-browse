@@ -118,7 +118,6 @@ jQuery(document).ready(function($){
       if(nav[$(this).val()] !== 'undefined'){
         var maps = nav[$(this).val()];
         var ll = maps.latlng.split(',');
-        mapa.setView(ll, 9);
         mapb.setView(ll, 9);
         $.each(maps, function(key, value) {
           if(key !== 'name' && key !== 'latlng'){
@@ -240,8 +239,8 @@ jQuery(document).ready(function($){
 
   // setup map
   var init = [area, b, a, z, c[0], c[1]];
-  navSetup();
   hashChange(init);
+  navSetup();
   mapSetup(0);
 
   // this need to be trigger after mapSetup
