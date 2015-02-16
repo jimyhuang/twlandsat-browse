@@ -32,8 +32,9 @@ jQuery(document).ready(function($){
 
     // before and after layer
     if(b){
+      var serverb = Math.floor((Math.random() * 3) + 1);
       var before = L.tileLayer(
-        'http://twlandsat.jimmyhub.net/processed/'+b+'/tiles/{z}/{x}/{y}.png',
+        'http://l'+serverb+'.jimmyhub.net/processed/'+b+'/tiles/{z}/{x}/{y}.png',
         {
           tms: true,
           maxZoom: maxZoom,
@@ -52,8 +53,9 @@ jQuery(document).ready(function($){
       mapb.on('dragend', mapMove);
     }
     if(a){
+      var servera = Math.floor((Math.random() * 3) + 1);
       var after = L.tileLayer(
-        'http://twlandsat.jimmyhub.net/processed/'+a+'/tiles/{z}/{x}/{y}.png',
+        'http://l'+servera+'.jimmyhub.net/processed/'+a+'/tiles/{z}/{x}/{y}.png',
         {
           tms: true,
           attribution: attribution,
