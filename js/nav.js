@@ -117,6 +117,9 @@ jQuery(document).ready(function($){
       $after.find('option[value!=0]').remove();
       if(nav[$(this).val()] !== 'undefined'){
         var maps = nav[$(this).val()];
+        var ll = maps[latlng].split(',');
+        mapa.setView(ll, 9);
+        mapb.setView(ll, 9);
         $.each(maps, function(key, value) {
           if(key !== 'name'){
             $before.append('<option value="'+key+'">'+value+'</option>');

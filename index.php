@@ -3,10 +3,10 @@ $base = './processed/';
 $dirs = scandir('./processed/');
 $nav = $list = array();
 $location = array(
-  '117043' => '北部(117/43)',
-  '117044' => '東部(117/44)',
-  '117045' => '桃竹苗(117/45)',
-  '118044' => '西南沿海(118/44)',
+  '117043' => array('name' => '北部(117/43)', 'latlng' => '24.6245479696219,121.44287109374999'),
+  '117044' => array('name' => '東部(117/44)', 'latlng' => '22.821757357861223,121.20666503906249'),
+  '117045' => array('name' => '桃竹苗(117/45)', 'latlng' => '23.835600986620936,120.48431396484375'),
+  '118044' => array('name' => '西南沿海(118/44)', 'latlng' => '23.34477759760015,120.82763671875'),
 );
 foreach($dirs as $d){
   $file = 'processed/'.$d.'/tiles/openlayers.html';
@@ -18,7 +18,8 @@ foreach($dirs as $d){
     $date = strtotime($year.'-01-01') + 86400*($day-1);
     $date = date('Y-m-d', $date);
     if(empty($nav[$rawpath]['name'])){
-      $nav[$rawpath]['name'] = $location[$rawpath];
+      $nav[$rawpath]['name'] = $location[$rawpath]['name'];
+      $nav[$rawpath]['latlng'] = $location[$rawpath]['latlng'];
     }
     $nav[$rawpath][$d] = $date;
     $list[$d] = array(
