@@ -59,7 +59,7 @@ list($before, $after) = explode('|', $landsat);
       <h1 id="site-name">賽豬公上太空</h1>
       <div id="share">
         <span class="fa fa-github-square"><a href="https://github.com/jimyhuang/twlandsat-browse" target="_blank">Code</a></span>
-        <span class="fa fa-comment"><a href="https://www.facebook.com/groups/610479852418250/?ref=bookmarks" target="_blank">社團</a></span>
+        <span class="fa fa-comment"><a href="https://www.facebook.com/groups/610479852418250/" target="_blank">社團</a></span>
         <span class="fa fa-globe"><a href="https://github.com/jimyhuang/twlandsat/blob/master/README.md" target="_blank">關於</a></span>
       </div>
       <nav id="nav">
