@@ -1,19 +1,14 @@
 body { margin:0; background: #EFEFEF; color: #555; }
 body { font-family: "儷黑 Pro", "LiHei Pro", "微軟正黑體", "Microsoft JhengHei", sans-serif; }
 body {
-  background-color:black;
-  background-image:
-  radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
-  radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px),
-  radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 40px),
-  radial-gradient(rgba(255,255,255,.4), rgba(255,255,255,.1) 2px, transparent 30px);
-  background-size: 550px 550px, 350px 350px, 250px 250px, 150px 150px; 
-  background-position: 0 0, 40px 60px, 130px 270px, 70px 100px;
+  background-color: #CCC;
+  background-image: linear-gradient(transparent 70%, rgba(255,255,255,.5) 70%);
+  background-size: 50px 50px;
 }
 h1, h2, h3, h4, h5, h6 { margin: 0; }
 a, a:link, a:visited { color: #86ba41 }
 a, a:hover { color: #629437; }
-#page { margin: 10px auto; width: 95%; margin: 10px; background: rgba(100%, 100%, 100%, 0.85); }
+#page { margin: 10px auto; width: 95%; margin: 10px; }
 main { height: 100%;}
 
 #share { font-size: 0.96em; position: absolute; right: 10px; top: 5px; }
