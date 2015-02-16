@@ -39,9 +39,10 @@ list($before, $after) = explode('|', $landsat);
   <meta property="og:image" content="https://farm3.staticflickr.com/2876/12199837206_100507b5d4_z.jpg" />
   <!-- Meta image from https://www.flickr.com/photos/t_zero/12199837206 cc by-nc-sa -->
   <link rel="stylesheet" href="//twlandsat.jimmyhub.net/css/style.css" />
-  <script src='http://maps.google.com/maps/api/js?sensor=false&v=3.7'></script>
-  <script src="http://www.openlayers.org/api/2.12/OpenLayers.js"></script>
   <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+  <script src="http://www.openlayers.org/api/2.12/OpenLayers.js"></script>
   <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 
   <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
@@ -55,7 +56,12 @@ list($before, $after) = explode('|', $landsat);
 <body>
   <div id="page">
     <header id="header">
-      <h1>賽豬公上太空 <sup style="font-size: 13px;"><a href="https://github.com/jimyhuang/twlandsat">計畫說明</a></sup></h1>
+      <h1 id="site-name">賽豬公上太空</h1>
+      <div id="share">
+        <span class="fa fa-github-square"><a href="https://github.com/jimyhuang/twlandsat-browse" target="_blank">Code</a></span>
+        <span class="fa fa-comment"><a href="https://www.facebook.com/groups/610479852418250/?ref=bookmarks" target="_blank">社團</a></span>
+        <span class="fa fa-globe"><a href="https://github.com/jimyhuang/twlandsat/blob/master/README.md" target="_blank">關於</a></span>
+      </div>
       <nav id="nav">
       </nav>
     </header>
