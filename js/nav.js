@@ -134,7 +134,7 @@ jQuery(document).ready(function($){
       ga('send', 'event', 'nav', 'click', 'select-change');
       var $other = $(this).attr("id") == 'select-before' ? $after : $before;
       var value = $(this).val();
-      if($other.val() != value){
+      if($other.val() != value && context != 'init'){
         var latlng = mapa.getCenter()
         var hash = [
           $area.val(),
