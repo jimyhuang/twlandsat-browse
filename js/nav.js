@@ -112,16 +112,16 @@ jQuery(document).ready(function($){
       $(this).select();
     });
     $($area).change(function(e, context){
-      console.log(e);
-      console.log(context);
       ga('send', 'event', 'nav', 'click', 'select-change');
       $before.find('option[value!=0]').remove();
       $after.find('option[value!=0]').remove();
       if(nav[$(this).val()] !== 'undefined'){
         var maps = nav[$(this).val()];
-        var ll = maps.latlng.split(',');
-        mapb.setView(ll, 9);
-        mapa.setView(ll, 9);
+        if(context != 'init'){
+          var ll = maps.latlng.split(',');
+          mapb.setView(ll, 9);
+          mapa.setView(ll, 9);
+        }
         $.each(maps, function(key, value) {
           if(key !== 'name' && key !== 'latlng'){
             $before.append('<option value="'+key+'">'+value+'</option>');
