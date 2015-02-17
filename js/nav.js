@@ -34,7 +34,7 @@ jQuery(document).ready(function($){
     if(b){
       var serverb = Math.floor((Math.random() * 3) + 1);
       var before = L.tileLayer(
-        'http://l'+serverb+'.jimmyhub.net/processed/'+b+'/tiles/{z}/{x}/{y}.png',
+        'http://l'+serverb+'.jimmyhub.net/processed/'+b+'/tiles-rgb/{z}/{x}/{y}.png',
         {
           tms: true,
           maxZoom: maxZoom,
@@ -55,7 +55,7 @@ jQuery(document).ready(function($){
     if(a){
       var servera = Math.floor((Math.random() * 3) + 1);
       var after = L.tileLayer(
-        'http://l'+servera+'.jimmyhub.net/processed/'+a+'/tiles/{z}/{x}/{y}.png',
+        'http://l'+servera+'.jimmyhub.net/processed/'+a+'/tiles-rgb/{z}/{x}/{y}.png',
         {
           tms: true,
           attribution: attribution,

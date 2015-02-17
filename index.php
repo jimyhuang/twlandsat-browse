@@ -9,7 +9,7 @@ $location = array(
   '118044' => array('name' => '西南沿海(118/44)', 'latlng' => '23.34477759760015,120.82763671875'),
 );
 foreach($dirs as $d){
-  $file = 'processed/'.$d.'/tiles/openlayers.html';
+  $file = 'processed/'.$d.'/tiles-rgb/openlayers.html';
   if($d[0] === 'L' && is_dir($base.$d) && is_file($file)){
     $rawpath = substr($d, 3, 6);
     $day = substr($d, 9, 7);
