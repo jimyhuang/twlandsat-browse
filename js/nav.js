@@ -239,8 +239,10 @@ jQuery(document).ready(function($){
   });
 
   // main
+  var intro_start = true;
   if (window.location.hash){
-    hashResolv(); 
+    hashResolv();
+    intro_start = false;
   }
   
   var resizing = 0;
@@ -267,7 +269,9 @@ jQuery(document).ready(function($){
   $("#select-before").val(b).trigger('change', 'init');
   $("#select-after").val(a).trigger('change', 'init');
   
-  intro.start();
+  if (intro_start){
+    intro.start();
+  }
 });
 
 
