@@ -6,7 +6,7 @@ intro.setOptions({
   doneLabel: "開始吧！",
   steps: [
     { 
-      intro: "歡迎來到<strong>賽豬公上太空</strong>計畫！<br />這個計畫希望將美國的地表研究衛星「Landsat」過去數十年經過台灣的資料，讓大家更輕易看到"
+      intro: "歡迎來到<strong>賽豬公上太空</strong>計畫！這個網頁將會 Demo 計畫產生的資料，將美國的地表研究衛星「Landsat」過去數十年經過台灣的資料，用更簡單的方式讓一般人可以瀏覽比較。"
     },
     {
       element: '#nav',

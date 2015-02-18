@@ -80,8 +80,8 @@ jQuery(document).ready(function($){
     if(a && b && mapa && mapb){
       jQuery('#map-diff').beforeAfter(mapb, mapa, {
         imagePath: './css/images/',
-        animateIntro : false,
-        introDelay : 1000,
+        animateIntro : true,
+        introDelay : 800,
         introDuration : 2000,
         introPosition : .4,
 				beforeLinkText: '僅顯示左側',
@@ -230,6 +230,13 @@ jQuery(document).ready(function($){
       return h[i];
     }
   }
+
+  /**
+   * Event trigger after end of map 
+   */
+  intro.oncomplete(function() {
+    window.setTimeout(mapReset, 600);
+  });
 
   // main
   if (window.location.hash){
