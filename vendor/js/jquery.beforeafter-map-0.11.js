@@ -89,11 +89,11 @@
 				$('#links'+randID).width(mapWidth);
 				$('#showleft'+randID).css({'position':'absolute','left':'0px'}).click(function(){
 					$('div:eq(2)', obj).animate({width:mapWidth},o.linkDisplaySpeed);
-					$('#dragwrapper'+randID).animate({left:mapWidth-$('#dragwrapper'+randID).width()+'px'},o.linkDisplaySpeed);
+					$('#dragwrapper'+randID).animate({left:mapWidth-$('#dragwrapper'+randID).width()-10+'px'},o.linkDisplaySpeed);
 				});
 				$('#showright'+randID).css({'position':'absolute','right':'0px'}).click(function(){
 					$('div:eq(2)', obj).animate({width:0},o.linkDisplaySpeed);
-					$('#dragwrapper'+randID).animate({left:'0px'},o.linkDisplaySpeed);
+					$('#dragwrapper'+randID).animate({left:'10px'},o.linkDisplaySpeed);
 				});
 			}
 			
