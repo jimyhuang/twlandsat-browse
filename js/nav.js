@@ -26,6 +26,10 @@ jQuery(document).ready(function($){
       c = [args[4], args[5]];
     }
 
+    // initialize map height
+    var map_height = $(window).height() - $("header").height() - $("footer").height();
+    $(".map").height(map_height - 80);
+
     // create base params
     var attribution = 'Data &copy; <a href="http://landsat.gsfc.nasa.gov/">USGS/NASA Landsat</a> in <a href="http://landsat.gsfc.nasa.gov/?page_id=2339">Public Domain</a>. Images <a href="http://twlandsat.jimmyhub.net">TWLandsat</a>';
     var maxZoom = 13;
@@ -78,8 +82,10 @@ jQuery(document).ready(function($){
         imagePath: './css/images/',
         animateIntro : false,
         introDelay : 1000,
-        introDuration : 1000,
-        introPosition : .5,
+        introDuration : 2000,
+        introPosition : .4,
+				beforeLinkText: '僅顯示左側',
+				afterLinkText: '僅顯示右側',
         showFullLinks : true
       });
     }
@@ -92,16 +98,17 @@ jQuery(document).ready(function($){
   var navSetup = function(){
     // form element
     var $area = $('<select id="select-area">');
-    var $before = $('<select id="select-before">');
-    var $after = $('<select id="select-after">');
+    var $before = $('<select id="select-before" class="select-date">');
+    var $after = $('<select id="select-after" class="select-date">');
     $("#nav")
+      .append('<i class="fa fa-location-arrow"></i>')
       .append($area)
-      .append('<span class="label"> &raquo; </span>')
+      .append('<i class="fa fa-calendar"></i>')
       .append($before)
-      .append('<span class="label"> vs </span>')
+      .append('<i class="fa fa-random"></i>')
       .append($after)
     var $copy = $('<input type="text" name="copy" id="copy" size="100" />');
-    $("footer").append('<div id="permalink"><label for="copy"> Copy link </label> </div>');
+    $("footer").append('<div id="permalink"><label for="copy" class="fa fa-clipboard"></label></div>');
     $("#permalink").append($copy);
 
     // setup options
@@ -130,6 +137,9 @@ jQuery(document).ready(function($){
             $after.append('<option value="'+key+'">'+value+'</option>');
           }
         });
+        $(".select-date").animate( { color: '#FF0000' }, 800 );
+        $(".select-date").animate( { color: '#000000' }, 800 );
+        
       }
     });
     $("#select-before, #select-after").change(function(e, context){

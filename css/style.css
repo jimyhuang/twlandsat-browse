@@ -8,14 +8,32 @@ body {
 h1, h2, h3, h4, h5, h6 { margin: 0; }
 a, a:link, a:visited { color: #86ba41 }
 a, a:hover { color: #629437; }
-#page { margin: 10px auto; width: 95%;}
-main { height: 100%;}
+#page { margin: 0; width: 100%;}
+header, footer { width: 95%; margin: 0 auto; }
+footer { padding-top: 20px; }
 
-#share { font-size: 1.0em; position: absolute; right: 10px; top: 5px; }
-#nav { font-size: 1.15em;}
-.map { height: 560px; }
+#share { font-size: 1.0em; position: absolute; right: 3%; top: 5px; }
+#nav { font-size: 1.0em; }
+.map { height: 300px; }
 input { width: 80%;}
 
+/* font awsome*/
 .fa:before {
   padding-right: 5px;
+}
+#nav .fa {
+  margin-left: 20px;
+}
+#nav .fa-random {
+  margin-left: 5px;
+}
+main span.balinks:first-child a:after {
+  content: "\f152";
+  padding-left:10px;
+  font: normal normal normal 14px/1 FontAwesome;
+}
+main span.balinks:last-child a:before{
+  content: "\f191";
+  padding-right:10px;
+  font: normal normal normal 14px/1 FontAwesome;
 }

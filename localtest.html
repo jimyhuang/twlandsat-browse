@@ -1,38 +1,3 @@
-<?php
-$base = './processed/';
-$dirs = scandir('./processed/');
-$nav = $list = array();
-$location = array(
-  '117043' => array('name' => '北部(117/43)', 'latlng' => '24.6245479696219,121.44287109374999'),
-  '117044' => array('name' => '東部(117/44)', 'latlng' => '22.821757357861223,121.20666503906249'),
-  '117045' => array('name' => '屏東(117/45)', 'latlng' => '22.187404991398775,120.6909942626953'),
-  '118043' => array('name' => '桃竹苗(118/43)', 'latlng' => '23.835600986620936,120.48431396484375'),
-  '118044' => array('name' => '西南沿海(118/44)', 'latlng' => '23.34477759760015,120.82763671875'),
-);
-foreach($dirs as $d){
-  $file = 'processed/'.$d.'/tiles-rgb/openlayers.html';
-  if($d[0] === 'L' && is_dir($base.$d) && is_file($file)){
-    $rawpath = substr($d, 3, 6);
-    $day = substr($d, 9, 7);
-    $year = substr($day, 0, 4);
-    $day = substr($day, 4);
-    $date = strtotime($year.'-01-01') + 86400*($day-1);
-    $date = date('Y-m-d', $date);
-    if(empty($nav[$rawpath]['name'])){
-      $nav[$rawpath]['name'] = $location[$rawpath]['name'];
-      $nav[$rawpath]['latlng'] = $location[$rawpath]['latlng'];
-    }
-    $nav[$rawpath][$d] = $date;
-    $list[$d] = array(
-      'date' => $date,
-      'location' => $location[$rawpath],
-      'rawpath' => $rawpath,
-    );
-  }
-}
-$landsat = !empty($_GET['landsat']) && $_GET['landsat'][0] === 'L' ? $_GET['landsat'] : '';
-list($before, $after) = explode('|', $landsat);
-?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -55,7 +20,7 @@ list($before, $after) = explode('|', $landsat);
   <script type="text/javascript" src="./vendor/js/jquery.beforeafter-map-0.11.js"></script>
   <script type="text/javascript" src="./vendor/js/intro.min.js"></script> 
   <script type="text/javascript">
-    var nav = <?php echo json_encode($nav); ?>;
+     var nav = {"117043":{"name":"\u5317\u90e8(117\/43)","latlng":"24.6245479696219,121.44287109374999","LC81170432014029LGN00":"2014-01-29","LC81170432014237LGN00":"2014-08-25","LC81170432014253LGN00":"2014-09-10","LC81170432014333LGN00":"2014-11-29","LC81170432014365LGN00":"2014-12-31"},"117044":{"name":"\u6771\u90e8(117\/44)","latlng":"22.821757357861223,121.20666503906249","LC81170442013330LGN00":"2013-11-26","LC81170442014013LGN00":"2014-01-13","LC81170442015032LGN00":"2015-02-01"},"117045":{"name":"\u5c4f\u6771(117\/45)","latlng":"22.187404991398775,120.6909942626953","LC81170452013330LGN00":"2013-11-26"},"118044":{"name":"\u897f\u5357\u6cbf\u6d77(118\/44)","latlng":"23.34477759760015,120.82763671875","LC81180442014084LGN00":"2014-03-25","LC81180442014276LGN00":"2014-10-03","LC81180442014292LGN00":"2014-10-19","LC81180442014308LGN00":"2014-11-04","LC81180442015023LGN00":"2015-01-23"}};
   </script>
 </head>
 <body>
@@ -91,7 +56,7 @@ var landsat = '<?php echo $landsat; ?>';
   ga('create', 'UA-59775466-1', 'auto');
   ga('send', 'pageview');
 </script>
-<script type="text/javascript" src="/js/intro.js"></script>
-<script type="text/javascript" src="/js/nav.js"></script>
+<script type="text/javascript" src="./js/intro.js"></script>
+<script type="text/javascript" src="./js/nav.js"></script>
 </body>
 </html>
