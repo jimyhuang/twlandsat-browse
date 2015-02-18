@@ -21,7 +21,7 @@ jQuery(document).ready(function($){
     else{
       area = args[0];
       b = args[1];
-      a = args[2]
+      a = args[2];
       z = args[3];
       c = [args[4], args[5]];
     }
@@ -36,9 +36,18 @@ jQuery(document).ready(function($){
 
     // before and after layer
     if(b){
+      var layer_b = 'rgb';
+      /*
+      if(b.indexOf('-')){
+        b = b.substr(0, b.indexOf('-'));
+        console.log(b);
+        console.log(b.indexOf('-'));
+        layer_b = 'swirnir';
+      }
+      */
       var serverb = Math.floor((Math.random() * 3) + 1);
       var before = L.tileLayer(
-        'http://l'+serverb+'.jimmyhub.net/processed/'+b+'/tiles-rgb/{z}/{x}/{y}.png',
+        'http://l'+serverb+'.jimmyhub.net/processed/'+b+'/tiles-'+layer_b+'/{z}/{x}/{y}.png',
         {
           tms: true,
           maxZoom: maxZoom,
@@ -58,8 +67,15 @@ jQuery(document).ready(function($){
     }
     if(a){
       var servera = Math.floor((Math.random() * 3) + 1);
+      var layer_a = 'rgb';
+      /*
+      if(a.indexOf('-')){
+        a = a.substr(0, a.indexOf('-'));
+        layer_a = 'swirnir';
+      }
+      */
       var after = L.tileLayer(
-        'http://l'+servera+'.jimmyhub.net/processed/'+a+'/tiles-rgb/{z}/{x}/{y}.png',
+        'http://l'+servera+'.jimmyhub.net/processed/'+a+'/tiles-'+layer_a+'/{z}/{x}/{y}.png',
         {
           tms: true,
           attribution: attribution,
