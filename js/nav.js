@@ -28,7 +28,6 @@ jQuery(document).ready(function($){
 
     // before and after layer
     if(b){
-      var layer_b = 'rgb';
       var layer_b = l[0] ? l[0] : 'rgb';
       var serverb = Math.floor((Math.random() * 3) + 1);
       var before = L.tileLayer(
@@ -47,12 +46,19 @@ jQuery(document).ready(function($){
         maxZoom: 13,
         layers: [osmb, before]
       });
+      if(layer_b == 'swirnir'){
+        var legend = L.control({position: 'bottomright'});
+        legend.onAdd = function () {
+          return swirnirLegend();
+        };
+        legend.addTo(mapb);
+      }
       mapb.on('zoomend', mapMove);
       mapb.on('dragend', mapMove);
     }
     if(a){
-      var servera = Math.floor((Math.random() * 3) + 1);
       var layer_a = l[1] ? l[1] : 'rgb';
+      var servera = Math.floor((Math.random() * 3) + 1);
       var after = L.tileLayer(
         'http://l'+servera+'.jimmyhub.net/processed/'+a+'/tiles-'+layer_a+'/{z}/{x}/{y}.png',
         {
@@ -70,6 +76,14 @@ jQuery(document).ready(function($){
         maxZoom: 13,
         layers: [osma, after]
       });
+
+      if(layer_a == 'swirnir'){
+        var legend = L.control({position: 'bottomright'});
+        legend.onAdd = function () {
+          return swirnirLegend();
+        };
+        legend.addTo(mapa);
+      }
       mapa.on('dragend', mapMove);
     }
     if(a && b && mapa && mapb){
@@ -78,7 +92,7 @@ jQuery(document).ready(function($){
         animateIntro : true,
         introDelay : 800,
         introDuration : 2000,
-        introPosition : .4,
+        introPosition : .5,
 				beforeLinkText: '僅顯示左側',
 				afterLinkText: '僅顯示右側',
         showFullLinks : true
@@ -262,6 +276,22 @@ jQuery(document).ready(function($){
   intro.oncomplete(function() {
     window.setTimeout(mapReset, 600);
   });
+
+  /**
+   * Helper function for leaflet legend
+   */
+  var swirnirLegend = function(){
+    var colors = ['pink', 'deep-blue', 'green', 'deep-green'];
+    var labels = ['建築物/裸露地', '水稻田/河流', '植物', '植物'];
+    var html = '';
+
+    for (var i = 0; i < colors.length; i++) {
+      html += '<div class="'+ colors[i] +'"><i class="fa fa-square"></i>'  + labels[i] + '</div>';
+    }
+    var $div = $('<div>').html(html);
+    $div.addClass('legend');
+    return $div[0];
+  } 
 
   // main
   var intro_start = true;

@@ -37,3 +37,23 @@ main span.balinks:last-child a:before{
   padding-right:10px;
   font: normal normal normal 14px/1 FontAwesome;
 }
+
+/* leaflet */
+.legend {
+  line-height: 18px;
+  color: #555;
+  background: #EFEFEF;
+  opacity: 0.9;
+  padding: 5px;
+  border-radius: 10px;
+}
+.legend i {
+  width: 18px;
+  height: 18px;
+  margin-right: 8px;
+}
+.legend .pink i { color: #F4BDCF; }
+.legend .deep-blue i { color: #085884; }
+.legend .green i { color: #08EE66; }
+.legend .deep-green i { color: #0F756A; }
+
