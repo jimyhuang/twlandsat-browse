@@ -90,7 +90,7 @@ var landsat = '<?php echo $landsat; ?>';
   ga('create', 'UA-59775466-1', 'auto');
   ga('send', 'pageview');
 </script>
-<script type="text/javascript" src="/js/nav.js"></script>
 <script type="text/javascript" src="/js/intro.js"></script>
+<script type="text/javascript" src="/js/nav.js"></script>
 </body>
 </html>

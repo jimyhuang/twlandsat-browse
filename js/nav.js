@@ -249,7 +249,8 @@ jQuery(document).ready(function($){
   $("#select-area").val(area).trigger('change', 'init');
   $("#select-before").val(b).trigger('change', 'init');
   $("#select-after").val(a).trigger('change', 'init');
-
+  
+  intro.start();
 });
 
 
