@@ -19,11 +19,7 @@ jQuery(document).ready(function($){
       },
       {
         element: '.ui-draggable-handle',
-        intro: "可以隨時用這個指標將要顯示的區域拉動左右側，以觀察不同"
-      },
-      {
-        element: '#step5',
-        intro: 'Get it, use it.'
+        intro: "可以隨時用這個指標將要顯示的區域拉動左右側，以觀察兩個時間點的不同"
       }
     ]
   });
