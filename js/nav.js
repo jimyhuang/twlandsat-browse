@@ -76,11 +76,11 @@ jQuery(document).ready(function($){
     if(a && b && mapa && mapb){
       jQuery('#map-diff').beforeAfter(mapb, mapa, {
         imagePath: './css/images/',
-        animateIntro : true,
+        animateIntro : false,
         introDelay : 1000,
         introDuration : 1000,
         introPosition : .5,
-        showFullLinks : false
+        showFullLinks : true
       });
     }
   }

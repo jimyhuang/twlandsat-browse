@@ -41,6 +41,7 @@ list($before, $after) = explode('|', $landsat);
   <meta property="og:image" content="https://farm3.staticflickr.com/2876/12199837206_100507b5d4_z.jpg" />
   <!-- Meta image from https://www.flickr.com/photos/t_zero/12199837206 cc by-nc-sa -->
   <link rel="stylesheet" href="//twlandsat.jimmyhub.net/css/style.css" />
+  <link rel="stylesheet" href="//twlandsat.jimmyhub.net/vendor/css/introjs.css" />
   <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
@@ -49,6 +50,7 @@ list($before, $after) = explode('|', $landsat);
 
   <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script type="text/javascript" src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/intro.js/0.6.0/intro.min.js"></script>
   <script type="text/javascript" src="//twlandsat.jimmyhub.net/vendor/js/jquery.ui.touch-punch.min.js"></script> 
   <script type="text/javascript" src="//twlandsat.jimmyhub.net/vendor/js/jquery.beforeafter-map-0.11.js"></script>
   <script type="text/javascript">
@@ -89,5 +91,6 @@ var landsat = '<?php echo $landsat; ?>';
   ga('send', 'pageview');
 </script>
 <script type="text/javascript" src="/js/nav.js"></script>
+<script type="text/javascript" src="/js/intro.js"></script>
 </body>
 </html>
