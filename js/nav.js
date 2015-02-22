@@ -4,27 +4,19 @@ var
   b = 'LC81180442015023LGN00',
   a = 'LC81180442014292LGN00',
   z = 12,
-  c = [23.42513365687343,120.34612655639648];
+  c = [23.42513365687343,120.34612655639648],
+  l = ['rgb', 'rgb'];
 
 var mapa, mapb;
 
 jQuery(document).ready(function($){
 
   /**
-   * Setup and initialize map from hashtag or pass args
+   * Setup and initialize map from hashtag
    */
-  var mapSetup = function(args){
-    if(args === 0){
-      // reset map using hash
-      hashResolv();
-    }
-    else{
-      area = args[0];
-      b = args[1];
-      a = args[2];
-      z = args[3];
-      c = [args[4], args[5]];
-    }
+  var mapSetup = function(){
+    // reset map using hash
+    hashResolv();
 
     // initialize map height
     var map_height = $(window).height() - $("header").height() - $("footer").height();
@@ -37,14 +29,7 @@ jQuery(document).ready(function($){
     // before and after layer
     if(b){
       var layer_b = 'rgb';
-      /*
-      if(b.indexOf('-')){
-        b = b.substr(0, b.indexOf('-'));
-        console.log(b);
-        console.log(b.indexOf('-'));
-        layer_b = 'swirnir';
-      }
-      */
+      var layer_b = l[0] ? l[0] : 'rgb';
       var serverb = Math.floor((Math.random() * 3) + 1);
       var before = L.tileLayer(
         'http://l'+serverb+'.jimmyhub.net/processed/'+b+'/tiles-'+layer_b+'/{z}/{x}/{y}.png',
@@ -67,13 +52,7 @@ jQuery(document).ready(function($){
     }
     if(a){
       var servera = Math.floor((Math.random() * 3) + 1);
-      var layer_a = 'rgb';
-      /*
-      if(a.indexOf('-')){
-        a = a.substr(0, a.indexOf('-'));
-        layer_a = 'swirnir';
-      }
-      */
+      var layer_a = l[1] ? l[1] : 'rgb';
       var after = L.tileLayer(
         'http://l'+servera+'.jimmyhub.net/processed/'+a+'/tiles-'+layer_a+'/{z}/{x}/{y}.png',
         {
@@ -115,14 +94,18 @@ jQuery(document).ready(function($){
     // form element
     var $area = $('<select id="select-area">');
     var $before = $('<select id="select-before" class="select-date">');
+    var $check_before = $('<input type="checkbox" id="check-before" class="check-swirnir" title="False color" value="1">');
     var $after = $('<select id="select-after" class="select-date">');
+    var $check_after = $('<input type="checkbox" id="check-after" class="check-swirnir" title="False color" value="1">');
     $("#nav")
       .append('<i class="fa fa-location-arrow"></i>')
       .append($area)
       .append('<i class="fa fa-calendar"></i>')
       .append($before)
+      .append($check_before)
       .append('<i class="fa fa-random"></i>')
       .append($after)
+      .append($check_after)
     var $copy = $('<input type="text" name="copy" id="copy" size="100" />');
     $("footer").append('<div id="permalink"><label for="copy" class="fa fa-clipboard"></label></div>');
     $("#permalink").append($copy);
@@ -160,9 +143,7 @@ jQuery(document).ready(function($){
     });
     $("#select-before, #select-after").change(function(e, context){
       ga('send', 'event', 'nav', 'click', 'select-change');
-      var $other = $(this).attr("id") == 'select-before' ? $after : $before;
-      var value = $(this).val();
-      if($other.val() != value && context != 'init'){
+      if(context != 'init'){
         var latlng = mapa.getCenter()
         var hash = [
           $area.val(),
@@ -182,6 +163,33 @@ jQuery(document).ready(function($){
     $area.change(function(){
       var hash = [$area.val()];
       hashChange(hash);
+    });
+    $('.check-swirnir').change(function(e, context) {
+      if(context == 'init'){
+        console.log(l);
+        if(l[0] != 'rgb'){
+          $("#check-before").prop('checked', true);;
+        }
+        if(l[1] != 'rgb'){
+          $("#check-after").prop('checked', true);;
+        }
+      }
+      else{
+        ga('send', 'event', 'nav', 'click', 'swir-switch');
+        var vals = [];
+        $(".check-swirnir").each(function(i){
+          if($(this).is(':checked')){
+            vals[i] = 'swirnir';
+          }
+          else{
+            vals[i] = 'rgb';
+          }
+        });
+        var hash = [];
+        hash[6] = vals.join('-');
+        hashChange(hash);
+        mapReset();
+      }
     });
   }
 
@@ -242,6 +250,7 @@ jQuery(document).ready(function($){
     a = h[2];
     z = h[3]*1;
     c = [h[4]*1,h[5]*1];
+    l = h[6].split('-');
     if(i){
       return h[i];
     }
@@ -272,10 +281,8 @@ jQuery(document).ready(function($){
     }
   });
 
-
-
   // setup map
-  var init = [area, b, a, z, c[0], c[1]];
+  var init = [area, b, a, z, c[0], c[1], l.join('-')];
   hashChange(init);
   navSetup();
   mapSetup(0);
@@ -284,6 +291,7 @@ jQuery(document).ready(function($){
   $("#select-area").val(area).trigger('change', 'init');
   $("#select-before").val(b).trigger('change', 'init');
   $("#select-after").val(a).trigger('change', 'init');
+  $(".check-swirnir").trigger('change', 'init');
   
   if (intro_start){
     intro.start();

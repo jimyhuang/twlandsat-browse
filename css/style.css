@@ -15,7 +15,7 @@ footer { padding-top: 20px; }
 #share { font-size: 1.0em; position: absolute; right: 3%; top: 5px; }
 #nav { font-size: 1.0em; }
 .map { height: 300px; }
-input { width: 80%;}
+input[type=text] { width: 80%;}
 
 /* font awsome*/
 .fa:before {
