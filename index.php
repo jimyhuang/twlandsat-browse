@@ -48,8 +48,8 @@ list($before, $after) = explode('|', $landsat);
 
   <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script type="text/javascript" src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
-  <script type="text/javascript" src="//twlandsat.jimmyhub.net/js/jquery.ui.touch-punch.min.js"></script> 
-  <script type="text/javascript" src="//twlandsat.jimmyhub.net/js/jquery.beforeafter-map-0.11.js"></script>
+  <script type="text/javascript" src="//twlandsat.jimmyhub.net/vendor/js/jquery.ui.touch-punch.min.js"></script> 
+  <script type="text/javascript" src="//twlandsat.jimmyhub.net/vendor/js/jquery.beforeafter-map-0.11.js"></script>
   <script type="text/javascript">
     var nav = <?php echo json_encode($nav); ?>;
   </script>
