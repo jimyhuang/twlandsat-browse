@@ -1,5 +1,5 @@
-var intro = introJs();
 jQuery(document).ready(function($){
+  var intro = introJs();
   intro.setOptions({
     nextLabel: " → ",
     prevLabel: " ← ",
