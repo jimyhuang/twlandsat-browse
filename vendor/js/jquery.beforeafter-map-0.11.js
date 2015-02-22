@@ -70,7 +70,7 @@
 			_after_.options.inertia = false;
 						
 			// Create an inner div wrapper (dragwrapper) to hold the images.
-			$(obj).prepend('<div id="dragwrapper'+randID+'"><div id="drag'+randID+'"><img width="8" height="200" alt="handle" src="'+o.imagePath+'handle.png" id="handle'+randID+'" /></div></div>'); // Create drag handle
+			$(obj).prepend('<div id="dragwrapper'+randID+'"><div id="drag'+randID+'"><img width="8" height="200" alt="handle" src="'+o.imagePath+'handle.gif" id="handle'+randID+'" /></div></div>'); // Create drag handle
 			$('#dragwrapper'+randID).css({'opacity':.25,'position':'absolute','padding':'0','left':(mapWidth*o.introPosition)-($('#handle'+randID).width()/2)+'px','z-index':'20'}).width($('#handle'+randID).width()).height(mapHeight);
 
 			$(_before_._container).height(mapHeight).width(mapWidth*o.introPosition).css({'position':'absolute','overflow':'hidden','left':'0px','z-index':'10'}); // Set CSS properties of the before map div
