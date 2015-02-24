@@ -14,8 +14,8 @@ foreach($dirs as $d){
   `mkdir -p /mnt/s3/processed/$d`;
   $dir = $base.$d;
   if(file_exists($dir.'/final-rgb-pan.TIF')){
-    `cp $dir/*.TIF /mnt/s3/processed/$d/`;
-    `rm -f $dir/*.TIF`;
+    `cp $dir/*.TIF.bz2 /mnt/s3/processed/$d/`;
+    `rm -f $dir/*.TIF.bz2`;
     $i++;
   }
 }
