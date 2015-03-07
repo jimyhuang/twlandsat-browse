@@ -25,27 +25,47 @@ jQuery(document).ready(function($){
     // create base params
     var attribution = 'Data &copy; <a href="http://landsat.gsfc.nasa.gov/">USGS/NASA Landsat</a> in <a href="http://landsat.gsfc.nasa.gov/?page_id=2339">Public Domain</a>. Images <a href="http://twlandsat.jimmyhub.net">TWLandsat</a>';
     var maxZoom = 13;
+    var legend = L.control({position: 'bottomright'});
+    legend.onAdd = function () {
+      return swirnirLegend();
+    };
 
     // before and after layer
     if(b){
       var layer_b = l[0] ? l[0] : 'rgb';
       var serverb = Math.floor((Math.random() * 3) + 1);
-      var before = L.tileLayer(
-        'http://l'+serverb+'.jimmyhub.net/processed/'+b+'/tiles-'+layer_b+'/{z}/{x}/{y}.png',
+      var rgbview_b = L.tileLayer(
+        'http://l'+serverb+'.jimmyhub.net/processed/'+b+'/tiles-rgb'+'/{z}/{x}/{y}.png',
         {
           tms: true,
           maxZoom: maxZoom,
         }
       );
-      var osmb = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+      var swirnir_b = L.tileLayer(
+        'http://l'+serverb+'.jimmyhub.net/processed/'+b+'/tiles-swirnir'+'/{z}/{x}/{y}.png',
+        {
+          tms: true,
+          maxZoom: maxZoom,
+        }
+      );
+      var osm_b = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
       });
+
       mapb = new L.map('before', {
         center: c,
         zoom: z,
         maxZoom: 13,
-        layers: [osmb, before]
+        layers: [rgbview_b]
       });
+
+      var baseLayers = {
+        "RGB view": rgbview_b,
+        "SwirNir view": swirnir_b,
+        "Street view": osm_b
+      };
+
+      /*
       if(layer_b == 'swirnir'){
         var legend = L.control({position: 'bottomright'});
         legend.onAdd = function () {
@@ -53,38 +73,72 @@ jQuery(document).ready(function($){
         };
         legend.addTo(mapb);
       }
+      */
       mapb.on('zoomend', mapMove);
       mapb.on('dragend', mapMove);
+      L.control.layers(baseLayers).addTo(mapb);
+
+      mapb.on('baselayerchange', function(e) {
+          console.log(e.name)
+          if (e.name=='SwirNir view'){
+            legend.addTo(mapb);
+          } 
+          else
+            legend.removeFrom(mapb);
+      });
     }
     if(a){
       var layer_a = l[1] ? l[1] : 'rgb';
       var servera = Math.floor((Math.random() * 3) + 1);
-      var after = L.tileLayer(
-        'http://l'+servera+'.jimmyhub.net/processed/'+a+'/tiles-'+layer_a+'/{z}/{x}/{y}.png',
+      var rgbview_a = L.tileLayer(
+        'http://l'+servera+'.jimmyhub.net/processed/'+a+'/tiles-rgb'+'/{z}/{x}/{y}.png',
         {
           tms: true,
           attribution: attribution,
           maxZoom: maxZoom,
         }
       );
-      var osma = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+      var swirnirview_a = L.tileLayer(
+        'http://l'+servera+'.jimmyhub.net/processed/'+a+'/tiles-swirnir'+'/{z}/{x}/{y}.png',
+        {
+          tms: true,
+          attribution: attribution,
+          maxZoom: maxZoom,
+        }
+      );
+      var osm_a = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
       });
       mapa = new L.map('after', {
         center: c,
         zoom: z,
         maxZoom: 13,
-        layers: [osma, after]
+        layers: [rgbview_a]
       });
 
-      if(layer_a == 'swirnir'){
+      var baseLayers = {
+        "RGB view": rgbview_a,
+        "SwirNir view": swirnirview_a,
+        "Street view": osm_a
+      };
+
+      /*if(layer_a == 'swirnir'){
         var legend = L.control({position: 'bottomright'});
         legend.onAdd = function () {
           return swirnirLegend();
         };
         legend.addTo(mapa);
-      }
+      }*/
       mapa.on('dragend', mapMove);
+      L.control.layers(baseLayers).addTo(mapa);
+      mapa.on('baselayerchange', function(e) {
+          console.log(e.name)
+          if (e.name=='SwirNir view'){
+            legend.addTo(mapa);
+          } 
+          else
+            legend.removeFrom(mapa);
+      });
     }
     if(a && b && mapa && mapb){
       jQuery('#map-diff').beforeAfter(mapb, mapa, {
@@ -109,6 +163,7 @@ jQuery(document).ready(function($){
     var $area = $('<select id="select-area">');
     var $before = $('<select id="select-before" class="select-date">');
     var $check_before = $('<input type="checkbox" id="check-before" class="check-swirnir" title="False color" value="1">');
+    //var $check_before = $('<input type="radio" id="layer-selection" value="RGB view" checked="checked">');
     var $after = $('<select id="select-after" class="select-date">');
     var $check_after = $('<input type="checkbox" id="check-after" class="check-swirnir" title="False color" value="1">');
     $("#nav")
