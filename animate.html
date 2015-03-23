@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>賽豬公上太空計畫</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta property="og:image" content="https://farm3.staticflickr.com/2876/12199837206_100507b5d4_z.jpg" />
+  <!-- Meta image from https://www.flickr.com/photos/t_zero/12199837206 cc by-nc-sa -->
+  <link rel="stylesheet" href="./css/style.css" />
+  <link rel="stylesheet" href="./vendor/css/introjs.min.css" />
+  <link rel="stylesheet" href="./vendor/css/introjs-nassim.css" />
+  <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+
+  <script src="http://www.openlayers.org/api/2.12/OpenLayers.js"></script>
+  <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+
+  <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="./vendor/js/jquery.ui.touch-punch.min.js"></script> 
+  <script type="text/javascript" src="./vendor/js/jquery.beforeafter-map-0.11.js"></script>
+  <script type="text/javascript" src="./vendor/js/intro.min.js"></script> 
+</head>
+<body>
+  <div id="page">
+    <header id="header">
+      <h1 id="site-name">賽豬公上太空</h1>
+      <div id="share">
+        <span class="fa fa-github-square"><a href="https://github.com/jimyhuang/twlandsat-browse" target="_blank">Code</a></span>
+        <span class="fa fa-comment"><a href="https://www.facebook.com/groups/610479852418250/" target="_blank">社團</a></span>
+        <span class="fa fa-globe"><a href="https://github.com/jimyhuang/twlandsat/blob/master/README.md" target="_blank">關於</a></span>
+      </div>
+      <nav id="nav">
+      </nav>
+    </header>
+    <main>
+      <div id="map-diff">
+        <div id="animate" class="map"></div>
+      </div>
+    </main>
+    <footer>
+    </footer>
+  </div> <!--/page-->
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-59775466-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<script type="text/javascript">
+  jQuery.getJSON('./nav.js', function(json){
+    var maxZoom = 13;
+    var i = 0;
+    var lname = [], ldate = [];
+    for (var key in json['117043']) {
+      if(key !== 'name' && key !== 'latlng'){
+        lname.push(key);
+        ldate.push(json['117043'][key]);
+      }
+    }
+    var osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    });
+
+    // start animation
+    var defaultmap = [osm];
+    var baseMap = new L.map('animate', {
+      center: [24.79592917415661,121.30348205566405],
+      zoom: 13,
+      maxZoom: maxZoom,
+      layers: defaultmap
+    });
+    var interval = setInterval(getLayer, 2000);
+
+    function getLayer(){
+      if(i >= lname.length ){
+        clearInterval(interval);
+        return;
+      }
+      var attribution = 'Data &copy; <a href="http://landsat.gsfc.nasa.gov/">USGS/NASA Landsat</a> in <a href="http://landsat.gsfc.nasa.gov/?page_id=2339">Public Domain</a>. Images <a href="http://twlandsat.jimmyhub.net">TWLandsat</a>';
+
+      // randomm server
+      var server = Math.floor((Math.random() * 3) + 1);
+      var rgbview = L.tileLayer('http://l'+server+'.jimmyhub.net/processed/'+lname[i]+'/tiles-rgb'+'/{z}/{x}/{y}.png', {
+        tms: true,
+        attribution: attribution,
+        maxZoom: maxZoom,
+      });
+      rgbview.addTo(baseMap);
+      i++;
+    }
+  });
+</script>
+</body>
+</html>
