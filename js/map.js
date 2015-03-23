@@ -273,39 +273,51 @@ jQuery(document).ready(function($){
     return $div[0];
   } 
 
-  // main
-  var intro_start = true;
-  if (window.location.hash){
-    hashResolv();
-    intro_start = false;
-  }
-  
-  var resizing = 0;
-  $(window).resize(function(){
-    if(!resizing){
-      resizing = 1;
-      window.setTimeout(function(){
-        resizing = 0;
-        mapReset();
-      }, 600);
+
+  /**
+   * Main function for start map. callback after json loaded
+   */
+  var mapStart = function(){
+    var intro_start = true;
+    if (window.location.hash){
+      hashResolv();
+      intro_start = false;
     }
-  });
+    
+    var resizing = 0;
+    $(window).resize(function(){
+      if(!resizing){
+        resizing = 1;
+        window.setTimeout(function(){
+          resizing = 0;
+          mapReset();
+        }, 600);
+      }
+    });
 
-  // setup map
-  var init = [area, b, a, z, c[0], c[1], l.join('-')];
-  hashChange(init);
-  navSetup();
-  mapSetup(0);
+    // setup map
+    var init = [area, b, a, z, c[0], c[1], l.join('-')];
+    hashChange(init);
+    navSetup();
+    mapSetup(0);
 
-  // this need to be trigger after mapSetup
-  $("#select-area").val(area).trigger('change', 'init');
-  $("#select-before").val(b).trigger('change', 'init');
-  $("#select-after").val(a).trigger('change', 'init');
-  $(".check-swirnir").trigger('change', 'init');
-  
-  if (intro_start){
-    intro.start();
+    // this need to be trigger after mapSetup
+    $("#select-area").val(area).trigger('change', 'init');
+    $("#select-before").val(b).trigger('change', 'init');
+    $("#select-after").val(a).trigger('change', 'init');
+    $(".check-swirnir").trigger('change', 'init');
+    
+    if (intro_start){
+      intro.start();
+    }
   }
+
+  // main
+  var nav = {}; 
+  jQuery.getJSON('./nav.js', function(json){
+    nav = json;
+    mapStart();
+  });
 });
 
 
