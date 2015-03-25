@@ -78,11 +78,22 @@ main span.balinks:last-child a:before{
   cursor: pointer;
   text-shadow: 0 0 10px #CCCCCC;
 }
-.slide-legend {
+.slide-legend, .slide-slider, .spinner {
   font-family: "儷黑 Pro", "LiHei Pro", "微軟正黑體", "Microsoft JhengHei", sans-serif;
   color: #FFFFFF;
   text-shadow: 0 0 8px #000000;
 }
 .slide-legend h3 {
-  font-size: 28px;
+  font-size: 26px;
+}
+.slide-slider .indicator {
+  font-size: 16px;
+  padding-right: 10px;
+  cursor: pointer;
+  color: #EFEFEF;
+  width: 125px;
+}
+.spinner {
+  font-size: 20px;
+  display:none;
 }

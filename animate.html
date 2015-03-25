@@ -5,7 +5,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta property="og:image" content="https://farm3.staticflickr.com/2876/12199837206_100507b5d4_z.jpg" />
   <!-- Meta image from https://www.flickr.com/photos/t_zero/12199837206 cc by-nc-sa -->
-  <link rel="stylesheet" href="./css/style.css?v=1" />
+  <link rel="stylesheet" href="./css/style.css?v=2" />
   <link rel="stylesheet" href="./vendor/css/introjs.min.css" />
   <link rel="stylesheet" href="./vendor/css/introjs-nassim.css" />
   <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
@@ -23,7 +23,7 @@
 <body>
   <div id="page">
     <header id="header">
-      <h1 id="site-name">賽豬公上太空</h1>
+      <h1 id="site-name"><a href="./index.html">賽豬公上太空</a></h1>
       <div id="share">
         <span class="fa fa-github-square"><a href="https://github.com/jimyhuang/twlandsat-browse" target="_blank">Code</a></span>
         <span class="fa fa-comment"><a href="https://www.facebook.com/groups/610479852418250/" target="_blank">社團</a></span>
@@ -63,24 +63,15 @@
     var slides = {
       subject:'石門水庫衛星空照圖',
       data: [
-        {title:'LC81170432014237LGN00', content:'2014-08-25 88.83'},
-        {title:'LC81170432014253LGN00', content:'2014-09-10 79.98'},
-        {title:'LC81170432014333LGN00', content:'2014-11-29 62.11'},
-        {title:'LC81170432014365LGN00', content:'2014-12-31 59.81'},
-        {title:'LC81170432015016LGN00', content:'2015-01-16 49.58'},
-        {title:'LC81170432015032LGN00', content:'2015-02-01 42.2'},
-        {title:'LC81170432015048LGN00', content:'2015-02-17 34'}
+        {title:'LC81170432014237LGN00', content:'2014-08-25,88.83'},
+        {title:'LC81170432014333LGN00', content:'2014-11-29,62.11'},
+        {title:'LC81170432014365LGN00', content:'2014-12-31,59.81'},
+        {title:'LC81170432015016LGN00', content:'2015-01-16,49.58'},
+        {title:'LC81170432015032LGN00', content:'2015-02-01,42.2'},
+        {title:'LC81170432015048LGN00', content:'2015-02-17,34'}
       ]
     };
 
-    var legend = L.control({position: 'bottomleft'});
-    legend.onAdd = function(map){
-      var html = '<h3></h3>';
-      html += '<h1>'+slides.subject+'</h1>';
-      var $div = $('<div>').html(html);
-      $div.addClass('slide-legend');
-      return $div[0];
-    }
 
     var osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
@@ -94,9 +85,20 @@
       maxZoom: maxZoom,
       layers: defaultmap
     });
+    var legend = L.control({position: 'bottomleft'});
+    legend.onAdd = function(map){
+      var html = '<div class="slide-slider"></div><div class="spinner"><i class="fa fa-spinner fa-spin"></i></div><h3></h3>';
+      html += '<h1>'+slides.subject+'</h1>';
+      var $div = $('<div>').html(html);
+      $div.addClass('slide-legend');
+      return $div[0];
+    }
     legend.addTo(baseMap);
+
     $('#play').click(function(e){
-      var interval = setInterval(getLayer, 3500);
+      var interval = setInterval(getLayer, 2500);
+      $('.spinner').show();
+      $overlay.fadeOut();
 
       var slide = null;
       var rgbview = null;
@@ -104,7 +106,7 @@
       function getLayer(){
         if(i >= slides.data.length ){
           clearInterval(interval);
-          $('#animate .leaflet-tile-pane .leaflet-layer').show();
+          $('.spinner').remove();
           return;
         }
         var slide = slides.data[i];
@@ -118,11 +120,26 @@
           maxZoom: maxZoom,
         });
         rgbview.addTo(baseMap);
-        var size = slide.content.split(' ');
-        $('.slide-legend h3').html(size[0] + ', '+size[1]+'%');
-        if(i != 0) {
-          $('#animate .leaflet-tile-pane .leaflet-layer:eq('+i+')').fadeOut(1500);
-        }
+        var size = slide.content.split(',');
+        $('.slide-legend h3').html(size[0] + ' 蓄水量'+size[1]+'%');
+        var $indicator = $('<div class="indicator"><i class="fa fa-circle-o"></i><span class="hover">'+size[0]+'</span><div>');
+        $indicator.hide();
+        $('.slide-slider').append($indicator);  
+        $indicator.fadeIn(1500);
+        $indicator.hover(function(){
+          $(this).find('i').removeClass('fa-circle-o');
+          $(this).find('i').addClass('fa-circle');
+          $(this).find('i').css('color', 'yellow');
+          var idx = $(this).index()+1;
+          var current = $('#animate .leaflet-tile-pane .leaflet-layer:eq('+idx+')');
+          $('#animate .leaflet-tile-pane .leaflet-layer').css('z-index', 0);
+          $('.slide-legend h3').html(size[0] + ' 蓄水量'+size[1]+'%');
+          current.css('z-index', 999);
+        }, function(){
+          $(this).find('i').css('color', 'white');
+          $(this).find('i').removeClass('fa-circle');
+          $(this).find('i').addClass('fa-circle-o');
+        });
         i++;
       }
     });
