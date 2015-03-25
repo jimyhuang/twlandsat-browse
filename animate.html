@@ -50,16 +50,38 @@
   ga('send', 'pageview');
 </script>
 <script type="text/javascript">
-  jQuery.getJSON('./nav.js', function(json){
+  jQuery(document).ready(function($){
+    var map_height = $(window).height() - $("header").height() - $("footer").height();
+    $(".map").height(map_height - 300);
+    var $overlay = $('<div id="overlay"><i class="fa fa-play-circle-o" id="play"></i></div>');
+    $overlay.height($('#animate').height());
+    $overlay.width($('#animate').width());
+    $('#map-diff').append($overlay);
     var maxZoom = 13;
     var i = 0;
-    var lname = [], ldate = [];
-    for (var key in json['117043']) {
-      if(key !== 'name' && key !== 'latlng'){
-        lname.push(key);
-        ldate.push(json['117043'][key]);
-      }
+
+    var slides = {
+      subject:'石門水庫衛星空照圖',
+      data: [
+        {title:'LC81170432014237LGN00', content:'2014-08-25 88.83'},
+        {title:'LC81170432014253LGN00', content:'2014-09-10 79.98'},
+        {title:'LC81170432014333LGN00', content:'2014-11-29 62.11'},
+        {title:'LC81170432014365LGN00', content:'2014-12-31 59.81'},
+        {title:'LC81170432015016LGN00', content:'2015-01-16 49.58'},
+        {title:'LC81170432015032LGN00', content:'2015-02-01 42.2'},
+        {title:'LC81170432015048LGN00', content:'2015-02-17 34'}
+      ]
+    };
+
+    var legend = L.control({position: 'bottomleft'});
+    legend.onAdd = function(map){
+      var html = '<h3></h3>';
+      html += '<h1>'+slides.subject+'</h1>';
+      var $div = $('<div>').html(html);
+      $div.addClass('slide-legend');
+      return $div[0];
     }
+
     var osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     });
@@ -67,30 +89,43 @@
     // start animation
     var defaultmap = [osm];
     var baseMap = new L.map('animate', {
-      center: [24.79592917415661,121.30348205566405],
+      center: [24.814550111759587,121.2949848175049],
       zoom: 13,
       maxZoom: maxZoom,
       layers: defaultmap
     });
-    var interval = setInterval(getLayer, 2000);
+    legend.addTo(baseMap);
+    $('#play').click(function(e){
+      var interval = setInterval(getLayer, 3500);
 
-    function getLayer(){
-      if(i >= lname.length ){
-        clearInterval(interval);
-        return;
+      var slide = null;
+      var rgbview = null;
+      var content = null;
+      function getLayer(){
+        if(i >= slides.data.length ){
+          clearInterval(interval);
+          $('#animate .leaflet-tile-pane .leaflet-layer').show();
+          return;
+        }
+        var slide = slides.data[i];
+        var attribution = 'Data &copy; <a href="http://landsat.gsfc.nasa.gov/">USGS/NASA Landsat</a> in <a href="http://landsat.gsfc.nasa.gov/?page_id=2339">Public Domain</a>. Images <a href="http://twlandsat.jimmyhub.net">TWLandsat</a>';
+
+        // random server
+        var server = Math.floor((Math.random() * 3) + 1);
+        rgbview = L.tileLayer('http://l'+server+'.jimmyhub.net/processed/'+slide.title+'/tiles-rgb'+'/{z}/{x}/{y}.png', {
+          tms: true,
+          attribution: attribution,
+          maxZoom: maxZoom,
+        });
+        rgbview.addTo(baseMap);
+        var size = slide.content.split(' ');
+        $('.slide-legend h3').html(size[0] + ', '+size[1]+'%');
+        if(i != 0) {
+          $('#animate .leaflet-tile-pane .leaflet-layer:eq('+i+')').fadeOut(1500);
+        }
+        i++;
       }
-      var attribution = 'Data &copy; <a href="http://landsat.gsfc.nasa.gov/">USGS/NASA Landsat</a> in <a href="http://landsat.gsfc.nasa.gov/?page_id=2339">Public Domain</a>. Images <a href="http://twlandsat.jimmyhub.net">TWLandsat</a>';
-
-      // randomm server
-      var server = Math.floor((Math.random() * 3) + 1);
-      var rgbview = L.tileLayer('http://l'+server+'.jimmyhub.net/processed/'+lname[i]+'/tiles-rgb'+'/{z}/{x}/{y}.png', {
-        tms: true,
-        attribution: attribution,
-        maxZoom: maxZoom,
-      });
-      rgbview.addTo(baseMap);
-      i++;
-    }
+    });
   });
 </script>
 </body>
