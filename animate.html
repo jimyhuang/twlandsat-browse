@@ -5,7 +5,7 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta property="og:image" content="https://farm3.staticflickr.com/2876/12199837206_100507b5d4_z.jpg" />
   <!-- Meta image from https://www.flickr.com/photos/t_zero/12199837206 cc by-nc-sa -->
-  <link rel="stylesheet" href="./css/style.css" />
+  <link rel="stylesheet" href="./css/style.css?v=1" />
   <link rel="stylesheet" href="./vendor/css/introjs.min.css" />
   <link rel="stylesheet" href="./vendor/css/introjs-nassim.css" />
   <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
@@ -52,7 +52,7 @@
 <script type="text/javascript">
   jQuery(document).ready(function($){
     var map_height = $(window).height() - $("header").height() - $("footer").height();
-    $(".map").height(map_height - 300);
+    $(".map").height(map_height);
     var $overlay = $('<div id="overlay"><i class="fa fa-play-circle-o" id="play"></i></div>');
     $overlay.height($('#animate').height());
     $overlay.width($('#animate').width());
