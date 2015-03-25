@@ -28,6 +28,7 @@
         <span class="fa fa-github-square"><a href="https://github.com/jimyhuang/twlandsat-browse" target="_blank">Code</a></span>
         <span class="fa fa-comment"><a href="https://www.facebook.com/groups/610479852418250/" target="_blank">社團</a></span>
         <span class="fa fa-globe"><a href="https://github.com/jimyhuang/twlandsat/blob/master/README.md" target="_blank">關於</a></span>
+        <div class="fb-like" data-href="http://twlandsat.jimmyhub.net/animate.html" data-width="180" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
       </div>
       <nav id="nav">
       </nav>
@@ -61,7 +62,7 @@
     var i = 0;
 
     var slides = {
-      subject:'石門水庫衛星空照圖',
+      subject:'石門水庫缺水實況衛星圖',
       data: [
         {title:'LC81170432014237LGN00', content:'2014-08-25,88.83'},
         {title:'LC81170432014333LGN00', content:'2014-11-29,62.11'},
@@ -85,10 +86,11 @@
       maxZoom: maxZoom,
       layers: defaultmap
     });
-    var legend = L.control({position: 'bottomleft'});
+    var legend = L.control({position: 'topright'});
     legend.onAdd = function(map){
-      var html = '<div class="slide-slider"></div><div class="spinner"><i class="fa fa-spinner fa-spin"></i></div><h3></h3>';
-      html += '<h1>'+slides.subject+'</h1>';
+      var html;
+      html = '<h1>'+slides.subject+'</h1><h3></h3>';
+      html += '<div class="slide-slider"></div><div class="spinner"><i class="fa fa-spinner fa-spin"></i></div>';
       var $div = $('<div>').html(html);
       $div.addClass('slide-legend');
       return $div[0];
@@ -145,5 +147,13 @@
     });
   });
 </script>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/zh_TW/sdk.js#xfbml=1&appId=113809385333711&version=v2.0";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 </body>
 </html>

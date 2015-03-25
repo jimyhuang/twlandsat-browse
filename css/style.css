@@ -8,10 +8,12 @@ body {
 h1, h2, h3, h4, h5, h6 { margin: 0; }
 a, a:link, a:visited { color: #86ba41 }
 a, a:hover { color: #629437; }
+a { text-decoration: none; }
 #page { margin: 0; width: 100%;}
 header, footer { width: 95%; margin: 0 auto; }
 footer { padding-top: 20px; }
 
+#site-name a { color: #000; }
 #share { font-size: 1.0em; position: absolute; right: 3%; top: 5px; }
 #nav { font-size: 1.0em; }
 #map-diff { position: relative; }
@@ -79,6 +81,7 @@ main span.balinks:last-child a:before{
   text-shadow: 0 0 10px #CCCCCC;
 }
 .slide-legend, .slide-slider, .spinner {
+  text-align:right;
   font-family: "儷黑 Pro", "LiHei Pro", "微軟正黑體", "Microsoft JhengHei", sans-serif;
   color: #FFFFFF;
   text-shadow: 0 0 8px #000000;
@@ -91,7 +94,6 @@ main span.balinks:last-child a:before{
   padding-right: 10px;
   cursor: pointer;
   color: #EFEFEF;
-  width: 125px;
 }
 .spinner {
   font-size: 20px;
