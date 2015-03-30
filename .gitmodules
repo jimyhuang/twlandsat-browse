@@ -1,0 +1,3 @@
+[submodule "vendor/leaflet-layer-player"]
+	path = vendor/leaflet-layer-player
+	url = git@github.com:jimyhuang/leaflet-layer-player.git

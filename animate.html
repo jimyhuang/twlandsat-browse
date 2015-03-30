@@ -5,22 +5,21 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta property="og:image" content="https://farm8.staticflickr.com/7635/16740030020_6e8681f5ef_z.jpg" />
   <!-- Meta image from https://www.flickr.com/photos/t_zero/12199837206 cc by-nc-sa -->
-  <link rel="stylesheet" href="./vendor/css/introjs.min.css" />
-  <link rel="stylesheet" href="./vendor/css/introjs-nassim.css" />
-  <link rel="stylesheet" href="./vendor/css/jquery-ui-slider-pips.css" />
+  <link rel="stylesheet" href="./vendor/jquery-ui-slider-pips/jquery-ui-slider-pips.css" />
   <link rel="stylesheet" href="./css/style.css?v=2" />
+  <link rel="stylesheet" href="./vendor/leaflet-layer-player/src/leaflet-layer-player.css" />
   <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
-  <link rel="stylesheet" href="https://code.jquery.com/ui/1.10.4/themes/flick/jquery-ui.css">
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/flick/jquery-ui.css">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
 
   <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 
-  <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-  <script type="text/javascript" src="https://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
-  <script type="text/javascript" src="./vendor/js/jquery-ui-slider-pips.min.js"></script> 
-  <script type="text/javascript" src="./vendor/js/jquery.ui.touch-punch.min.js"></script> 
-  <script type="text/javascript" src="./vendor/js/jquery.beforeafter-map-0.11.js"></script>
-  <script type="text/javascript" src="./vendor/js/intro.min.js"></script> 
+  <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script type="text/javascript" src="http://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
+  <script type="text/javascript" src="./vendor/jquery-ui-slider-pips/jquery-ui-slider-pips.min.js"></script> 
+  <script type="text/javascript" src="./vendor/jquery.ui.touch-punch/jquery.ui.touch-punch.min.js"></script> 
+  <script type="text/javascript" src="./vendor/leaflet-layer-player/src/leaflet-layer-player.js"></script> 
 </head>
 <body>
   <div id="page">
@@ -53,147 +52,42 @@
   ga('send', 'pageview');
 </script>
 <script type="text/javascript">
-  jQuery(document).ready(function($){
-    var
-      osm,
-      baseMap,
-      legend,
-      control,
-      slider,
-      labels = [];
-
-    // setup slide
-    var slides = {
-      subject:'石門水庫缺水實況衛星圖',
-      data: [
-        {title:'LC81170432014237LGN00', content:'2014-08-25', data:'88.83'},
-        {title:'LC81170432014333LGN00', content:'2014-11-29', data:'62.11'},
-        {title:'LC81170432014365LGN00', content:'2014-12-31', data:'59.81'},
-        {title:'LC81170432015016LGN00', content:'2015-01-16', data:'49.58'},
-        {title:'LC81170432015032LGN00', content:'2015-02-01', data:'42.2'},
-        {title:'LC81170432015048LGN00', content:'2015-02-17', data:'34'}
-      ]
-    };
-
-    var playLayer = function(i){
-      slider.slider("value", i);
-      var slide = slides.data[i];
-      var idx = i+1;
-      $('#animate .current').fadeOut(500);
-      $('#animate .current').removeClass('current');
-
-      var current = $('#animate .leaflet-tile-pane .leaflet-layer:eq('+idx+')');
-      current.addClass('current');
-      current.hide();
-      current.css('z-index', 999);
-      current.fadeIn(500);
-      $('.slide-legend h3').html(slide.content + ' 蓄水量'+slide.data+'%');
-      $('#animate .leaflet-tile-pane .leaflet-layer').not('.current').css('z-index', 0);
-    }
-
-    var getLayer = function(i){
-      var slide = slides.data[i];
-      var attribution = 'Data &copy; <a href="http://landsat.gsfc.nasa.gov/">USGS/NASA Landsat</a> in <a href="http://landsat.gsfc.nasa.gov/?page_id=2339">Public Domain</a>. Images <a href="http://twlandsat.jimmyhub.net">TWLandsat</a>';
-
-      // random server
-      var server = Math.floor((Math.random() * 3) + 1);
-      var rgbview = L.tileLayer('http://l'+server+'.jimmyhub.net/processed/'+slide.title+'/tiles-rgb'+'/{z}/{x}/{y}.png', {
-        tms: true,
-        attribution: attribution,
-        maxZoom: 13,
-      });
-      rgbview.addTo(baseMap);
-    }
-
-    var addOverlay = function(delay){
-      $('#overlay').remove();
-      var $overlay = $('<div id="overlay"><i class="fa fa-spinner fa-spin"></i></div>');
-      var $play = $('<i class="fa fa-play-circle-o" id="play"></i>');
-      
-      $overlay.height($('#animate').height());
-      $overlay.width($('#animate').width());
-      $('#map-diff').append($overlay);
-      var interval = null;
-      var i = 0;
-      setTimeout(function(){
-        $overlay.html('');
-        $overlay.append($play);
-        $('#play').click(function(e){
-          $overlay.fadeOut();
-          $('#animate .leaflet-tile-pane .leaflet-layer:not(:eq(1))').hide();
-          interval = setInterval(function(){
-            if(i >= slides.data.length ){
-              i = 0;
-              clearInterval(interval);
-              return;
-            }
-            else{
-              playLayer(i);
-              i++;
-            }
-          }, 2000);
-        });
-      }, delay);
-    }
-
-
-    var map_height = $(window).height() - $("header").height() - $("footer").height();
-    $(".map").height(map_height);
-    addOverlay(3000);
-    $(window).resize(function(){ addOverlay(600); });
-
-    // setup map
-    osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-    });
-
-    baseMap = new L.map('animate', {
-      center: [24.814550111759587,121.2949848175049],
-      zoom: 13,
-      maxZoom: 13,
-      layers: [osm]
-    });
-    legend = L.control({position: 'topright'});
-    legend.onAdd = function(map){
-      var html;
-      html = '<h1>'+slides.subject+'</h1><h3></h3>';
-      var $div = $('<div>').html(html);
-      $div.addClass('slide-legend');
-      return $div[0];
-    }
-    legend.addTo(baseMap);
-
-    control = L.control({position: 'bottomright'});
-    control.onAdd = function(map){
-      var html;
-      html = '<div id="slider"></div>';
-      var $div = $('<div>').html(html);
-      $div.addClass('slide-control');
-      return $div[0];
-    }
-    control.addTo(baseMap);
-    
-    // preloading
-    for(var i = 0; i < slides.data.length; i++){
-      getLayer(i);
-      labels.push(slides.data[i].content);
-    }
-
-    slider = $("#slider").slider({
-      value: 0,
-      min: 0,
-      max: slides.data.length - 1,
-      step: 1,
-      slide: function( event, ui ) {
-        playLayer(ui.value);  
-      }
-    }).slider("pips", {
-      rest: "label",
-      labels: labels
-    });
-
-
+jQuery(document).ready(function($){
+  // setup map
+  osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
   });
+  var map_height = $(window).height() - $("header").height() - $("footer").height();
+  $(".map").height(map_height);
+  baseMap = new L.map('animate', {
+    center: [24.814550111759587,121.2949848175049],
+    zoom: 13,
+    maxZoom: 13,
+    layers: [osm]
+  });
+  var layerplayer = L.control.layerPlayer({
+    position: 'bottomleft',
+    slides: {
+      subject:'石門水庫缺水實況衛星圖',
+      rows: [
+        {title:'LC81170432014237LGN00', date:'2014-08-25', data:'88.83'},
+        {title:'LC81170432014333LGN00', date:'2014-11-29', data:'62.11'},
+        {title:'LC81170432014365LGN00', date:'2014-12-31', data:'59.81'},
+        {title:'LC81170432015016LGN00', date:'2015-01-16', data:'49.58'},
+        {title:'LC81170432015032LGN00', date:'2015-02-01', data:'42.2'},
+        {title:'LC81170432015048LGN00', date:'2015-02-17', data:'34'}
+      ]
+    },
+    tile: 'http://l1.jimmyhub.net/processed/{slide.title}/tiles-rgb'+'/{z}/{x}/{y}.png',
+    tms: true,
+    attribution: 'Data &copy; <a href="http://landsat.gsfc.nasa.gov/">USGS/NASA Landsat</a> in <a href="http://landsat.gsfc.nasa.gov/?page_id=2339">Public Domain</a>. Images <a href="http://twlandsat.jimmyhub.net">TWLandsat</a>',
+    playInterval: 1000,
+    loadingDelay: 4000,
+    chart: true
+  });
+  baseMap.addControl(layerplayer);
+
+});
 </script>
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
