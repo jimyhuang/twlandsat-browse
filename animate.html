@@ -63,7 +63,9 @@ jQuery(document).ready(function($){
     center: [24.814550111759587,121.2949848175049],
     zoom: 13,
     maxZoom: 13,
-    layers: [osm]
+    layers: [osm],
+    doubleClickZoom: false,
+    tap: false
   });
   var layerplayer = L.control.layerPlayer({
     position: 'bottomleft',
