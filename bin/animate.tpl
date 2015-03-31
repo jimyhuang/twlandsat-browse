@@ -70,55 +70,34 @@
     var slides = JSON.parse(json);
     </script>
     <script type="text/javascript">
-(function($) {
-var re = /([^&=]+)=?([^&]*)/g;
-var decodeRE = /\+/g;  // Regex for replacing addition symbol with a space
-var decode = function (str) {return decodeURIComponent( str.replace(decodeRE, " ") );};
-$.parseParams = function(query) {
-    var params = {}, e;
-    while ( e = re.exec(query) ) { 
-        var k = decode( e[1] ), v = decode( e[2] );
-        if (k.substring(k.length - 2) === '[]') {
-            k = k.substring(0, k.length - 2);
-            (params[k] || (params[k] = [])).push(v);
-        }
-        else params[k] = v;
-    }
-    return params;
-};
-})(jQuery);
 jQuery(document).ready(function($){
-  var url = window.location.href;
-  var params = $.parseParams( url.split('?')[1] || '' ); 
-  if(typeof params.profile !== 'undefined'){
-    // setup map
-    osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-    });
-    var map_height = $(window).height() - $("header").height() - $("footer").height() - $('.twlandsat').height();
-    $(".map").height(map_height);
-    baseMap = new L.map('animate', {
-      center: slides.center,
-      zoom: slides.zoom,
-      maxZoom: 13,
-      layers: [osm],
-      doubleClickZoom: false,
-      tap: false
-    });
+  // setup map
+  osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+  });
+  var map_height = $(window).height() - $("header").height() - $("footer").height() - $('.twlandsat').height();
+  $(".map").height(map_height);
+  baseMap = new L.map('animate', {
+    center: slides.center,
+    zoom: slides.zoom,
+    maxZoom: 13,
+    layers: [osm],
+    doubleClickZoom: false,
+    tap: false
+  });
 
-    var server = Math.floor((Math.random() * 3) + 1);
-    var layerplayer = L.control.layerPlayer({
-      position: 'bottomleft',
-      slides: slides,
-      tile: 'http://l1.jimmyhub.net/processed/{slide.title}/tiles-rgb/{z}/{x}/{y}.png',
-      tms: true,
-      attribution: '<a href="http://landsat.gsfc.nasa.gov/">USGS/NASA Landsat</a>. Imagery from <a href="http://nspo.g0v.tw">TWLandsat',
-      playInterval: 1000,
-      loadingDelay: 4000,
-      chart: true
-    });
-    baseMap.addControl(layerplayer);
-  }
+  var server = Math.floor((Math.random() * 3) + 1);
+  var layerplayer = L.control.layerPlayer({
+    position: 'bottomleft',
+    slides: slides,
+    tile: 'http://l1.jimmyhub.net/processed/{slide.title}/tiles-rgb/{z}/{x}/{y}.png',
+    tms: true,
+    attribution: '<a href="http://landsat.gsfc.nasa.gov/">USGS/NASA Landsat</a>. Imagery from <a href="http://nspo.g0v.tw">TWLandsat',
+    playInterval: 1000,
+    loadingDelay: 4000,
+    chart: true
+  });
+  baseMap.addControl(layerplayer);
 });
     </script>
   </div>
