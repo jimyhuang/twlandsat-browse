@@ -65,45 +65,63 @@
     <script type="text/javascript" src="./vendor/jquery.ui.touch-punch/jquery.ui.touch-punch.min.js"></script> 
     <script type="text/javascript" src="./vendor/leaflet-layer-player/src/leaflet-layer-player.js"></script> 
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
-<script type="text/javascript">
+
+    <script type="text/javascript">
+(function($) {
+var re = /([^&=]+)=?([^&]*)/g;
+var decodeRE = /\+/g;  // Regex for replacing addition symbol with a space
+var decode = function (str) {return decodeURIComponent( str.replace(decodeRE, " ") );};
+$.parseParams = function(query) {
+    var params = {}, e;
+    while ( e = re.exec(query) ) { 
+        var k = decode( e[1] ), v = decode( e[2] );
+        if (k.substring(k.length - 2) === '[]') {
+            k = k.substring(0, k.length - 2);
+            (params[k] || (params[k] = [])).push(v);
+        }
+        else params[k] = v;
+    }
+    return params;
+};
+})(jQuery);
 jQuery(document).ready(function($){
-  // setup map
-  osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-  });
-  var map_height = $(window).height() - $("header").height() - $("footer").height() - $('.twlandsat').height();
-  $(".map").height(map_height);
-  baseMap = new L.map('animate', {
-    center: [24.814550111759587,121.2949848175049],
-    zoom: 13,
-    maxZoom: 13,
-    layers: [osm],
-    doubleClickZoom: false,
-    tap: false
-  });
-  var layerplayer = L.control.layerPlayer({
-    position: 'bottomleft',
-    slides: {
-      subject:'石門水庫缺水實況衛星圖',
-      rows: [
-        {title:'LC81170432014237LGN00', date:'2014-08-25', data:'88.83'},
-        {title:'LC81170432014333LGN00', date:'2014-11-29', data:'62.11'},
-        {title:'LC81170432014365LGN00', date:'2014-12-31', data:'59.81'},
-        {title:'LC81170432015016LGN00', date:'2015-01-16', data:'49.58'},
-        {title:'LC81170432015032LGN00', date:'2015-02-01', data:'42.2'},
-        {title:'LC81170432015048LGN00', date:'2015-02-17', data:'34'}
-      ]
-    },
-    tile: 'http://l1.jimmyhub.net/processed/{slide.title}/tiles-rgb'+'/{z}/{x}/{y}.png',
-    tms: true,
-    attribution: '<a href="http://landsat.gsfc.nasa.gov/">USGS/NASA Landsat</a>. Imagery from <a href="http://nspo.g0v.tw">TWLandsat</a>. Reservoir data from <a href="http://fhy.wra.gov.tw/ReservoirPage_2011/StorageCapacity.aspx">台灣地區主要水庫蓄水量報告表</a>',
-    playInterval: 1000,
-    loadingDelay: 4000,
-    chart: true
-  });
-  baseMap.addControl(layerplayer);
+  var url = window.location.href;
+  var params = $.parseParams( url.split('?')[1] || '' ); 
+  if(typeof params.profile !== 'undefined'){
+    var json_url = window.location.origin + window.location.pathname.replace('.html', '/') + params.profile + '.js';
+    $.getJSON(json_url, function(slides){
+      // setup map
+      osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+      });
+      var map_height = $(window).height() - $("header").height() - $("footer").height() - $('.twlandsat').height();
+      $(".map").height(map_height);
+      baseMap = new L.map('animate', {
+        center: slides.center,
+        zoom: slides.zoom,
+        maxZoom: 13,
+        layers: [osm],
+        doubleClickZoom: false,
+        tap: false
+      });
+
+      var server = Math.floor((Math.random() * 3) + 1);
+      var layerplayer = L.control.layerPlayer({
+        position: 'bottomleft',
+        slides: slides,
+        tile: 'http://l1.jimmyhub.net/processed/{slide.title}/tiles-rgb/{z}/{x}/{y}.png',
+        tms: true,
+        attribution: '<a href="http://landsat.gsfc.nasa.gov/">USGS/NASA Landsat</a>. Imagery from <a href="http://nspo.g0v.tw">TWLandsat',
+        playInterval: 1000,
+        loadingDelay: 4000,
+        chart: true
+      });
+      baseMap.addControl(layerplayer);
+    
+    });
+  }
 });
-</script>
+    </script>
   </div>
   <footer>
     <p class="pull-right"><a href="#">Back to top</a></p>
