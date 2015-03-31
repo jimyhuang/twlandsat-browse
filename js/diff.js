@@ -100,7 +100,7 @@ jQuery(document).ready(function($){
     }
     if(a && b && mapa && mapb){
       jQuery('#map-diff').beforeAfter(mapb, mapa, {
-        imagePath: './css/images/',
+        imagePath: '/css/images/',
         animateIntro : true,
         introDelay : 800,
         introDuration : 2000,
