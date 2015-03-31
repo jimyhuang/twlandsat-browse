@@ -88,7 +88,7 @@ jQuery(document).ready(function($){
     hashResolv();
 
     // initialize map height
-    var map_height = $(window).height() - $("header").height() - $("footer").height();
+    var map_height = $(window).height() - $("header").height() - $("footer").height() - $('.twlandsat').height();
     $(".map").height(map_height - 80);
 
     // before and after layer
