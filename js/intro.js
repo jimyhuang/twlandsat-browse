@@ -5,9 +5,6 @@ intro.setOptions({
   skipLabel: " 略過介紹 ",
   doneLabel: "開始吧！",
   steps: [
-    { 
-      intro: "歡迎來到賽豬公上太空計畫！這個網頁將會Demo本計畫產生的資料，將美國的地表研究衛星「Landsat」過去數十年繞行經過台灣所收集到的資料，用更簡單的方式讓大眾可以瀏覽比較。"
-    },
     {
       element: '#nav',
       intro: "Landsat衛星每16天會經過台灣5個地方，因此你可以從這裡選擇要看哪個位置的地圖。"

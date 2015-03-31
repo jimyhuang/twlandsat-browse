@@ -1,19 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>地圖動畫播放工具 | 賽豬公上太空計畫</title>
+  <title>一起加入 | 賽豬公上太空計畫</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <meta property="og:image" content="http://nspo.g0v.tw/css/images/cover1.jpg" />
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
   <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-
-  <!-- page specific css -->
-  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/flick/jquery-ui.css">
-  <link rel="stylesheet" href="./vendor/jquery-ui-slider-pips/jquery-ui-slider-pips.css" />
-  <link rel="stylesheet" href="./vendor/leaflet-layer-player/src/leaflet-layer-player.css" />
-
-  <!-- override css -->
+  <link rel="stylesheet" href="./vendor/introjs/introjs.min.css" />
+  <link rel="stylesheet" href="./vendor/introjs/introjs-nassim.css" />
   <link rel="stylesheet" href="./css/style.css" />
 
   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
@@ -21,8 +16,10 @@
   <script type="text/javascript" src="//code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
   <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
   <script type="text/javascript" src="./vendor/jquery.ui.touch-punch/jquery.ui.touch-punch.min.js"></script> 
+  <script type="text/javascript" src="./vendor/jquery.beforeafter-map/jquery.beforeafter-map-0.11.js"></script>
+  <script type="text/javascript" src="./vendor/introjs/intro.min.js"></script> 
 </head>
-<body class="animate">
+<body class="developer">
 <div class="navbar-wrapper">
   <div class="container">
     <nav class="navbar navbar-inverse navbar-static-top">
@@ -43,10 +40,10 @@
             <li><a href="https://github.com/jimyhuang/twlandsat/blob/master/README.md" target="_blank">關於</a></li>
             <li><a href="https://www.flickr.com/search/?tags=twlandsat" target="_blank">相簿</a></li>
             <li><a href="https://www.facebook.com/groups/610479852418250/" target="_blank">討論</a></li>
-            <li><a href="./developer.html" target="_blank">參與</a></li>
+            <li class="active"><a href="./developer.html" target="_blank">參與</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right share">
-            <li><div class="fb-like" data-href="http://nspo.g0v.tw/diff.html" data-width="180" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div></li>
+            <li><div class="fb-like" data-href="http://nspo.g0v.tw/" data-width="180" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div></li>
           </ul>
         </div>
       </div>
@@ -55,55 +52,37 @@
 </div>
 <div class="twlandsat">
   <div class="inner-wrapper">
+    <div class="container">
+      <h1>一起加入</h1>
+    </div>
   </div>
 </div>
-<div id="content" class="container-fluid">
-  <div class="row">
-    <div id="animate" class="map"></div>
-    <script type="text/javascript" src="./vendor/jquery-ui-slider-pips/jquery-ui-slider-pips.min.js"></script> 
-    <script type="text/javascript" src="./vendor/jquery.ui.touch-punch/jquery.ui.touch-punch.min.js"></script> 
-    <script type="text/javascript" src="./vendor/leaflet-layer-player/src/leaflet-layer-player.js"></script> 
-    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
-<script type="text/javascript">
-jQuery(document).ready(function($){
-  // setup map
-  osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-  });
-  var map_height = $(window).height() - $("header").height() - $("footer").height();
-  $(".map").height(map_height);
-  baseMap = new L.map('animate', {
-    center: [24.814550111759587,121.2949848175049],
-    zoom: 13,
-    maxZoom: 13,
-    layers: [osm],
-    doubleClickZoom: false,
-    tap: false
-  });
-  var layerplayer = L.control.layerPlayer({
-    position: 'bottomleft',
-    slides: {
-      subject:'石門水庫缺水實況衛星圖',
-      rows: [
-        {title:'LC81170432014237LGN00', date:'2014-08-25', data:'88.83'},
-        {title:'LC81170432014333LGN00', date:'2014-11-29', data:'62.11'},
-        {title:'LC81170432014365LGN00', date:'2014-12-31', data:'59.81'},
-        {title:'LC81170432015016LGN00', date:'2015-01-16', data:'49.58'},
-        {title:'LC81170432015032LGN00', date:'2015-02-01', data:'42.2'},
-        {title:'LC81170432015048LGN00', date:'2015-02-17', data:'34'}
-      ]
-    },
-    tile: 'http://l1.jimmyhub.net/processed/{slide.title}/tiles-rgb'+'/{z}/{x}/{y}.png',
-    tms: true,
-    attribution: '<a href="http://landsat.gsfc.nasa.gov/">USGS/NASA Landsat</a>. Imagery from <a href="http://nspo.g0v.tw">TWLandsat</a>. Reservoir data from <a href="http://fhy.wra.gov.tw/ReservoirPage_2011/StorageCapacity.aspx">台灣地區主要水庫蓄水量報告表</a>',
-    playInterval: 1000,
-    loadingDelay: 4000,
-    chart: true
-  });
-  baseMap.addControl(layerplayer);
-});
-</script>
+<div id="content" class="container">
+  <hr class="featurette-divider">
+  <div class="row featurette">
+        <div class="col-lg-6">
+          <h3>加入社團</h3>
+          <p>目前有一群關心環境、地理資訊、程式高手組成的Facebook社團，在這社團可以一起討論如何運用衛星圖，以及分享相關GIS資訊... <a class="btn btn-xs btn-info" href="https://www.facebook.com/groups/610479852418250/" target="_blank">立刻加入</a></p>
+
+          <h3>應用圖資</h3>
+          <p>時間的軌跡，需要了解台灣過去發展歷史的朋友，才知道該怎麼看圖。例如：海岸線變化，地表的種植地增加減少，城市擴張... <a class="btn btn-xs btn-info" href="http://nspo.g0v.tw/diff.html" target="_blank">瀏覽地圖</a></p>
+
+          <h3>撰寫程式</h3>
+          <p>有了這些圖資，一定有很多有趣的事情，想要運算、寫程式、做地圖應用... <a class="btn btn-xs btn-info" href="https://github.com/jimyhuang/twlandsat/issues/1" target="_blank">成為開發者</a></p>
+        </div>
+        <div class="col-lg-6">
+          <h3>演算衛星圖</h3>
+          <p>只要你有下列規格的電腦與網路，即可一同協助我們演算過往30年的圖資... </p>
+          <p><a class="btn btn-xs btn-info" href="https://github.com/jimyhuang/twlandsat#%E5%AE%89%E8%A3%9D" target="_blank">安裝演算環境</a></p>
+          <ul>
+            <li>CPU：多核心，會讓你算圖時還可做別的事情，瀏覽網頁</li>
+            <li>RAM：至少 2GB，建議4GB</li>
+            <li>硬碟空間：至少剩餘 10 GB</li>
+            <li>網路：穩定不中斷的網路。算圖結果會上傳至Server，512KB 上傳，至少需要30-40分鐘完成。</li>
+          </ul>
+        </div>
   </div>
+  <hr class="featurette-divider">
   <footer>
     <p class="pull-right"><a href="#">Back to top</a></p>
     <p>

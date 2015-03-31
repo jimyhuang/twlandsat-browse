@@ -17,7 +17,7 @@ jQuery(document).ready(function($){
   var mapObject = function(landsat, name){
     var obj;
     // create base params
-    var attribution = 'Data &copy; <a href="http://landsat.gsfc.nasa.gov/">USGS/NASA Landsat</a> in <a href="http://landsat.gsfc.nasa.gov/?page_id=2339">Public Domain</a>. Images <a href="http://twlandsat.jimmyhub.net">TWLandsat</a>';
+    var attribution = '<a href="http://landsat.gsfc.nasa.gov/">USGS/NASA Landsat</a>. Imagery <a href="http://nspo.g0v.tw">賽豬公上太空計畫</a>';
     var maxZoom = 13;
     var layer = name == 'before' ? l[0] : l[1];
 
@@ -105,8 +105,6 @@ jQuery(document).ready(function($){
         introDelay : 800,
         introDuration : 2000,
         introPosition : .5,
-				beforeLinkText: '僅顯示左側',
-				afterLinkText: '僅顯示右側',
         showFullLinks : true
       });
     }
@@ -127,9 +125,7 @@ jQuery(document).ready(function($){
       .append($before)
       .append('<i class="fa fa-random"></i>')
       .append($after);
-    var $copy = $('<input type="text" name="copy" id="copy" size="100" />');
-    $("footer").append('<div id="permalink"><label for="copy" class="fa fa-clipboard"></label></div>');
-    $("#permalink").append($copy);
+    var $copy = $('#copy');
 
     // setup options
     $.each(nav, function( key, value ) {
@@ -192,7 +188,7 @@ jQuery(document).ready(function($){
    */
   var mapReset = function(){
     $('#map-diff').remove();
-    $('<div id="map-diff"><div id="before" /><div id="after" /></div>').appendTo('main');
+    $('<div id="map-diff"><div id="before" /><div id="after" /></div>').insertAfter('#nav');
     $("#before, #after").addClass('map');
     mapSetup(0);
   }
