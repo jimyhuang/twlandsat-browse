@@ -3,8 +3,8 @@
 <head>
   <title>地圖動畫播放工具 | 賽豬公上太空計畫</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta property="og:title" content="{title}" />
-  <meta property="og:image" content="{image}" />
+  <meta property="og:title" content="地圖動畫播放工具" />
+  <meta property="og:image" content="https://farm9.staticflickr.com/8791/17054949615_6be81ca0c7.jpg" />
   <meta name=viewport content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.min.css">
