@@ -6,7 +6,7 @@ $files = scandir($base);
 $tpl = file_get_contents('animate.tpl');
 
 foreach($files as $f){
-  if(preg_match('/\.js$/', $f){
+  if(preg_match('/\.js$/', $f)){
     $name = str_replace('.js', '', $f);
     $str = file_get_contents($base.$f);
     $json = json_decode($str);
