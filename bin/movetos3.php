@@ -1,10 +1,8 @@
 <?php
-$sapi = php_sapi_name();
-if($sapi != 'cli') {
-  return;
-}
+require_once('init.inc');
+global $base_path;
 
-$base = __DIR__.'/processed/';
+$base = $base_path.'processed/';
 $dirs = scandir($base);
 
 $limit = 3;

@@ -1,12 +1,9 @@
 <?php
-$sapi = php_sapi_name();
-if($sapi != 'cli') {
-  return;
-}
-date_default_timezone_set('Asia/Taipei');
+require_once('init.inc');
+global $base_path;
 
-$base = './processed/';
-$dirs = scandir('./processed/');
+$base = $base_path.'processed/';
+$dirs = scandir($base);
 $nav = $list = array();
 $location = array(
   '117043' => array('name' => '北部(117/43)', 'latlng' => '24.6245479696219,121.44287109374999'),
@@ -16,7 +13,7 @@ $location = array(
   '118044' => array('name' => '西南沿海澎湖(118/44)', 'latlng' => '23.34477759760015,120.82763671875'),
 );
 foreach($dirs as $d){
-  $file = 'processed/'.$d.'/tiles-rgb/openlayers.html';
+  $file = $base.$d.'/tiles-rgb/openlayers.html';
   if($d[0] === 'L' && is_dir($base.$d) && is_file($file)){
     $rawpath = substr($d, 3, 6);
     $day = substr($d, 9, 7);
@@ -37,5 +34,4 @@ foreach($dirs as $d){
   }
 }
 
-file_put_contents('./nav.js', json_encode($nav));
-?>
+file_put_contents($base_path.'nav.js', json_encode($nav));
