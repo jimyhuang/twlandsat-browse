@@ -70,7 +70,7 @@ jQuery(document).ready(function($){
   osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
   });
-  var map_height = $(window).height() - $("header").height() - $("footer").height();
+  var map_height = $(window).height() - $("header").height() - $("footer").height() - $('.twlandsat').height();
   $(".map").height(map_height);
   baseMap = new L.map('animate', {
     center: [24.814550111759587,121.2949848175049],
@@ -125,7 +125,7 @@ jQuery(document).ready(function($){
   var js, fjs = d.getElementsByTagName(s)[0];
   if (d.getElementById(id)) return;
   js = d.createElement(s); js.id = id;
-  js.src = "//connect.facebook.net/zh_TW/sdk.js#xfbml=1&appId=113809385333711&version=v2.0";
+  js.src = "//connect.facebook.net/zh_TW/sdk.js#xfbml=1&appId=1592598511026958&version=v2.0";
   fjs.parentNode.insertBefore(js, fjs);
 }(document, 'script', 'facebook-jssdk'));</script>
 </body>
