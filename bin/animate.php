@@ -12,7 +12,7 @@ foreach($files as $f){
     $json = json_decode($str);
     if(!empty($json)){
       $replace = array(
-        '{title}' => $json->title,
+        '{title}' => $json->subject,
         '{image}' => $json->image,
         '{url}' => $base_url.'/animate/'.$name.'.html',
         '{json}' => $str,
