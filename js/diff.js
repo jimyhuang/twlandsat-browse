@@ -310,7 +310,7 @@ jQuery(document).ready(function($){
 
   // main
   var nav = {}; 
-  jQuery.getJSON('./nav.js', function(json){
+  jQuery.getJSON('/nav.js', function(json){
     nav = json;
     mapStart();
   });

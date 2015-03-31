@@ -1,26 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>地圖選擇比較工具 | 賽豬公上太空計畫</title>
+  <title>地圖動畫播放工具 | 賽豬公上太空計畫</title>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta property="og:image" content="http://nspo.g0v.tw/css/images/cover1.jpg" />
+  <meta property="og:title" content="{title}" />
+  <meta property="og:image" content="{image}" />
   <meta name=viewport content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.css" />
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="./vendor/introjs/introjs.min.css" />
-  <link rel="stylesheet" href="./vendor/introjs/introjs-nassim.css" />
-  <link rel="stylesheet" href="./css/style.css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+
+  <!-- page specific css -->
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/flick/jquery-ui.css">
+  <link rel="stylesheet" href="/vendor/jquery-ui-slider-pips/jquery-ui-slider-pips.css" />
+  <link rel="stylesheet" href="/vendor/leaflet-layer-player/src/leaflet-layer-player.css" />
+
+  <!-- override css -->
+  <link rel="stylesheet" href="/css/style.css" />
 
   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
-  <script type="text/javascript" src="//code.jquery.com/jquery-2.1.1.min.js"></script>
-  <script type="text/javascript" src="//code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
-  <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="./vendor/jquery.ui.touch-punch/jquery.ui.touch-punch.min.js"></script> 
-  <script type="text/javascript" src="./vendor/jquery.beforeafter-map/jquery.beforeafter-map-0.11.js"></script>
-  <script type="text/javascript" src="./vendor/introjs/intro.min.js"></script> 
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+  <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.min.js"></script>
 </head>
-<body class="diff">
+<body class="animate">
 <div class="navbar-wrapper">
   <div class="container">
     <nav class="navbar navbar-inverse navbar-static-top">
@@ -32,19 +35,26 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="./">賽豬公上太空</a>
+          <a class="navbar-brand" href="/">賽豬公上太空</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li><a href="./">首頁</a></li>
-            <li><a href="./#content">成果</a></li>
+            <li><a href="/">首頁</a></li>
+            <li><a href="/#content">成果</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">工具 <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="/diff/">地圖比較工具</a></li>
+                <li><a href="/animate/">地圖動畫播放工具</a></li>
+              </ul>
+            </li>
             <li><a href="https://github.com/jimyhuang/twlandsat/blob/master/README.md" target="_blank">關於</a></li>
             <li><a href="https://www.flickr.com/search/?tags=twlandsat" target="_blank">相簿</a></li>
             <li><a href="https://www.facebook.com/groups/610479852418250/" target="_blank">討論</a></li>
-            <li><a href="./developer.html">參與</a></li>
+            <li><a href="/developer.html">參與</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right share">
-            <li><div class="fb-like" data-href="http://nspo.g0v.tw/diff.html" data-width="180" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div></li>
+            <li><div class="fb-like" data-href="http://nspo.g0v.tw/animate/" data-width="180" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div></li>
           </ul>
         </div>
       </div>
@@ -55,20 +65,9 @@
   <div class="inner-wrapper">
   </div>
 </div>
-<div id="content" class="container-fluid">
+<div id="content" class="container">
   <div class="row">
-    <div id="nav">
-    </div>
-    <div id="map-diff">
-      <div id="before" class="map"></div>
-      <div id="after" class="map"></div>
-    </div>
-    <div class="input-group" id="permalink">
-      <span class="input-group-addon" id="input-copy">@</span>
-      <input type="text" name="copy" id="copy" class="form-control" placeholder="permalink here" aria-describedby="input-copy" />
-    </div>
-    <script type="text/javascript" src="./js/intro.js"></script>
-    <script type="text/javascript" src="./js/diff.js"></script>
+    {animate-rows}
   </div>
   <footer>
     <p class="pull-right"><a href="#">Back to top</a></p>
