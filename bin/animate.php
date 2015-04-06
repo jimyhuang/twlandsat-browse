@@ -25,7 +25,7 @@ foreach($files as $f){
     }
 
     // for animate/index.html
-    $row[] = '<div class="col-md-6">
+    $row[] = '<div class="col-md-6 placeholder">
       <a href="'.$url.'"><img src="'.$json->image.'" class="img-responsive"></a>
       <h4><a href="'.$url.'">'.$json->subject.'</a></h4>
     </div>';

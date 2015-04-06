@@ -121,6 +121,11 @@ footer {
   background: rgba(0, 0, 0, 0.35);
 }
 
+/* animate */
+.animate .placeholder {
+  text-align: center;
+}
+
 
 /* font awsome*/
 .fa:before {
