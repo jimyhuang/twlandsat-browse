@@ -15,12 +15,10 @@ foreach($files as $f){
         '{title}' => $json->subject,
         '{image}' => $json->image,
         '{url}' => $base_url.'/animate/'.$name.'.html',
-        '{json}' => $str,
+        '{json}' => json_encode($json),
       );
       $html = str_replace(array_keys($replace), $replace, $tpl);
       file_put_contents($base.$name.'.html', $html);
     }
   }
 }
-
-file_put_contents($base_path.'animate.js', json_encode($nav));

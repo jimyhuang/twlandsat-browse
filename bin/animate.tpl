@@ -12,17 +12,16 @@
 
   <!-- page specific css -->
   <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.4/themes/flick/jquery-ui.css">
-  <link rel="stylesheet" href="./vendor/jquery-ui-slider-pips/jquery-ui-slider-pips.css" />
-  <link rel="stylesheet" href="./vendor/leaflet-layer-player/src/leaflet-layer-player.css" />
+  <link rel="stylesheet" href="/vendor/jquery-ui-slider-pips/jquery-ui-slider-pips.css" />
+  <link rel="stylesheet" href="/vendor/leaflet-layer-player/src/leaflet-layer-player.css" />
 
   <!-- override css -->
-  <link rel="stylesheet" href="./css/style.css" />
+  <link rel="stylesheet" href="/css/style.css" />
 
   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
   <script type="text/javascript" src="//code.jquery.com/jquery-2.1.1.min.js"></script>
   <script type="text/javascript" src="//code.jquery.com/ui/1.11.0/jquery-ui.min.js"></script>
   <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="./vendor/jquery.ui.touch-punch/jquery.ui.touch-punch.min.js"></script> 
 </head>
 <body class="animate">
 <div class="navbar-wrapper">
@@ -62,13 +61,13 @@
 <div id="content" class="container-fluid">
   <div class="row">
     <div id="animate" class="map"></div>
-    <script type="text/javascript" src="./vendor/jquery-ui-slider-pips/jquery-ui-slider-pips.min.js"></script> 
-    <script type="text/javascript" src="./vendor/jquery.ui.touch-punch/jquery.ui.touch-punch.min.js"></script> 
-    <script type="text/javascript" src="./vendor/leaflet-layer-player/src/leaflet-layer-player.js"></script> 
+    <script type="text/javascript" src="/vendor/jquery-ui-slider-pips/jquery-ui-slider-pips.min.js"></script> 
+    <script type="text/javascript" src="/vendor/jquery.ui.touch-punch/jquery.ui.touch-punch.min.js"></script> 
+    <script type="text/javascript" src="/vendor/leaflet-layer-player/src/leaflet-layer-player.js"></script> 
     <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
     <script type="text/javascript">
     var json = '{json}';
-    var slides = JSON.parse(jsonString);    
+    var slides = JSON.parse(json);
     </script>
     <script type="text/javascript">
 (function($) {
