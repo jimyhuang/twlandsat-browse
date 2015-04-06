@@ -66,9 +66,7 @@
   </div>
 </div>
 <div id="content" class="container">
-  <div class="row">
-    {animate-rows}
-  </div>
+  {animate-rows}
   <footer>
     <p class="pull-right"><a href="#">Back to top</a></p>
     <p>

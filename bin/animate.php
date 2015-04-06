@@ -12,11 +12,12 @@ foreach($files as $f){
     $name = str_replace('.js', '', $f);
     $str = file_get_contents($base.$f);
     $json = json_decode($str);
+    $url = $base_url.'/animate/'.$name.'.html';
     if(!empty($json)){
       $replace = array(
         '{title}' => $json->subject,
         '{image}' => $json->image,
-        '{url}' => $base_url.'/animate/'.$name.'.html',
+        '{url}' => $url,
         '{json}' => json_encode($json),
       );
       $html = str_replace(array_keys($replace), $replace, $tpl);
@@ -25,18 +26,22 @@ foreach($files as $f){
 
     // for animate/index.html
     $row[] = '<div class="col-md-6">
-      <img src="'.$json->image.'" class="img-responsive">
-      <h4>'.$json->subject.'</h4>
+      <a href="'.$url.'"><img src="'.$json->image.'" class="img-responsive"></a>
+      <h4><a href="'.$url.'">'.$json->subject.'</a></h4>
     </div>';
     if($i%2){
-      $rows[] = $row;
+      $rows[] = implode('', $row);
       $row = array();
     }
     $i++;
   }
 }
 
+if(!empty($row)){
+  $rows[] = implode('', $row);
+}
+
 $index = file_get_contents('animate-index.tpl');
-$rows = '<div class="row">'.implode('</div><div class="row">', $rows).'</div>';
-$index = str_replace('{animate-rows}', $rows, $index);
+$output = '<div class="row">'.implode('</div><div class="row">', $rows).'</div>';
+$index = str_replace('{animate-rows}', $output, $index);
 file_put_contents($base_path.'animate/index.html', $index);
