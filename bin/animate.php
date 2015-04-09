@@ -1,4 +1,9 @@
 <?php
+
+/**
+ * Generate static html file for animation
+ */
+
 require_once('init.inc');
 global $base_path, $base_url;
 $base = $base_path.'animate/';

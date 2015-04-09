@@ -1,4 +1,9 @@
 <?php
+
+/**
+ * Simple script to move pansharpend file to s3
+ */
+
 require_once('init.inc');
 global $base_path;
 
