@@ -39,4 +39,4 @@ foreach($dirs as $d){
   }
 }
 
-file_put_contents($base_path.'nav.js', json_encode($nav));
+file_put_contents($base_path.'nav.json', json_encode($nav));
