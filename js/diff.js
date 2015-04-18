@@ -1,11 +1,15 @@
 // global vars
-var 
+var
   area = '118044',
   b = 'LC81180442015023LGN00',
   a = 'LC81180442014292LGN00',
   z = 12,
   c = [23.42513365687343,120.34612655639648],
   l = ['rgb', 'rgb'];
+
+var
+  m,
+  t;
 
 var mapa, mapb;
 
@@ -25,7 +29,7 @@ jQuery(document).ready(function($){
     var server = Math.floor((Math.random() * 3) + 1);
     var rgbview = L.tileLayer('http://l'+server+'.jimmyhub.net/processed/'+landsat+'/tiles-rgb'+'/{z}/{x}/{y}.png', {
       tms: true,
-      attribution: attribution,
+      //attribution: attribution,
       maxZoom: maxZoom,
     });
     var swirnirview = L.tileLayer('http://l'+server+'.jimmyhub.net/processed/'+landsat+'/tiles-swirnir'+'/{z}/{x}/{y}.png', {
@@ -66,7 +70,7 @@ jQuery(document).ready(function($){
         hash[6] = l.join('-');
         hashChange(hash);
         legend.addTo(obj);
-      } 
+      }
     });
     obj.on('overlayremove', function(e) {
       if (e.name=='SwirNir view'){
@@ -75,7 +79,7 @@ jQuery(document).ready(function($){
         hash[6] = l.join('-');
         hashChange(hash);
         legend.removeFrom(obj);
-      } 
+      }
     });
     return obj;
   }
@@ -155,7 +159,7 @@ jQuery(document).ready(function($){
         });
         $(".select-date").animate( { color: '#FF0000' }, 800 );
         $(".select-date").animate( { color: '#000000' }, 800 );
-        
+
       }
     });
     $("#select-before, #select-after").change(function(e, context){
@@ -207,6 +211,22 @@ jQuery(document).ready(function($){
   }
 
   /**
+   * Help function for getting param values
+   */
+  var paramResolve = function(param){
+    var param = {};
+    window.location.search
+      .replace('?', '')
+      .split('&')
+      .forEach(function (t) {
+        var p = t.split('=');
+        param[p[0]] = p[1];
+      })
+    m = param['m'];
+    t = param['t'];
+  }
+
+  /**
    * Help function for update hashtag
    */
   var hashChange = function(hash){
@@ -219,7 +239,7 @@ jQuery(document).ready(function($){
     });
     document.title =
       '賽豬公上太空計畫'
-      + '|' 
+      + '|'
       + nav[h[0]].name
       + ' '
       + nav[h[0]][h[1]]
@@ -227,7 +247,7 @@ jQuery(document).ready(function($){
       + nav[h[0]][h[2]];
     window.location.hash = h.join(',');
     $("input#copy").val(window.location);
-    hashResolv(); 
+    hashResolv();
   }
 
   /**
@@ -247,7 +267,7 @@ jQuery(document).ready(function($){
   }
 
   /**
-   * Event trigger after end of map 
+   * Event trigger after end of map
    */
   intro.oncomplete(function() {
     window.setTimeout(mapReset, 600);
@@ -267,7 +287,7 @@ jQuery(document).ready(function($){
     var $div = $('<div>').html(html);
     $div.addClass('legend');
     return $div[0];
-  } 
+  }
 
 
   /**
@@ -275,11 +295,15 @@ jQuery(document).ready(function($){
    */
   var mapStart = function(){
     var intro_start = true;
+    if (window.location.search){
+      paramResolve();
+      intro_start = false;
+    }
     if (window.location.hash){
       hashResolv();
       intro_start = false;
     }
-    
+
     var resizing = 0;
     $(window).resize(function(){
       if(!resizing){
@@ -302,14 +326,14 @@ jQuery(document).ready(function($){
     $("#select-before").val(b).trigger('change', 'init');
     $("#select-after").val(a).trigger('change', 'init');
     $(".check-swirnir").trigger('change', 'init');
-    
+
     if (intro_start){
       intro.start();
     }
   }
 
   // main
-  var nav = {}; 
+  var nav = {};
   jQuery.getJSON('/nav.js', function(json){
     nav = json;
     mapStart();
