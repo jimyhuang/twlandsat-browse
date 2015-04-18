@@ -17,6 +17,22 @@ var mapa, mapb;
 jQuery(document).ready(function($){
 
   /**
+   * Add draw control to map
+   */
+  var addDraw = function(){
+    return function(){
+      var map = this;
+      var drawnItems = new L.FeatureGroup();
+      drawnItems.addTo(map);
+      var drawControl = new L.Control.Draw({
+        edit: {
+          featureGroup: drawnItems
+        }
+      }).addTo(map);
+    }
+  }
+
+  /**
    * Make a object for osm
    */
   var mapObject = function(landsat, name){
@@ -86,6 +102,7 @@ jQuery(document).ready(function($){
         legend.removeFrom(obj);
       }
     });
+    obj.on('load', addDraw());
     return obj;
   }
 
