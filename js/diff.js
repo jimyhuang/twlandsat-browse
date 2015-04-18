@@ -58,6 +58,7 @@ jQuery(document).ready(function($){
 
     obj.on('dragend', mapMove);
     L.control.layers(baseLayers, overlayMaps).addTo(obj);
+    if (m && t) L.marker(m.split(',')).bindPopup(t).addTo(obj);
     var legend = L.control({position: 'bottomright'});
     legend.onAdd = function () {
       return swirnirLegend();
