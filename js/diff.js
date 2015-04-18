@@ -9,6 +9,7 @@ var
 
 var
   m,
+  p,
   t;
 
 var mapa, mapb;
@@ -58,7 +59,10 @@ jQuery(document).ready(function($){
 
     obj.on('dragend', mapMove);
     L.control.layers(baseLayers, overlayMaps).addTo(obj);
-    if (m && t) L.marker(m.split(',')).bindPopup(t).addTo(obj);
+    if (m && t) L.marker(m.split(',').map(function (n) { return parseFloat(n) })).bindPopup(decodeURI(t)).addTo(obj);
+    if (p && t)
+      L.polygon(p.split('!').map(function (x) { return x.split(',').map(function (n) { return parseFloat(n) }) }))
+        .bindPopup(decodeURI(t)).addTo(obj);
     var legend = L.control({position: 'bottomright'});
     legend.onAdd = function () {
       return swirnirLegend();
@@ -225,6 +229,7 @@ jQuery(document).ready(function($){
       })
     m = param['m'];
     t = param['t'];
+    p = param['p'];
   }
 
   /**
