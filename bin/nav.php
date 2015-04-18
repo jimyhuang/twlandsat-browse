@@ -1,4 +1,9 @@
 <?php
+
+/**
+ * Generate navigation for diff tool
+ */
+
 require_once('init.inc');
 global $base_path;
 
