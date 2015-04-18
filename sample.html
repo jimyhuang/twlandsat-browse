@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="zh-TW">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+	<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+	<style>	
+		#map { 
+			height: 540px;
+			width: 800px; 
+		}
+	</style>
+</head>
+
+<body>
+
+	<div id="map"></div>
+
+	<script>
+		var map = L.map('map').setView([23.256172010924537,120.43350219726562], 10);
+		L.tileLayer('http://l3.jimmyhub.net/processed/LC81180442014292LGN00/tiles-rgb/{z}/{x}/{y}.png', {
+   			tms: true, // tile
+   			attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+    		maxZoom: 18
+		}).addTo(map);
+	</script>
+</body>
