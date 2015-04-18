@@ -216,23 +216,6 @@ jQuery(document).ready(function($){
   }
 
   /**
-   * Help function for getting param values
-   */
-  var paramResolve = function(param){
-    var param = {};
-    window.location.search
-      .replace('?', '')
-      .split('&')
-      .forEach(function (t) {
-        var p = t.split('=');
-        param[p[0]] = p[1];
-      })
-    m = param['m'];
-    t = param['t'];
-    p = param['p'];
-  }
-
-  /**
    * Help function for update hashtag
    */
   var hashChange = function(hash){
@@ -260,13 +243,29 @@ jQuery(document).ready(function($){
    * Help function for get hashtag value
    */
   var hashResolv = function(i){
-    var h = window.location.hash.split(',');
+    var s = window.location.hash.indexOf(';'),
+        h;
+    if (s > 0)
+      h = window.location.hash.substr(0, s).split(',');
+    else
+      h = window.location.hash.split(',');
     area = h[0].replace('#','');
     b = h[1];
     a = h[2];
     z = h[3]*1;
     c = [h[4]*1,h[5]*1];
     l = h[6].split('-');
+    if (s > 0) {
+      var q = {};
+      window.location.hash.substr(s+1).split('&')
+        .forEach(function (t) {
+          var v = t.split('=');
+          q[v[0]] = v[1];
+        })
+      m = q['m'];
+      t = q['t'];
+      p = q['p'];
+    }
     if(i){
       return h[i];
     }
@@ -301,10 +300,6 @@ jQuery(document).ready(function($){
    */
   var mapStart = function(){
     var intro_start = true;
-    if (window.location.search){
-      paramResolve();
-      intro_start = false;
-    }
     if (window.location.hash){
       hashResolv();
       intro_start = false;
