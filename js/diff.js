@@ -14,23 +14,59 @@ var
 
 var mapa, mapb;
 
-jQuery(document).ready(function($){
+function Draw(map){
+  var
+    draw = {},
+    drawControl,
+    drawnItems,
+    on = false;
 
   /**
    * Add draw control to map
    */
-  var addDraw = function(){
-    return function(){
-      var map = this;
-      var drawnItems = new L.FeatureGroup();
-      drawnItems.addTo(map);
-      var drawControl = new L.Control.Draw({
+  draw.add = function(){
+    if (!drawnItems) {
+      drawnItems = L.featureGroup().addTo(map);
+    }
+    if (!drawControl) {
+      drawControl = new L.Control.Draw({
+        draw: {
+          polyline: false,
+          polygon: false,
+          rectangle: false
+        },
         edit: {
           featureGroup: drawnItems
         }
-      }).addTo(map);
+      });
     }
+    drawControl.addTo(map);
+    on = true;
+    map.on('draw:created', function(event){
+			var layer = event.layer;
+			drawnItems.addLayer(layer);
+		});
+  };
+
+  /**
+   * Remove draw control from map
+   */
+  draw.remove = function(){
+    drawControl.removeFrom(map);
+    on = false;
   }
+
+  /**
+   * Toggle draw control on map
+   */
+  draw.toggle = function(){
+    return (on ? draw.remove : draw.add)()
+  }
+
+  return draw;
+}
+
+jQuery(document).ready(function($){
 
   /**
    * Make a object for osm
@@ -73,6 +109,8 @@ jQuery(document).ready(function($){
       "SwirNir view": swirnirview
     };
 
+    var draw = Draw(obj);
+    L.easyButton('fa fa-pencil-square-o', draw.toggle, '註記', obj);
     obj.on('dragend', mapMove);
     L.control.layers(baseLayers, overlayMaps).addTo(obj);
     if (m && t) L.marker(m.split(',').map(function (n) { return parseFloat(n) })).bindPopup(decodeURI(t)).addTo(obj);
@@ -102,7 +140,6 @@ jQuery(document).ready(function($){
         legend.removeFrom(obj);
       }
     });
-    obj.on('load', addDraw());
     return obj;
   }
 
