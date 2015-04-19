@@ -165,4 +165,6 @@ span.balinks:last-child a:before{
 .legend .green i { color: #08EE66; }
 .legend .deep-green i { color: #0F756A; }
 
-
+#sortable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
+#sortable li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1em; font-size: 1em; height: 4em; }
+#sortable li span { position: absolute; margin-left: -1.3em; }
