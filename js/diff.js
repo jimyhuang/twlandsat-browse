@@ -335,7 +335,7 @@ jQuery(document).ready(function($){
 
   // main
   var nav = {};
-  jQuery.getJSON('/nav.js', function(json){
+  jQuery.getJSON('http://static.jimmyhub.net/nav.json?callback=?', function(json){
     nav = json;
     mapStart();
   });
