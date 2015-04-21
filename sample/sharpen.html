@@ -18,105 +18,94 @@
 ///    sharpen(context, width, height, mixFactor)
 ///  mixFactor: [0.0, 1.0]
 function sharpen(ctx, w, h, mix) {
+  var weights = [0, -1, 0, -1, 5, -1, 0, -1, 0],
+    katet = Math.round(Math.sqrt(weights.length)),
+    half = (katet * 0.5) | 0,
+    dstData = ctx.createImageData(w, h),
+    dstBuff = dstData.data,
+    srcBuff = ctx.getImageData(0, 0, w, h).data,
+    y = h;
 
-    var weights = [0, -1, 0, -1, 5, -1, 0, -1, 0],
-        katet = Math.round(Math.sqrt(weights.length)),
-        half = (katet * 0.5) | 0,
-        dstData = ctx.createImageData(w, h),
-        dstBuff = dstData.data,
-        srcBuff = ctx.getImageData(0, 0, w, h).data,
-        y = h;
+  while (y--) {
 
-    while (y--) {
+    x = w;
 
-        x = w;
+    while (x--) {
 
-        while (x--) {
+      var sy = y,
+        sx = x,
+        dstOff = (y * w + x) * 4,
+        r = 0,
+        g = 0,
+        b = 0,
+        a = 0;
 
-            var sy = y,
-                sx = x,
-                dstOff = (y * w + x) * 4,
-                r = 0,
-                g = 0,
-                b = 0,
-                a = 0;
+      for (var cy = 0; cy < katet; cy++) {
+        for (var cx = 0; cx < katet; cx++) {
 
-            for (var cy = 0; cy < katet; cy++) {
-                for (var cx = 0; cx < katet; cx++) {
+          var scy = sy + cy - half;
+          var scx = sx + cx - half;
 
-                    var scy = sy + cy - half;
-                    var scx = sx + cx - half;
+          if (scy >= 0 && scy < h && scx >= 0 && scx < w) {
 
-                    if (scy >= 0 && scy < h && scx >= 0 && scx < w) {
+            var srcOff = (scy * w + scx) * 4;
+            var wt = weights[cy * katet + cx];
 
-                        var srcOff = (scy * w + scx) * 4;
-                        var wt = weights[cy * katet + cx];
-
-                        r += srcBuff[srcOff] * wt;
-                        g += srcBuff[srcOff + 1] * wt;
-                        b += srcBuff[srcOff + 2] * wt;
-                        a += srcBuff[srcOff + 3] * wt;
-                    }
-                }
-            }
-
-            dstBuff[dstOff] = r * mix + srcBuff[dstOff] * (1 - mix);
-            dstBuff[dstOff + 1] = g * mix + srcBuff[dstOff + 1] * (1 - mix);
-            dstBuff[dstOff + 2] = b * mix + srcBuff[dstOff + 2] * (1 - mix)
-            dstBuff[dstOff + 3] = srcBuff[dstOff + 3];
+            r += srcBuff[srcOff] * wt;
+            g += srcBuff[srcOff + 1] * wt;
+            b += srcBuff[srcOff + 2] * wt;
+            a += srcBuff[srcOff + 3] * wt;
+          }
         }
+      }
+
+      dstBuff[dstOff] = r * mix + srcBuff[dstOff] * (1 - mix);
+      dstBuff[dstOff + 1] = g * mix + srcBuff[dstOff + 1] * (1 - mix);
+      dstBuff[dstOff + 2] = b * mix + srcBuff[dstOff + 2] * (1 - mix)
+      dstBuff[dstOff + 3] = srcBuff[dstOff + 3];
     }
+  }
 
-    ctx.putImageData(dstData, 0, 0);
+  ctx.putImageData(dstData, 0, 0);
 }
-function getBase64Image(img) {
-    // Create an empty canvas element
-    var canvas = document.createElement("canvas");
-    canvas.width = img.width;
-    canvas.height = img.height;
-
-    // Copy the image contents to the canvas
-    var ctx = canvas.getContext("2d");
-    ctx.drawImage(img, 0, 0);
-
-    // Get the data-URL formatted image
-    // Firefox supports PNG and JPEG. You could check img.src to
-    // guess the original format, but be aware the using "image/jpg"
-    // will re-encode the image.
-    var dataURL = canvas.toDataURL("image/png");
-
-    return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+function drawImg(canvas, src){
+  var ctx = canvas.getContext('2d');
+  var img = new Image;
+  img.onload = function(){
+    ctx.drawImage(img,0,0); // Or at whatever offset you like
+    sharpen(ctx, canvas.width, canvas.height, 60 * 0.01);
+  };
+  img.crossOrigin = "anonymous"
+  img.src = src;
 }
-window.onload=function(){
-    L_PREFER_CANVAS = true;
-    var id = 'map';
-    var map = L.map(id).setView([23.42513365687343,120.34612655639648], 12);
-    var tile = L.tileLayer('http://l3.jimmyhub.net/processed/LT51180441988349BKT00/tiles-rgb/{z}/{x}/{y}.png', {
-         tms: true, // tile
-        maxZoom: 13
-    }).addTo(map);
-    var i = 0;
-    var toremove = [];
-    $("#map img").error(function(){
-      var i = $(this).index();
-      $("#map").find(".leaflet-tile-container canvas:eq("+i+")").remove();
-      $(this).remove();
-    });
-
-
-    var ctile = new L.TileLayer.Canvas();
-    map.addLayer(ctile);
-  $("#map").find(".leaflet-tile-container img").each(function(i){
-    var canvas = $('#map .leaflet-tile-pane .leaflet-tile-container canvas:eq('+i+')')[0];
-    var ctx = canvas.getContext('2d');
-    var img = new Image;
-    img.onload = function(){
-      ctx.drawImage(img,0,0); // Or at whatever offset you like
-      sharpen(ctx, canvas.width, canvas.height, 80 * 0.01);
-    };
-    img.crossOrigin = "anonymous"
-    img.src = $(this).attr("src");
+window.onload =  function(){
+  L_PREFER_CANVAS = true;
+  var id = 'map';
+  var map = L.map(id).setView([23.42513365687343,120.34612655639648], 12);
+  var tile = L.tileLayer('http://l3.jimmyhub.net/processed/LT51180441988349BKT00/tiles-rgb/{z}/{x}/{y}.png', {
+    tms: true, // tile
+    maxZoom: 12
+  }).addTo(map);
+  var i = 0;
+  var toremove = [];
+  $("#map .leaflet-tile-container img").error(function(){
+    var i = $(this).index();
+    $("#map").find(".leaflet-tile-container canvas:eq("+i+")").remove();
+    $(this).remove();
   });
+
+  var canvasTiles = new L.TileLayer.Canvas();
+  canvasTiles.drawTile = function(canvas, tilePoint, zoom) {
+    var left = $(canvas).css('left');
+    var top = $(canvas).css('top');
+    var img = $("#map").find(".leaflet-tile-container img").filter(function(){
+      return $(this).css('top') == top && $(this).css('left') == left;
+    });
+    if(img.length){
+      drawImg(canvas, img.attr('src'));
+    }
+  } 
+  map.addLayer(canvasTiles);
 }
   </script>
 </head>
