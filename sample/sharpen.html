@@ -73,7 +73,7 @@ function drawImg(canvas, src){
   var img = new Image;
   img.onload = function(){
     ctx.drawImage(img,0,0); // Or at whatever offset you like
-    sharpen(ctx, canvas.width, canvas.height, 60 * 0.01);
+    sharpen(ctx, canvas.width, canvas.height, 80 * 0.01);
   };
   img.crossOrigin = "anonymous"
   img.src = src;
