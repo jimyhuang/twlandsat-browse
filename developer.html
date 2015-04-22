@@ -66,6 +66,32 @@
   </div>
 </div>
 <div id="content" class="container">
+  <div class="row featurette">
+    <div class="col-md-12">
+      <h2 class="featurette-heading">
+        賽豬公<span class="text-muted">名人堂</span>
+      </h2>
+      <p class="lead">賽完豬公 ... 當廟公！！？</p>
+      <div id="hof"></div>
+      <script>
+        var url = 'http://l1.jimmyhub.net';
+        $.getJSON('http://static.jimmyhub.net/hof.json', function(data){
+          for(name in data){
+            if(name != 'anonymous'){
+              var $div = $("<div><span class='fa fa-map-marker'>"+name+"</span></div>");
+              var src= '';
+              for(i in data[name]){
+                src = url+data[name][i];
+                $('<a href="" class="fa fa-heart"><img src="'+src+'" class="thumb" /></a>').appendTo($div);
+              }
+              $div.appendTo("#hof");
+            }
+          }
+        });
+      </script>
+      <!-- <p><a class="btn btn-primary btn-lg" href="/animate/" role="button">如何變廟公 »</a></p> -->
+    </div>
+  </div>
   <hr class="featurette-divider">
   <div class="row featurette">
         <div class="col-lg-6">

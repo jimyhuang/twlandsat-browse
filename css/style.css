@@ -120,6 +120,21 @@ footer {
 .developer .twlandsat .inner-wrapper {
   background: rgba(0, 0, 0, 0.35);
 }
+.developer #hof span.fa-map-marker {
+  width: 100px;
+}
+.developer #hof .fa-heart {
+  position: relative;
+}
+.developer #hof .fa-heart img {
+  display: none;
+  position: absolute;
+  z-index: 90;
+  top: 100%;
+}
+.developer #hof a.fa-heart:hover img{
+  display: block;
+}
 
 /* animate */
 .animate .placeholder {

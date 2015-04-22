@@ -6,7 +6,7 @@
 
 processed
 pull.php
-nav.json
+*.json
 
 animate/*
 queue
