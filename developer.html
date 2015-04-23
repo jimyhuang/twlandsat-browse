@@ -79,10 +79,10 @@
           for(name in data){
             if(name != 'anonymous'){
               var $div = $("<div><span class='fa fa-map-marker'>"+name+"</span></div>");
-              var src= '';
+              var href = '';
               for(i in data[name]){
-                src = url+data[name][i];
-                $('<a href="" class="fa fa-heart"><img src="'+src+'" class="thumb" /></a>').appendTo($div);
+                href = data[name][i];
+                $('<a href="'+href+'" class="fa fa-heart" target="_blank"></a>').appendTo($div);
               }
               $div.appendTo("#hof");
             }
