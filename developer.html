@@ -78,11 +78,12 @@
         $.getJSON('http://static.jimmyhub.net/hof.json', function(data){
           for(name in data){
             if(name != 'anonymous'){
-              var $div = $("<div><span class='fa fa-map-marker'>"+name+"</span></div>");
+              var $div = $("<div><span class='col left fa fa-map-marker'>"+name+"</span></div>");
+              $div.append("<span class='col right'></span>");
               var href = '';
               for(i in data[name]){
                 href = data[name][i];
-                $('<a href="'+href+'" class="fa fa-heart" target="_blank"></a>').appendTo($div);
+                $('<a href="'+href+'" class="fa fa-rocket" target="_blank"></a>').appendTo($div.find('.right'));
               }
               $div.appendTo("#hof");
             }

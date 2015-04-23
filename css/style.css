@@ -123,6 +123,12 @@ footer {
 .developer #hof span.fa-map-marker {
   width: 100px;
 }
+.developer #hof span.col {
+  display: table-cell;
+}
+.developer #hof span.right {
+  margin-left: 10px;
+}
 .developer #hof .fa-heart {
   position: relative;
 }
