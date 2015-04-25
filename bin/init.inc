@@ -2,7 +2,7 @@
 date_default_timezone_set('Asia/Taipei');
 $sapi = php_sapi_name();
 if($sapi != 'cli') {
-  return;
+  exit(1);
 }
 
 // with traling slash
