@@ -1,10 +1,16 @@
 <?php
 
 require_once('init.inc');
-
-$c = file_get_contents('../queue/completed');
-$line = explode("\n", $c);
+$base = '/home/twlandsat';
 $wall = array();
+// progresss
+$pending = `cat $base/queue/pending | sort | uniq | wc -l`;
+$completed = `cat $base/queue/completed | sort | uniq | wc -l`;
+$wall['$progress'] = $completed / ($pending + $completed);
+
+// hof
+$c = file_get_contents("$base/queue/completed");
+$line = explode("\n", $c);
 foreach($line as $l){
   list($landsat, $name) = explode(' ', $l);
   $name = !empty($name) ? $name : 'anonymous';
@@ -60,4 +66,4 @@ uasort($wall, function ($a, $b) {
   return ($a == $b) ? 0 : (($a > $b) ? -1 : 1);
 });
 
-file_put_contents('../hof.json', json_encode($wall));
+file_put_contents("$base/hof.json", json_encode($wall));
