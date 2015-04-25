@@ -37,7 +37,10 @@ if(!empty($_POST['action']) && !empty($name) && !empty($type)){
       if(!empty($landsat)){
         $completed = "$landsat $name\n";
         file_put_contents("$base/completed", $completed, FILE_APPEND);
-        echo "Completed";
+        echo "Completed\n";
+
+        ## trigger hof
+        `php /home/twlandsat/bin/hof.php`;
       }
       break;
   }
