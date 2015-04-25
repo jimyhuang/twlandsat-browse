@@ -6,22 +6,89 @@
 	<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
 	<style>	
 		#map { 
-			height: 540px;
-			width: 800px; 
+			height: 300px;
+			width: 100%; 
 		}
+pre {
+  border-left: solid 2px #ccc;
+  padding-left: 18px;
+  margin: 2em 0 2em -20px;
+  width: 960px;
+  overflow-x: auto;
+}
+
+.html .value,
+.javascript .string,
+.javascript .regexp {
+  color: #756bb1;
+}
+
+.html .tag,
+.css .tag,
+.javascript .keyword {
+  color: #3182bd;
+}
+
+aside,
+.comment {
+  color: #636363;
+}
+
+.html .doctype,
+.javascript .number {
+  color: #31a354;
+}
+
+.html .attribute,
+.css .attribute,
+.javascript .class,
+.javascript .special {
+  color: #e6550d;
+}
 	</style>
 </head>
 
 <body>
-
+  <h3>Tile usage sample - <a href="http://nspo.g0v.tw">賽豬公上太空</a></h3>
 	<div id="map"></div>
-
 	<script>
-		var map = L.map('map').setView([23.256172010924537,120.43350219726562], 10);
+		var map = L.map('map').setView([23.13152007723789,120.16811370849608], 11);
 		L.tileLayer('http://l3.jimmyhub.net/processed/LC81180442014292LGN00/tiles-rgb/{z}/{x}/{y}.png', {
    			tms: true, // tile
-   			attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-    		maxZoom: 18
+   			attribution: '&copy; <a href="http://nspo.g0v.tw">twlandsat</a> contributors',
+    		maxZoom: 13
 		}).addTo(map);
 	</script>
+<div>
+<h3>Code</h3>
+<pre><code class="html xml"><span class="doctype">&lt;!doctype html&gt;</span>
+<span class="tag">&lt;<span class="title">html</span> <span class="attribute">lang</span>=<span class="value">"zh-TW"</span>&gt;</span>
+<span class="tag">&lt;<span class="title">head</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">meta</span> <span class="attribute">charset</span>=<span class="value">"UTF-8"</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">title</span>&gt;</span>tile usage sample |　Twlandsat - 賽豬公上太空 <span class="tag">&lt;/<span class="title">title</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"</span> /&gt;</span>
+  <span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"</span>&gt;</span><span class="javascript"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+  <span class="tag">&lt;<span class="title">style</span>&gt;</span><span class="css"> 
+    <span class="id">#map</span> <span class="rules">{ 
+      <span class="rule"><span class="attribute">height</span>:<span class="value"> <span class="number">540</span>px</span>;</span>
+      <span class="rule"><span class="attribute">width</span>:<span class="value"> <span class="number">800</span>px</span>;</span> 
+    <span class="rule">}</span></span>
+  </span><span class="tag">&lt;/<span class="title">style</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">head</span>&gt;</span>
+
+<span class="tag">&lt;<span class="title">body</span>&gt;</span>
+
+  <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"map"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
+
+  <span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
+    <span class="keyword">var</span> map = L.map(<span class="string">'map'</span>).setView([<span class="number">23.256172010924537</span>,<span class="number">120.43350219726562</span>], <span class="number">10</span>);
+    L.tileLayer(<span class="string">'http://l3.jimmyhub.net/processed/LC81180442014292LGN00/tiles-rgb/{z}/{x}/{y}.png'</span>, {
+        tms: <span class="literal">true</span>, <span class="comment">// tile</span>
+        attribution: <span class="string">'&amp;copy; &lt;a href="http://nspo.g0v.tw"&gt;twlandsat&lt;/a&gt; contributors'</span>,
+        maxZoom: <span class="number">18</span>
+    }).addTo(map);
+  </span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;/<span class="title">body</span>&gt;</span>
+</code></pre>
+</div>
 </body>
