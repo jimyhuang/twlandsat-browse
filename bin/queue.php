@@ -9,10 +9,12 @@ if(!empty($_POST['action']) && !empty($name) && !empty($type)){
     case 'pending':
       `cat $base/completed | awk '{print $1}' > $tmp/ctmp`;
       if($type == 'LT5'){
-        $c = `grep -v -x -f $tmp/ctmp $base/pending | grep LT5`;
+        $file = 'pending';
+        $c = `grep -v -x -f $tmp/ctmp $base/$file | grep LT5`;
       }
       if($type == 'LC8'){
-        $c = `grep -v -x -f $tmp/ctmp $base/pending | grep LT5`;
+        $file = 'pending8';
+        $c = `grep -v -x -f $tmp/ctmp $base/$file | grep LC8`;
       }
       if(!empty($c)){
         $lines = explode("\n", $c);
@@ -21,7 +23,7 @@ if(!empty($_POST['action']) && !empty($name) && !empty($type)){
         if($processing){
           unset($lines[$line_num]);
           $c = implode("\n", $lines);
-          $result = file_put_contents("$base/pending", $c, LOCK_EX);
+          $result = file_put_contents("$base/$file", $c, LOCK_EX);
           if(!empty($result)){
             echo $processing;
             $processing = "$processing $name\n";
