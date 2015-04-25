@@ -39,7 +39,7 @@ jQuery(document).ready(function($){
       maxZoom: maxZoom,
     });
     var osm = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+      attribution: '&copy; <a href="http://nspo.g0v.tw/developer.html">TWlandsat</a>, <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
     });
     var defaultmap = (layer === 'rgb') ? [osm, rgbview] : [osm, swirnirview];
     obj = new L.map(name, {
