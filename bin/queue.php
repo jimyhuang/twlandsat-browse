@@ -23,14 +23,16 @@ if(!empty($_POST['action']) && !empty($name) && !empty($type)){
         if($processing){
           unset($lines[$line_num]);
           $c = implode("\n", $lines);
-          $result = file_put_contents("$base/$file", $c, LOCK_EX);
-          if(!empty($result)){
-            echo $processing;
-            $processing = "$processing $name\n";
-            file_put_contents("$base/processing", $processing, FILE_APPEND);
-          }
-          else{
-            echo '0';
+          if(!empty($c)){
+            $result = file_put_contents("$base/$file", $c, LOCK_EX);
+            if(!empty($result)){
+              echo $processing;
+              $processing = "$processing $name\n";
+              file_put_contents("$base/processing", $processing, FILE_APPEND);
+            }
+            else{
+              echo '0';
+            }
           }
         }
       }
