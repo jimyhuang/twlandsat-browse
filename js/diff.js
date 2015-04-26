@@ -14,22 +14,18 @@ var
 
 var mapa, mapb;
 
-function Draw(m){
+function Draw(ma, mb){
   var
-    map = m,
+    mapa = ma,
+    mapb = mb,
     draw = {},
     drawControl,
     drawnItems,
     on = false;
 
-  draw.map = function(){
-    if (arguments.length > 0) {
-      map = arguments[0];
-      return draw;
-    }
-    return map;
-  }
-
+  /**
+   * Accessor to drawnItems feature group
+   */
   draw.drawnItems = function(){
     if (arguments.length > 0) {
       drawnItems = arguments[0];
@@ -44,9 +40,8 @@ function Draw(m){
   /**
    * Add draw control to map
    */
-  draw.add = function(map){
-    if (map) draw.map(map)
-    draw.drawnItems().addTo(draw.map());
+  draw.add = function(){
+    draw.drawnItems().addTo(mapa);
     if (!drawControl) {
       drawControl = new L.Control.Draw({
         draw: {
@@ -59,19 +54,19 @@ function Draw(m){
         }
       });
     }
-    drawControl.addTo(draw.map());
-    on = true;
-    draw.map().on('draw:created', function(event){
+    drawControl.addTo(mapa);
+    mapa.on('draw:created', function(event){
 			var layer = event.layer;
 			draw.drawnItems().addLayer(layer);
 		});
+    on = true;
   };
 
   /**
    * Remove draw control from map
    */
   draw.remove = function(){
-    drawControl.removeFrom(draw.map());
+    drawControl.removeFrom(mapa);
     on = false;
   }
 
@@ -171,21 +166,12 @@ jQuery(document).ready(function($){
     var map_height = $(window).height() - $("header").height() - $("footer").height() - $('.twlandsat').height();
     $(".map").height(map_height - 80);
 
-    var draw = Draw();
-    draw
-      .drawnItems()
-      .addLayer(L.marker([23.43033148706685,120.35247802734374]))
     // before and after layer
     if(b) {
       mapb = mapObject(b, 'before');
-      draw.map(mapb);
-      L.easyButton('fa fa-pencil-square-o', draw.toggle, '註記', mapb);
-      draw.drawnItems().addTo(mapb);
     }
     if(a){
       mapa = mapObject(a, 'after');
-      console.log(draw.drawnItems());
-      draw.drawnItems().addTo(mapa);
     }
     if(a && b && mapa && mapb){
       jQuery('#map-diff').beforeAfter(mapb, mapa, {
@@ -196,6 +182,14 @@ jQuery(document).ready(function($){
         introPosition : .5,
         showFullLinks : true
       });
+
+      var draw = Draw(mapa, mapb);
+      L.easyButton('fa fa-pencil-square-o', function(){
+        $("#before").toggle();
+        $("#map-diff > .ui-draggable").toggle();
+        $("#map-diff > img").toggle();
+        draw.toggle();
+      }, '編輯', mapa);
     }
   }
 
