@@ -20,28 +20,14 @@ function Draw(ma, mb){
     mapb = mb,
     draw = {},
     drawControl,
-    drawnItems,
+    itemsa = L.featureGroup().addTo(mapa),
+    itemsb = L.featureGroup().addTo(mapb),
     on = false;
-
-  /**
-   * Accessor to drawnItems feature group
-   */
-  draw.drawnItems = function(){
-    if (arguments.length > 0) {
-      drawnItems = arguments[0];
-      return draw;
-    }
-    if (!drawnItems) {
-      drawnItems = L.featureGroup();
-    }
-    return drawnItems;
-  }
 
   /**
    * Add draw control to map
    */
   draw.add = function(){
-    draw.drawnItems().addTo(mapa);
     if (!drawControl) {
       drawControl = new L.Control.Draw({
         draw: {
@@ -50,15 +36,28 @@ function Draw(ma, mb){
           rectangle: false
         },
         edit: {
-          featureGroup: draw.drawnItems()
+          featureGroup: itemsa,
+          edit: false,
+          remove: false
         }
       });
     }
     drawControl.addTo(mapa);
     mapa.on('draw:created', function(event){
 			var layer = event.layer;
-			draw.drawnItems().addLayer(layer);
+			itemsa.addLayer(layer);
+      if (layer.getRadius) {
+        itemsb.addLayer(L.circle(layer.getLatLng(), layer.getRadius()));
+      } else {
+        itemsb.addLayer(L.marker(layer.getLatLng()));
+      }
 		});
+    mapa.on('draw.edited', function(event){
+      var layers = event.layers;
+    });
+    mapa.on('draw:deleted', function(event){
+      var layers = event.layers;
+    });
     on = true;
   };
 
