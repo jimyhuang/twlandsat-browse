@@ -16,11 +16,16 @@ $location = array(
   '117045' => array('name' => '屏東(117/45)', 'latlng' => '22.187404991398775,120.6909942626953'),
   '118043' => array('name' => '新竹台中(118/43)', 'latlng' => '23.835600986620936,120.48431396484375'),
   '118044' => array('name' => '西南沿海澎湖(118/44)', 'latlng' => '23.34477759760015,120.82763671875'),
+  '119043' => array('name' => '金門(119/43)', 'latlng' => '24.154272147387534,118.81988525390624'),
+  '118042' => array('name' => '馬祖(118/42)', 'latlng' => '26.13817933988797,120.28106689453125'),
 );
 foreach($dirs as $d){
   $file = $base.$d.'/tiles-rgb/openlayers.html';
   if($d[0] === 'L' && is_dir($base.$d) && is_file($file)){
     $rawpath = substr($d, 3, 6);
+    if(empty($location[$rawpath])){
+      continue;
+    }
     $day = substr($d, 9, 7);
     $year = substr($day, 0, 4);
     $day = substr($day, 4);
