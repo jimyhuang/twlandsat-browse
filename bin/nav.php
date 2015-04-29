@@ -44,4 +44,9 @@ foreach($dirs as $d){
   }
 }
 
+foreach($nav as $k => $v){
+  asort($v);
+  $nav[$k] = $v;
+}
+
 file_put_contents($base_path.'nav.json', json_encode($nav));
