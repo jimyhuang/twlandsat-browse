@@ -22,6 +22,7 @@ function Draw(ma, mb){
     drawControl,
     itemsa = L.featureGroup().addTo(mapa),
     itemsb = L.featureGroup().addTo(mapb),
+    //
     on = false;
 
   /**
