@@ -5,14 +5,32 @@ var
   a = 'LC81180442014292LGN00',
   z = 12,
   c = [23.42513365687343,120.34612655639648],
+  features = [],
   l = ['rgb', 'rgb'];
 
-var
-  m,
-  p,
-  t;
-
 var mapa, mapb;
+
+L.Marker.prototype.serialize = function(){
+  return 'm=' + this.getLatLng().lat + ',' + this.getLatLng().lng;
+}
+L.Circle.prototype.serialize = function(){
+  return 'c=' + this.getLatLng().lat + ',' + this.getLatLng().lng + ',' + this.getRadius()
+}
+L.FeatureGroup.prototype.serialize = function(){
+  return this.getLayers().map(function(l) { return l.serialize(); });
+}
+L.FeatureGroup.prototype.resolve = function(f){
+  var that = this;
+  f.forEach(function(s){
+    if(s.substr(0,2) === 'm='){
+      that.addLayer(L.marker(s.substr(2).split(',')))
+    }else if(s.substr(0,2) === 'c='){
+      var r = s.substr(2).split(',')
+      that.addLayer(L.circle(r.slice(0,2), r[2]))
+    }
+  })
+  return this;
+}
 
 jQuery(document).ready(function($){
 
@@ -59,10 +77,6 @@ jQuery(document).ready(function($){
 
     obj.on('dragend', mapMove);
     L.control.layers(baseLayers, overlayMaps).addTo(obj);
-    if (m && t) L.marker(m.split(',').map(function (n) { return parseFloat(n) })).bindPopup(decodeURI(t)).addTo(obj);
-    if (p && t)
-      L.polygon(p.split('!').map(function (x) { return x.split(',').map(function (n) { return parseFloat(n) }) }))
-        .bindPopup(decodeURI(t)).addTo(obj);
     var legend = L.control({position: 'bottomright'});
     legend.onAdd = function () {
       return swirnirLegend();
@@ -87,6 +101,70 @@ jQuery(document).ready(function($){
       }
     });
     return obj;
+  }
+
+  /**
+   * Draw control
+   */
+  function Draw(ma, mb){
+    var
+      mapa = ma,
+      mapb = mb,
+      draw = {},
+      drawControl,
+      itemsa = L.featureGroup().resolve(features).addTo(mapa),
+      itemsb = L.featureGroup().resolve(features).addTo(mapb),
+      on = false;
+
+    /**
+     * Add draw control to map
+     */
+    draw.add = function(){
+      if (!drawControl) {
+        drawControl = new L.Control.Draw({
+          draw: {
+            polyline: false,
+            polygon: false,
+            rectangle: false
+          },
+          edit: {
+            featureGroup: itemsa,
+            edit: false,
+            remove: false
+          }
+        });
+      }
+      drawControl.addTo(mapa);
+      mapa.on('draw:created', function(event){
+        var layer = event.layer;
+        itemsa.addLayer(layer);
+        if (layer.getRadius) {
+          itemsb.addLayer(L.circle(layer.getLatLng(), layer.getRadius()));
+        } else {
+          itemsb.addLayer(L.marker(layer.getLatLng()));
+        }
+        features = itemsa.serialize();
+      });
+      on = true;
+    };
+
+    /**
+     * Remove draw control from map
+     */
+    draw.remove = function(){
+      drawControl.removeFrom(mapa);
+      hashChange([]);
+      on = false;
+    }
+
+    /**
+     * Toggle draw control on map
+     */
+    draw.toggle = function(){
+      return (on ? draw.remove : draw.add)()
+    }
+
+    return draw;
   }
 
   /**
@@ -116,6 +194,14 @@ jQuery(document).ready(function($){
         introPosition : .5,
         showFullLinks : true
       });
+
+      var draw = Draw(mapa, mapb);
+      L.easyButton('fa fa-pencil-square-o', function(){
+        $("#before").toggle();
+        $("#map-diff > .ui-draggable").toggle();
+        $("#map-diff > img").toggle();
+        draw.toggle();
+      }, '編輯', mapa);
     }
   }
 
@@ -219,7 +305,7 @@ jQuery(document).ready(function($){
    * Help function for update hashtag
    */
   var hashChange = function(hash){
-    var h = window.location.hash.split(',');
+    var h = window.location.hash.split(';', 1)[0].split(',');
     h[0] = h[0].replace('#','');
     $.each(hash, function(i, v){
       if(v){
@@ -234,7 +320,7 @@ jQuery(document).ready(function($){
       + nav[h[0]][h[1]]
       + '/'
       + nav[h[0]][h[2]];
-    window.location.hash = h.join(',');
+    window.location.hash = [h.join(',')].concat(features).join(';');
     $("input#copy").val(window.location);
     hashResolv();
   }
@@ -243,29 +329,16 @@ jQuery(document).ready(function($){
    * Help function for get hashtag value
    */
   var hashResolv = function(i){
-    var s = window.location.hash.indexOf(';'),
-        h;
-    if (s > 0)
-      h = window.location.hash.substr(0, s).split(',');
-    else
-      h = window.location.hash.split(',');
+    var f = window.location.hash.split(';'),
+        h = f[0].split(',');
+    f.shift();
     area = h[0].replace('#','');
     b = h[1];
     a = h[2];
     z = h[3]*1;
     c = [h[4]*1,h[5]*1];
     l = h[6].split('-');
-    if (s > 0) {
-      var q = {};
-      window.location.hash.substr(s+1).split('&')
-        .forEach(function (t) {
-          var v = t.split('=');
-          q[v[0]] = v[1];
-        })
-      m = q['m'];
-      t = q['t'];
-      p = q['p'];
-    }
+    features = f;
     if(i){
       return h[i];
     }
