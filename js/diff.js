@@ -10,6 +10,8 @@ var
 
 var mapa, mapb;
 
+var circleOptions = { color: '#f30', fillOpacity: 0.2 };
+
 L.Marker.prototype.serialize = function(){
   return 'm=' + this.getLatLng().lat + ',' + this.getLatLng().lng;
 }
@@ -20,13 +22,13 @@ L.FeatureGroup.prototype.serialize = function(){
   return this.getLayers().map(function(l) { return l.serialize(); });
 }
 L.FeatureGroup.prototype.resolve = function(f){
-  var that = this;
+  var fgroup = this;
   f.forEach(function(s){
     if(s.substr(0,2) === 'm='){
-      that.addLayer(L.marker(s.substr(2).split(',')))
+      fgroup.addLayer(L.marker(s.substr(2).split(',')))
     }else if(s.substr(0,2) === 'c='){
       var r = s.substr(2).split(',')
-      that.addLayer(L.circle(r.slice(0,2), r[2]))
+      fgroup.addLayer(L.circle(r.slice(0,2), r[2], circleOptions))
     }
   })
   return this;
@@ -112,8 +114,8 @@ jQuery(document).ready(function($){
       mapb = mb,
       draw = {},
       drawControl,
-      itemsa = L.featureGroup().resolve(features).addTo(mapa),
-      itemsb = L.featureGroup().resolve(features).addTo(mapb),
+      fgroupa = L.featureGroup().resolve(features).addTo(mapa),
+      fgroupb = L.featureGroup().resolve(features).addTo(mapb),
       on = false;
 
     /**
@@ -128,22 +130,29 @@ jQuery(document).ready(function($){
             rectangle: false
           },
           edit: {
-            featureGroup: itemsa,
-            edit: false,
-            remove: false
+            featureGroup: fgroupa
           }
         });
       }
       drawControl.addTo(mapa);
       mapa.on('draw:created', function(event){
         var layer = event.layer;
-        itemsa.addLayer(layer);
         if (layer.getRadius) {
-          itemsb.addLayer(L.circle(layer.getLatLng(), layer.getRadius()));
-        } else {
-          itemsb.addLayer(L.marker(layer.getLatLng()));
+          layer.setStyle(circleOptions);
         }
-        features = itemsa.serialize();
+        fgroupa.addLayer(layer);
+        features = fgroupa.serialize();
+        fgroupb.clearLayers().resolve(features);
+      });
+
+      mapa.on('draw:edited', function(event){
+        features = fgroupa.serialize();
+        fgroupb.clearLayers().resolve(features);
+      });
+
+      mapa.on('draw:deleted', function(event){
+        features = fgroupa.serialize();
+        fgroupb.clearLayers().resolve(features);
       });
       on = true;
     };
