@@ -99,6 +99,9 @@ footer {
 }
 
 /* page diff */
+.diff .introjs-fixParent.leaflet-control {
+  position: static !important;
+}
 .diff #nav {
   margin: 10px 0;
 }

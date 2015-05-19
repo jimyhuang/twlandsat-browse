@@ -197,7 +197,7 @@ jQuery(document).ready(function($){
     if(a && b && mapa && mapb){
       jQuery('#map-diff').beforeAfter(mapb, mapa, {
         imagePath: '/css/images/',
-        animateIntro : true,
+        animateIntro : false,
         introDelay : 800,
         introDuration : 2000,
         introPosition : .5,
@@ -257,9 +257,8 @@ jQuery(document).ready(function($){
             $after.append('<option value="'+key+'">'+value+'</option>');
           }
         });
-        $(".select-date").animate( { color: '#FF0000' }, 800 );
-        $(".select-date").animate( { color: '#000000' }, 800 );
-
+        $("#select-before").val(b).trigger('change', 'init');
+        $("#select-after").val(a).trigger('change', 'init');
       }
     });
     $("#select-before, #select-after").change(function(e, context){
@@ -382,7 +381,8 @@ jQuery(document).ready(function($){
    */
   var mapStart = function(){
     var intro_start = true;
-    if (window.location.hash){
+    var visited = localStorage.getItem("twlandsat-diff-intro");
+    if (window.location.hash && visited){
       hashResolv();
       intro_start = false;
     }
@@ -411,6 +411,7 @@ jQuery(document).ready(function($){
     $(".check-swirnir").trigger('change', 'init');
 
     if (intro_start){
+      localStorage.setItem("twlandsat-diff-intro", 1);
       intro.start();
     }
   }

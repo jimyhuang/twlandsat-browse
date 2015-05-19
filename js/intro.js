@@ -21,6 +21,11 @@ intro.setOptions({
       element: '.handle-icon',
       position: 'right',
       intro: "你也可以隨時用這個指標將要顯示的區域拉動左右側，以觀察兩個時間點的不同區域範圍"
+    },
+    {
+      element: '.leaflet-bar-part',
+      position: 'right',
+      intro: "或開啟標示地圖的功能，可以標示你感興趣的關注地點！"
     }
   ]
 });
