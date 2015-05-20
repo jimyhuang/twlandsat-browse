@@ -10,7 +10,7 @@ var
 
 var mapa, mapb;
 
-var circleOptions = { color: '#f30', fillOpacity: 0.2 };
+var circleOptions = { color: '#f30', fillOpacity: 0.07 };
 
 L.Marker.prototype.serialize = function(){
   return 'm=' + this.getLatLng().lat + ',' + this.getLatLng().lng;
