@@ -102,9 +102,6 @@ footer {
 .diff .introjs-fixParent.leaflet-control {
   position: static !important;
 }
-.diff .introjs-skipbutton {
-  display: none;
-}
 .diff #nav {
   margin: 10px 0;
 }

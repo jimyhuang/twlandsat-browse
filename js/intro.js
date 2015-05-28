@@ -8,11 +8,11 @@ intro.setOptions({
   doneLabel: "開始吧！",
   steps: [
     {
-      element: '#nav',
+      element: '#select-area',
       intro: "Landsat衛星每16天會經過台灣5個地方，因此你可以從這裡選擇要看哪個位置的地圖。"
     },
     {
-      element: '#select-area',
+      element: '#select-before',
       intro: "選完區域後，已有地圖資料的日期，便會顯示在這裡。將左右兩個日期設定在不同日期，即可看到比較圖"
     },
     {
