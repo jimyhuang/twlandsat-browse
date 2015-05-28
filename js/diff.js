@@ -92,6 +92,9 @@ jQuery(document).ready(function($){
         hashChange(hash);
         legend.addTo(obj);
       }
+      if (e.name=='RGB view'){
+        ga('send', 'event', 'nav', 'click', 'rgb-switch');
+      }
     });
     obj.on('overlayremove', function(e) {
       if (e.name=='SwirNir view'){
@@ -267,8 +270,13 @@ jQuery(document).ready(function($){
       }
     });
     $("#select-before, #select-after").change(function(e, context){
-      ga('send', 'event', 'nav', 'click', 'select-change');
       if(context != 'init'){
+        if($(this).attr('id') == 'select-before'){
+          ga('send', 'event', 'area', 'change', $("#select-before option:selected").text().substr(0, 4));
+        }
+        else{
+          ga('send', 'event', 'area', 'change', $("#select-after option:selected").text().substr(0, 4));
+        }
         var latlng = mapa.getCenter()
         var hash = [
           $area.val(),
@@ -280,12 +288,15 @@ jQuery(document).ready(function($){
         ];
         hashChange(hash);
         if($before.val() != '0' && $after.val() != '0'){
-          ga('send', 'pageview', {'page': '/', 'title': document.title});
+          ga('send', 'pageview', {'page': '/diff/', 'title': $("#area-select option:selected").text()+" - "+$("#select-before option:selected").text()+" vs "+$("#select-after option:selected").text()});
           mapReset();
         }
       }
     });
-    $area.change(function(){
+    $area.change(function(e, context){
+      if(context != 'init'){
+        ga('send', 'event', 'area', 'change', $("#area-select option:selected").val());
+      }
       var hash = [$area.val()];
       hashChange(hash);
     });
