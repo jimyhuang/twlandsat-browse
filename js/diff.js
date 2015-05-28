@@ -138,8 +138,10 @@ jQuery(document).ready(function($){
       mapa.on('draw:created', function(event){
         var layer = event.layer;
         if (layer.getRadius) {
+          ga('send', 'event', 'edit', 'click', 'draw-circle');
           layer.setStyle(circleOptions);
         }
+        ga('send', 'event', 'edit', 'click', 'draw-marker');
         fgroupa.addLayer(layer);
         features = fgroupa.serialize();
         fgroupb.clearLayers().resolve(features);
@@ -161,6 +163,7 @@ jQuery(document).ready(function($){
      * Remove draw control from map
      */
     draw.remove = function(){
+      ga('send', 'event', 'edit', 'click', 'draw-save');
       drawControl.removeFrom(mapa);
       hashChange([]);
       on = false;
@@ -170,6 +173,7 @@ jQuery(document).ready(function($){
      * Toggle draw control on map
      */
     draw.toggle = function(){
+      ga('send', 'event', 'edit', 'click', 'edit-mode');
       return (on ? draw.remove : draw.add)()
     }
 
@@ -211,18 +215,6 @@ jQuery(document).ready(function($){
         $("#map-diff > img").toggle();
         draw.toggle();
       }, '編輯', mapa);
-      $(".leaflet-bar-part").click(function(){
-        ga('send', 'event', 'edit', 'click', 'edit-mode');
-      });
-      $(".leaflet-draw-draw-circle").click(function(){
-        ga('send', 'event', 'edit', 'click', 'draw-circle');
-      });
-      $(".leaflet-draw-draw-marker").click(function(){
-        ga('send', 'event', 'edit', 'click', 'draw-marker');
-      });
-      $(".leaflet-draw-actions").click(function(){
-        ga('send', 'event', 'edit', 'click', 'draw-save');
-      });
     }
   }
 
