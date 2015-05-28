@@ -211,6 +211,18 @@ jQuery(document).ready(function($){
         $("#map-diff > img").toggle();
         draw.toggle();
       }, '編輯', mapa);
+      $(".leaflet-bar-part").click(function(){
+        ga('send', 'event', 'edit', 'click', 'edit-mode');
+      });
+      $(".leaflet-draw-draw-circle").click(function(){
+        ga('send', 'event', 'edit', 'click', 'draw-circle');
+      });
+      $(".leaflet-draw-draw-marker").click(function(){
+        ga('send', 'event', 'edit', 'click', 'draw-marker');
+      });
+      $(".leaflet-draw-actions").click(function(){
+        ga('send', 'event', 'edit', 'click', 'draw-save');
+      });
     }
   }
 
@@ -238,6 +250,7 @@ jQuery(document).ready(function($){
 
     // chanage action
     $copy.click(function(){
+      ga('send', 'event', 'share', 'select', 'copy');
       $(this).select();
     });
     $($area).change(function(e, context){
@@ -300,7 +313,7 @@ jQuery(document).ready(function($){
    * Help function for leaflet drag event
    */
   var mapMove = function(){
-    ga('send', 'event', 'nav', 'click', 'map-move');
+    ga('send', 'event', 'nav', 'drag-drop', 'map-move');
     var latlng = mapa.getCenter()
     var hash = [];
     hash[3] = mapa.getZoom();
@@ -421,6 +434,17 @@ jQuery(document).ready(function($){
   jQuery.getJSON('http://static.jimmyhub.net/nav.json?callback=?', function(json){
     nav = json;
     mapStart();
+
+    // google analytics tracking
+    $(".ui-draggable").on('dragstart', function(){
+      ga('send', 'event', 'nav', 'drag-drop', 'diff-slide');
+    })
+    $(".leaflet-control-zoom-out").click(function(){
+      ga('send', 'event', 'nav', 'click', 'zoom-out');
+    });
+    $(".leaflet-control-zoom-in").click(function(){
+      ga('send', 'event', 'nav', 'click', 'zoom-in');
+    });
   });
 });
 
