@@ -288,7 +288,7 @@ jQuery(document).ready(function($){
         ];
         hashChange(hash);
         if($before.val() != '0' && $after.val() != '0'){
-          ga('send', 'pageview', {'page': '/diff/', 'title': $("#area-select option:selected").text()+" - "+$("#select-before option:selected").text()+" vs "+$("#select-after option:selected").text()});
+          ga('send', 'pageview', {'page': location.pathname + location.search  + location.hash, 'title': $("#area-select option:selected").text()+" - "+$("#select-before option:selected").text()+" vs "+$("#select-after option:selected").text()});
           mapReset();
         }
       }
