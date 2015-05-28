@@ -218,6 +218,10 @@ jQuery(document).ready(function($){
         $("#map-diff > img").toggle();
         draw.toggle();
       }, '編輯', mapa);
+
+      L.easyButton('fa fa-share-alt', function(){
+        $.colorbox({inline: true, href:"#permalink", width:'70%'});
+      }, '分享', mapa);
     }
   }
 
@@ -246,6 +250,7 @@ jQuery(document).ready(function($){
     // chanage action
     $copy.click(function(){
       ga('send', 'event', 'share', 'select', 'copy');
+      $.colorbox({inline: true, href:"#permalink", width:'70%'});
       $(this).select();
     });
     $($area).change(function(e, context){
@@ -448,6 +453,14 @@ jQuery(document).ready(function($){
     $(".leaflet-control-zoom-in").click(function(){
       ga('send', 'event', 'nav', 'click', 'zoom-in');
     });
+  });
+
+  // others 
+  $(document).bind('cbox_complete', function(){
+    $("#copy").select();
+  });
+  $("#copy-link").click(function(){
+    $("#copy").select();
   });
 });
 

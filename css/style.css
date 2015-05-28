@@ -111,6 +111,9 @@ footer {
 .diff .map {
   height: 300px;
 }
+.diff #copy-link {
+  cursor: pointer;
+}
 
 /* developer */
 .developer .twlandsat {

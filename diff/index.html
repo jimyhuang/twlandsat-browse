@@ -9,6 +9,7 @@
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.2.3/leaflet.draw.css" />
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/css/bootstrap.min.css">
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/jquery.colorbox/1.4.33/example2/colorbox.min.css">
   <link rel="stylesheet" href="/vendor/introjs/introjs.min.css" />
   <link rel="stylesheet" href="/vendor/introjs/introjs-nassim.css" />
   <link rel="stylesheet" href="/css/style.css" />
@@ -19,6 +20,7 @@
   <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery.colorbox/1.4.33/jquery.colorbox-min.js"></script>
   <script type="text/javascript" src="/vendor/jquery.ui.touch-punch/jquery.ui.touch-punch.min.js"></script>
   <script type="text/javascript" src="/vendor/jquery.beforeafter-map/jquery.beforeafter-map-0.11.js"></script>
   <script type="text/javascript" src="/vendor/introjs/intro.min.js"></script>
@@ -75,8 +77,9 @@
       <div id="after" class="map"></div>
     </div>
     <div class="input-group" id="permalink">
-      <span class="input-group-addon" id="input-copy">@</span>
-      <input type="text" name="copy" id="copy" class="form-control" placeholder="permalink here" aria-describedby="input-copy" />
+      <span class="input-group-addon" id="popup-link">分享地圖</span>
+      <input type="text" name="copy" id="copy" class="form-control" placeholder="permalink here" aria-label="" />
+      <span class="input-group-addon" id="copy-link"><i class="fa fa-files-o">Ctrl+C 複製</i></span>
     </div>
     <script type="text/javascript" src="/js/intro.js"></script>
     <script type="text/javascript" src="/js/diff.js"></script>
