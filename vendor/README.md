@@ -8,3 +8,4 @@ Under this directory, each project have it's own license agreement, read first b
   - jquery.ui.touch-punch - This code is dual licensed under the MIT or GPL Version 2 licenses, http://touchpunch.furf.com/
   - leaflet-button-control - https://gist.github.com/ejh/2935327
   - leaflet-layer-player - GPL V3, https://github.com/jimyhuang/leaflet-layer-player
+  - sidr - MIT License - http://opensource.org/licenses/MIT
