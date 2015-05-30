@@ -42,7 +42,11 @@ function generate_animation(){
   var result={};
   result['subject']=$("#animation_title").val();
   result['rows']=animationRows;
-  console.log(JSON.stringify(result));
+  result['zoom']=mapa.getZoom();
+  result['center']=mapa.getCenter();
+  console.log(JSON.stringify(result))
+  return encode_result=encodeURIComponent(JSON.stringify(result));
+  
   /*$.ajax({
     type: 'POST',
     url: "http://nspo.g0v.tw/bin/animate_submit.php",
@@ -50,6 +54,23 @@ function generate_animation(){
   });*/
 
   //call server to generate output file
+}
+
+function preview(){
+  var display=$( "#previewVideo").attr('style');
+  console.log(display);
+  if(display.indexOf('display:block')>-1){
+    $( "#previewVideo").attr("style", "display:none");
+    return;  
+  }
+      
+  result=generate_animation();
+  console.log(result);
+  preview_src = "http://localhost/selfmaker/preview.html#"+result; 
+  console.log(preview_src);
+  //document.write('<iframe height="450"  allowTransparency="true" frameborder="0" scrolling="yes" style="width:100%;" src="'+preview_src+'" type= "text/javascript"></iframe>');  
+  $( "#previewVideo" ).attr( "src", preview_src );
+  $( "#previewVideo").attr("style", "display:block");
 }
 
 function remove_animation(){
