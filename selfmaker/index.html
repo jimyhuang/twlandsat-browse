@@ -80,6 +80,7 @@
       <span class="input-group-addon" id="input-copy">@</span>
       <input type="text" name="copy" id="copy" class="form-control" placeholder="permalink here" aria-describedby="input-copy" />
     </div>
+    <div id="sidr">
     <div id="animation-maker">
       <div class="row">
         <div id="animation-input">
@@ -101,6 +102,7 @@
         <button type="button" class="btn btn-default btn" onclick="remove_animation()"><span>刪除</span></button>
       </div>
     </div>
+    </div><!-- end sidr -->
     <script type="text/javascript" src="/js/intro.js"></script>
     <script type="text/javascript" src="/js/animatemaker.js"></script>
     <script type="text/javascript" src="/vendor/leaflet-button-control/leaflet-button-control.js"></script>
@@ -109,8 +111,7 @@
       jQuery(document).ready(function($){
         $('#toggle-editor').sidr({
           name: 'sidr-right',
-          side: 'right',
-          source: '#animation-maker'
+          side: 'right'
         });
       });
     </script>
@@ -122,7 +123,6 @@
     </p>
   </footer>
 </div>
-<div id="sidr"></div>
 <script>
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
