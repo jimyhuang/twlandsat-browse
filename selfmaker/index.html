@@ -106,9 +106,11 @@
     <script type="text/javascript" src="/vendor/leaflet-button-control/leaflet-button-control.js"></script>
     <script type="text/javascript" src="/vendor/sidr/jquery.sidr.min.js"></script>
     <script>
-      $('#animation-menu').sidr({
-        name: 'sidr-right',
-        side: 'right'
+      jQuery(document).ready(function($){
+        $('#animation-menu').sidr({
+          name: 'sidr-right',
+          side: 'right'
+        });
       });
     </script>
   </div>
