@@ -66,7 +66,7 @@ function preview(){
       
   result=generate_animation();
   console.log(result);
-  preview_src = "selfmaker/preview.html#"+result; 
+  preview_src = "/selfmaker/preview.html#"+result; 
   console.log(preview_src);
   //document.write('<iframe height="450"  allowTransparency="true" frameborder="0" scrolling="yes" style="width:100%;" src="'+preview_src+'" type= "text/javascript"></iframe>');  
   $( "#previewVideo" ).attr( "src", preview_src );
