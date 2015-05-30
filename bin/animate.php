@@ -24,7 +24,7 @@ if(file_exists($log)){
           // generte static image
           $img_url = 'http://i.jimmyhub.net/shot/'.$v;
           $gen_img = is_file($img_url);
-          $decoded->image = $img;
+          $decoded->image = $img_url;
           $success = file_put_contents($base."$name.json", json_encode($decoded));
           if($success){
             `echo "" > $log`;

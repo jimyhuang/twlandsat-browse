@@ -383,13 +383,6 @@ jQuery(document).ready(function($){
   }
 
   /**
-   * Event trigger after end of map 
-   */
-  intro.oncomplete(function() {
-    window.setTimeout(mapReset, 600);
-  });
-
-  /**
    * Helper function for leaflet legend
    */
   var swirnirLegend = function(){
@@ -409,12 +402,6 @@ jQuery(document).ready(function($){
    * Main function for start map. callback after json loaded
    */
   var mapStart = function(){
-    var intro_start = true;
-    if (window.location.hash){
-      hashResolv();
-      intro_start = false;
-    }
-    
     var resizing = 0;
     $(window).resize(function(){
       if(!resizing){
@@ -438,9 +425,7 @@ jQuery(document).ready(function($){
     $("#select-after").val(a).trigger('change', 'init');
     $(".check-swirnir").trigger('change', 'init');
     
-    if (intro_start){
-      intro.start();
-    }
+    intro.start();
   }
 
   // main

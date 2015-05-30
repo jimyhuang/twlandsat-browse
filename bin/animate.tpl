@@ -100,8 +100,7 @@ jQuery(document).ready(function($){
     tile: 'http://l1.jimmyhub.net/processed/{slide.title}/tiles-rgb/{z}/{x}/{y}.png',
     tms: true,
     attribution: '<a href="http://landsat.gsfc.nasa.gov/">USGS/NASA Landsat</a>. Imagery from <a href="http://nspo.g0v.tw">TWLandsat',
-    playInterval: 1000,
-    loadingDelay: 4000,
+    playInterval: 650,
     chart: true
   });
   baseMap.addControl(layerplayer);
