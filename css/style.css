@@ -192,6 +192,44 @@ span.balinks:last-child a:before{
 .legend .green i { color: #08EE66; }
 .legend .deep-green i { color: #0F756A; }
 
-#sortable { list-style-type: none; margin: 0; padding: 0; width: 60%; }
-#sortable li { margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1em; font-size: 1em; height: 4em; }
-#sortable li span { position: absolute; margin-left: -1.3em; }
+/* selfmaker */
+.selfmaker a.btn {
+  margin-bottom: 5px; 
+  margin-left: 3px;
+  font-size: 15px;
+}
+.selfmaker #animation-maker {
+  z-index: 2000;
+  position: fixed;
+  top: 77px;
+  right: 0px;
+  width: 33%;
+  min-width: 350px;
+  background: rgba(255, 255, 255, 0.7);
+  padding: 10px 30px;
+  border-radius: 8px 0 0 8px;
+  border: 1px solid #AEACAC;
+  border-width: 1px 0px 1px 1px;
+}
+#animation-maker .fa-compress {
+  position: absolute;
+  z-index:2001;
+  top: 10px;
+  right: 13px;
+  cursor: pointer;
+  font-size: 20px;
+}
+#animation-toggle {
+  cursor: pointer;
+  z-index: 2000;
+  position: fixed;
+  top: 77px;
+  right: 10px;
+  width: 37px;
+  padding: 2px;
+  font-size: 20px;
+  color: #777;
+  border-radius: 5px;
+  border: 1px solid #AEACAC;
+  text-align: center;
+}

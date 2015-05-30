@@ -12,7 +12,6 @@
   <link rel="stylesheet" href="/vendor/introjs/introjs-nassim.css" />
   <link rel="stylesheet" href="/css/style.css" />
   <link rel="stylesheet" href="/vendor/jquery-ui/jquery-ui.css" />
-  <link rel="stylesheet" href="/vendor/sidr/jquery.sidr.dark.css">
 
   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.3/leaflet.js"></script>
   <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
@@ -70,7 +69,6 @@
 <div id="content" class="container-fluid">
   <div class="row">
     <div id="nav">
-      <a id="toggle-editor" href="#animation-maker">Toggle Editor</a>
     </div>
     <div id="map-diff">
       <div id="before" class="map"></div>
@@ -80,38 +78,44 @@
       <span class="input-group-addon" id="input-copy">@</span>
       <input type="text" name="copy" id="copy" class="form-control" placeholder="permalink here" aria-describedby="input-copy" />
     </div>
-    <div id="sidr">
+    <div id="animation-toggle"><i class="fa fa-pencil"></i></div>
     <div id="animation-maker">
+      <i class="fa fa-compress"></i>
       <div class="row">
         <div id="animation-input">
           <div class="input-group">
             <span class="input-group-addon">動畫標題：</span>
-            <input type="text" name="animation_title" id="animation_title" placeholder="animation_title" aria-describedby="sizing-addon1"/>
+            <input type="text" name="animation_title" id="animation_title" placeholder="請輸入動畫標題" aria-describedby="sizing-addon1"/>
           </div>
           
-          <ul id="sortable">
-              <!--li class="ui-state-default">
-                <input type="checkbox" class="ui-icon ui-icon-arrowthick-2-n-s"><label>item1</label></input>
-                <input type="text" />
-              </li--> 
-          </ul> 
         </div>
       </div>
-      <div class="animation-control">
+      <div class="row">
+        <ul id="sortable">
+            <!--li class="ui-state-default">
+              <input type="checkbox" class="ui-icon ui-icon-arrowthick-2-n-s"><label>item1</label></input>
+              <input type="text" />
+            </li--> 
+        </ul> 
+      </div>
+      <div class="row animation-control">
         <button type="button" class="btn btn-success btn" onclick="generate_animation()"><span>產生動畫</span></button>
         <button type="button" class="btn btn-default btn" onclick="remove_animation()"><span>刪除</span></button>
       </div>
     </div>
-    </div><!-- end sidr -->
     <script type="text/javascript" src="/js/intro.js"></script>
     <script type="text/javascript" src="/js/animatemaker.js"></script>
     <script type="text/javascript" src="/vendor/leaflet-button-control/leaflet-button-control.js"></script>
-    <script type="text/javascript" src="/vendor/sidr/jquery.sidr.min.js"></script>
     <script>
       jQuery(document).ready(function($){
-        $('#toggle-editor').sidr({
-          name: 'sidr-right',
-          side: 'right'
+        $("#animation-toggle").hide();
+        $("#animation-maker .fa-compress").click(function(){
+          $("#animation-maker").slideUp();
+          $("#animation-toggle").show();
+        });
+        $("#animation-toggle").click(function(){
+          $("#animation-maker").slideDown();
+          $("#animation-toggle").hide();
         });
       });
     </script>
