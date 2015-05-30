@@ -26,12 +26,12 @@ function generate_animation(){
   */
 
   var animationRows = [];
-  $("#sortable li input[type=text]").each(function() {
+  $("#sortable li input[type=number]").each(function() {
     var date=$(this).attr("id"); 
     date=date.substr(5);
     var title=animationInfo[date];
     var data=$(this).val();
-    console.log("generate animation ",date, title, data);
+    // console.log("generate animation ",date, title, data);
     var info={};
     info['title']=title;
     info['date']=date;
@@ -41,10 +41,10 @@ function generate_animation(){
 
   var result={};
   result['subject']=$("#animation_title").val();
-  result['rows']=animationRows;
-  result['zoom']=mapa.getZoom();
+  result['rows'] = animationRows;
+  result['zoom'] = mapa.getZoom();
   result['center']=mapa.getCenter();
-  console.log(JSON.stringify(result))
+  // console.log(JSON.stringify(result))
   return encode_result=encodeURIComponent(JSON.stringify(result));
   
   /*$.ajax({
@@ -57,23 +57,16 @@ function generate_animation(){
 }
 
 function preview(){
-  var display=$( "#previewVideo").attr('style');
-  console.log(display);
-  if(display.indexOf('display:block')>-1){
-    $( "#previewVideo").attr("style", "display:none");
-    return;  
-  }
-      
-  result=generate_animation();
+  var result = generate_animation();
   preview_src = "/selfmaker/preview.html#"+result; 
   $.colorbox({href: preview_src, iframe: true, width:'80%', height:'80%'})
 }
 
 function remove_animation(){
-  $("#sortable li input").each(function() {
+  $("#sortable li input[type=checkbox]").each(function() {
       var select=$(this).prop("checked"); 
       var date=$(this).attr("id");  
-      console.log(date, select)
+      // console.log(date, select)
       if(select){
           var date=$(this).attr("id");
           $(this).parent().remove();
@@ -204,43 +197,52 @@ jQuery(document).ready(function($){
    function genAnimationItem(date){
       var $input=$('<li class="ui-state-default"></li>');
       $input.attr("id","li_"+date);
-      var $checkbox=$('<input type="checkbox" class="ui-icon ui-icon-arrowthick-2-n-s"/>');
+      $input.hover(function(){
+        $(this).addClass("hover");
+      }, function(){
+        $(this).removeClass("hover");
+      });
+
+      var $checkbox=$('<input type="checkbox" />');
       $checkbox.attr("id", "checkbox_"+date);
+      $checkbox.on('click', function(){
+        var checked = $("#animation-maker input[type=checkbox]:checked");
+        if(checked.length > 0){
+          $("#animation-delete").addClass("btn-danger").removeAttr("disabled");
+        }
+        else{
+          $("#animation-delete").removeClass("btn-danger").attr("disabled", true);
+        }
+      });
+
       var $checklabel=$('<label></label>');
       $checklabel.attr("for", date);
-      var $inputdata=$('<input type="text">');
+      var $inputdata=$('<input type="number" placeholder="直條圖數值" min="1" max="100" />');
       $inputdata.attr("id", "text_"+date);
       $checklabel.text(date);
-      $input.append($checkbox);
-      $input.append($checklabel);
+      $input.append('<i class="fa fa-arrows-v"></i>');
       $input.append($inputdata);
-      console.log('genAnimationItem', date);
+      $input.append($checklabel);
+      $input.append($checkbox);
+      // console.log('genAnimationItem', date);
       $("#sortable").append($input);
    }
 
-   function add_beforebutton(){
-      var imgname=$("#select-before").val();
-      var before_date=$("#select-before option:selected").text();
-      console.log("someone clicked my before ", imgname, before_date);
-      animationInfo[before_date]=imgname;
-      genAnimationItem(before_date);
-   }
-
-   function add_afterbutton(){
-      var imgname=$("#select-after").val();
-      var after_date=$("#select-after option:selected").text();
-      console.log("someone clicked my after ", imgname, after_date);
-      animationInfo[after_date]=imgname;
-      genAnimationItem(after_date);
+   function add_slide(id){
+      var imgname=$("#"+id).val();
+      var date=$("#"+id+" option:selected").text();
+      animationInfo[date]=imgname;
+      genAnimationItem(date);
+      $("#animation-preview").removeAttr('disabled').addClass('btn-success');
   }
 
   var navSetup = function(){
     // form element
     var $area = $('<select id="select-area">');
     var $before = $('<select id="select-before" class="select-date">');
-    var $before_add =$('<a class="btn btn-info btn-xs" role="button">add</a>')
+    var $before_add =$('<a class="btn btn-info btn-xs" role="button"><i class="fa fa-plus"></i></a>')
     var $after = $('<select id="select-after" class="select-date">');
-    var $after_add =$('<a class="btn btn-info btn-xs" role="button"><span>add</span></button>')
+    var $after_add =$('<a class="btn btn-info btn-xs" role="button"><i class="fa fa-plus"></i></a>')
     $("#nav")
       .append('<i class="fa fa-location-arrow"></i>')
       .append($area)
@@ -252,10 +254,10 @@ jQuery(document).ready(function($){
       .append($after_add);
     var $copy = $('#copy');
     $after_add.click(function(){
-      add_afterbutton();
+      add_slide('select-after');
     });
     $before_add.click(function(){
-      add_beforebutton();
+      add_slide('select-before');
     });
 
     // setup options
@@ -446,6 +448,12 @@ jQuery(document).ready(function($){
   jQuery.getJSON('http://static.jimmyhub.net/nav.json', function(json){
     nav = json;
     mapStart();
+    $("#animation-preview").click(function(){
+      preview();
+    });
+    $("#animation-delete").click(function(){
+      remove_animation();
+    });
   });
 });
 

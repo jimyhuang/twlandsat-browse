@@ -193,6 +193,12 @@ span.balinks:last-child a:before{
 .legend .deep-green i { color: #0F756A; }
 
 /* selfmaker */
+.selfmaker #nav .fa-plus {
+  margin-left: 0;
+}
+.selfmaker #nav a.btn {
+  text-align: center;
+}
 .selfmaker a.btn {
   margin-bottom: 5px; 
   margin-left: 3px;
@@ -218,6 +224,40 @@ span.balinks:last-child a:before{
   right: 13px;
   cursor: pointer;
   font-size: 20px;
+}
+#animation-maker .row {
+  margin: 3px 0;
+}
+#animation-maker ul {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+}
+#animation-maker ul li {
+  list-style-type: none;
+  padding: 0;
+  border: 0;
+  margin: 5px;
+  background: transparent;
+  cursor: move;
+}
+#animation-maker ul li.hover {
+  background: #D7D5C5;
+}
+#animation-maker ul li *{
+  padding: 0 2px;
+}
+#animation-maker input[type=number] {
+  width: 100px;
+}
+#animation-maker input[type=checkbox] {
+  background: rgba(0, 0, 0, 0);
+  margin: 0;
+  padding: 0;
+  display: inline-block;
+}
+#animation-maker button {
+  margin-right: 5px;
 }
 #animation-toggle {
   cursor: pointer;

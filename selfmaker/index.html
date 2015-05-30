@@ -101,14 +101,12 @@
         </ul> 
       </div>
       <div class="row animation-control">
-        <button type="button" class="btn btn-success btn" onclick="generate_animation()"><span>產生動畫</span></button>
-        <button type="button" class="btn btn-default btn" onclick="remove_animation()"><span>刪除</span></button>
-        <a href="#" data-rel="popup" data-position-to="window" class="ui-btn ui-corner-all ui-shadow ui-btn-inline" onclick="preview()">預覽</a>
-        <iframe id="previewVideo" width="497" height="298" seamless="" style="display:none;"></iframe>
+        <button id="animation-preview" type="button" class="btn" disabled="disabled">預覽</a>
+        <button id="animation-delete" type="button" class="btn" disabled="disabled">刪除</button>
       </div>
     </div>
-    <script type="text/javascript" src="/js/intro.js"></script>
-    <script type="text/javascript" src="/js/animatemaker.js"></script>
+    <script type="text/javascript" src="/selfmaker/intro.js"></script>
+    <script type="text/javascript" src="/selfmaker/animatemaker.js"></script>
     <script type="text/javascript" src="/vendor/leaflet-button-control/leaflet-button-control.js"></script>
     <script>
       jQuery(document).ready(function($){
