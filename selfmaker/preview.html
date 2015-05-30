@@ -82,6 +82,7 @@
           console.log(url);
           var name = CryptoJS.MD5(url);
           if(name){
+            name = name.toString();
             name = name.substr(0, 8);
           }
           $.get(url);
