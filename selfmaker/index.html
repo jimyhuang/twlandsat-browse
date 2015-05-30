@@ -77,23 +77,25 @@
       <span class="input-group-addon" id="input-copy">@</span>
       <input type="text" name="copy" id="copy" class="form-control" placeholder="permalink here" aria-describedby="input-copy" />
     </div>
-    <div class="row">
-      <div id="animation-input">
-        <div class="input-group">
-          <span class="input-group-addon">動畫標題：</span>
-          <input type="text" name="animation_title" id="animation_title" placeholder="animation_title" aria-describedby="sizing-addon1"/>
+    <div id="maker">
+      <div class="row">
+        <div id="animation-input">
+          <div class="input-group">
+            <span class="input-group-addon">動畫標題：</span>
+            <input type="text" name="animation_title" id="animation_title" placeholder="animation_title" aria-describedby="sizing-addon1"/>
+          </div>
+          <ul id="sortable">
+              <!--li class="ui-state-default">
+                <input type="checkbox" class="ui-icon ui-icon-arrowthick-2-n-s"><label>item1</label></input>
+                <input type="text" />
+              </li--> 
+          </ul> 
         </div>
-        <ul id="sortable">
-            <!--li class="ui-state-default">
-              <input type="checkbox" class="ui-icon ui-icon-arrowthick-2-n-s"><label>item1</label></input>
-              <input type="text" />
-            </li--> 
-        </ul> 
       </div>
-    </div>
-    <div>
-      <button type="button" class="btn btn-primary btn-lg" onclick="generate_animation()"><span>產生動畫</span></button>
-      <button type="button" class="btn btn-primary btn-lg" onclick="remove_animation()"><span>刪除</span></button>
+      <div>
+        <button type="button" class="btn btn-primary btn-lg" onclick="generate_animation()"><span>產生動畫</span></button>
+        <button type="button" class="btn btn-primary btn-lg" onclick="remove_animation()"><span>刪除</span></button>
+      </div>
     </div>
     <script type="text/javascript" src="/js/intro.js"></script>
     <script type="text/javascript" src="/js/animatemaker.js"></script>
