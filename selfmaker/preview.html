@@ -21,6 +21,7 @@
   <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
   <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
   <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.min.js"></script>
+  <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/md5.js"></script> 
 </head>
 <body class="animate">
 	<div id="content" class="container-fluid">
@@ -32,7 +33,14 @@
 	    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
 	    <script type="text/javascript">
 	    var hashtag = window.location.hash.replace('#', '');
-	    var json = decodeURIComponent(hashtag);
+      if(hashtag){
+	      var json = decodeURIComponent(hashtag);
+      }
+      else
+      if(window.location.search){
+        var search = window.location.search.replace('?l=', '');
+	      var json = decodeURIComponent(search);
+      }
 	    var slides = JSON.parse(json);
 	    </script>
 	    <script type="text/javascript">
@@ -64,6 +72,20 @@
 			    chart: true
 			  });
 			  baseMap.addControl(layerplayer);
+        var $save = $('<button id="animation-save" type="button" class="btn-warning btn-lg" style="position:absolute; top:10px; left:48%; z-index:5000;">儲存</a>');
+        if(window.location.hash){
+          $save.appendTo('body');
+        }
+
+        $("#animation-save").click(function(){
+          var url = window.location.origin + window.location.pathname + '?l=' + window.location.hash.replace(/^#/, '');
+          console.log(url);
+          var name = CryptoJS.MD5(url);
+          if(name){
+            name = name.substr(0, 8);
+          }
+          $.get(url);
+        });
 			});
 	    </script>
 	  </div>
