@@ -9,4 +9,4 @@ processed
 pull.php
 *.json
 
-animate/*
+animate/*.js
