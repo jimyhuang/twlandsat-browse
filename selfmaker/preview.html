@@ -72,20 +72,33 @@
 			    chart: true
 			  });
 			  baseMap.addControl(layerplayer);
-        var $save = $('<button id="animation-save" type="button" class="btn-warning btn-lg" style="position:absolute; top:10px; left:48%; z-index:5000;">儲存</a>');
+        var $save = $('<div id="animation-wrap" style="position:absolute; top:10px; left:48%; z-index:5000;"><button id="animation-save" type="button" class="btn-warning btn-lg">儲存</a></div>');
         if(window.location.hash){
           $save.appendTo('body');
         }
 
+        var visited = localStorage.getItem("twlandsat-diff-intro");
         $("#animation-save").click(function(){
           var url = window.location.origin + window.location.pathname + '?l=' + window.location.hash.replace(/^#/, '');
-          console.log(url);
           var name = CryptoJS.MD5(url);
-          if(name){
-            name = name.toString();
-            name = name.substr(0, 8);
-          }
+          name = name.toString();
+          name = name.substr(0, 8);
+          localStorage.setItem("twlandsat-selfmaker", window.location.hash.replace(/^#/, ''));
           $.get(url);
+          $("#animation-wrap").html('儲存成功，系統處理縮圖，請在 <span id="countdown">60</span> 秒後存取下列網址！<input type="text" id="animation-input">');
+          var counter = setInterval(function(){
+            var c = parseInt($("#countdown").text());
+            c--;
+            $("#countdown").html(c);
+            if(c <= 0){
+              clearInterval(counter);
+              return;
+            }
+          }, 1000);
+          $("#animation-input").val(window.location.origin + '/animate/' + name + '.html');
+          $("#animation-input").css({"width":"100%", "border":"0px", "text-align": "center"});
+          $("#animation-input").click(function(){ $(this).select(); });
+          $("#animation-wrap").css({"width":"500px", "background":"#FFF", "border": "1px solid #777", "text-align":"center", "margin-left": "-250px", "border-radius":"5px", "opacity":"0.8"});
         });
 			});
 	    </script>
