@@ -41,6 +41,7 @@ function generate_animation(){
 
   var result={};
   result['subject']=$("#animation_title").val();
+  result['arthor']=$("#arthor").val();
   result['rows'] = animationRows;
   result['zoom'] = mapa.getZoom();
   result['center']=mapa.getCenter();
