@@ -41,11 +41,11 @@ function generate_animation(){
 
   var result={};
   result['subject']=$("#animation_title").val();
-  result['arthor']=$("#arthor").val();
+  result['author']=$("#author").val();
   result['rows'] = animationRows;
   result['zoom'] = mapa.getZoom();
   result['center']=mapa.getCenter();
-  // console.log(JSON.stringify(result))
+  //console.log(JSON.stringify(result))
   return encode_result=encodeURIComponent(JSON.stringify(result));
   
   /*$.ajax({
