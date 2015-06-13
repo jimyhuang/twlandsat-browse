@@ -62,7 +62,7 @@ foreach($files as $f){
     }
 
     // for animate/index.html
-    if(empty($json->author)){
+    if(!empty($json->author)){
       $row[] = '<div class="col-md-6 placeholder">
       <a href="'.$url.'"><img src="'.$json->image.'" class="img-responsive"></a>
       <h4><a href="'.$url.'">'.$json->subject.'</a></h4><h4>'.$json->author.'</h4>
