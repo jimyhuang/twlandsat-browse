@@ -54,7 +54,7 @@
             <li><a href="/developer.html">參與</a></li>
           </ul>
           <ul class="nav navbar-nav navbar-right share">
-            <li><div class="fb-like" data-href="http://nspo.g0v.tw/" data-width="180" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div></li>
+            <li><div class="fb-like" data-href="http://nspo.g0v.tw/animate/{name}.html" data-width="180" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div></li>
           </ul>
         </div>
       </div>

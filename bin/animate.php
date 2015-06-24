@@ -55,6 +55,7 @@ foreach($files as $f){
           '{image}' => $json->image,
           '{url}' => $url,
           '{json}' => json_encode($json),
+          '{name}' => $name,
         );
         $html = str_replace(array_keys($replace), $replace, $tpl);
         file_put_contents($base.$name.'.html', $html);
