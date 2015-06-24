@@ -79,14 +79,15 @@
 
         var visited = localStorage.getItem("twlandsat-diff-intro");
         $("#animation-save").click(function(){
-          var url = window.location.origin + window.location.pathname + '?l=' + window.location.hash.replace(/^#/, '');
-          $.get(url);
+          var url = window.location.origin + window.location.pathname;
+          var data = window.location.hash.replace(/^#/, '');
+          localStorage.setItem("twlandsat-selfmaker", data);
+          $.post(url, data);
 
-          var name = CryptoJS.MD5(url);
+          var name = CryptoJS.MD5(window.location.href);
           name = name.toString();
           name = name.substr(0, 8);
           var permalink = window.location.origin + '/animate/' + name + '.html';
-          localStorage.setItem("twlandsat-selfmaker", window.location.hash.replace(/^#/, ''));
 
           $("#animation-wrap").html('<div>系統處理縮圖中，請在 <span id="countdown">60</span> 秒後存取下列網址.. <i class="fa fa-rocket fa-spin"></i></div><input type="text" id="animation-input">');
           var counter = setInterval(function(){
@@ -94,7 +95,7 @@
             c--;
             $("#countdown").html(c);
             if(c <= 0){
-              $("#animation-wrap div").html('<a href="'+permalink+'"><i class="fa fa-rocket"></i>儲存成功，立刻觀看動畫</a>');
+              $("#animation-wrap div").html('<a href="'+permalink+'" target="_blank"><i class="fa fa-rocket"></i>儲存成功，立刻觀看動畫</a>');
               clearInterval(counter);
               return;
             }
