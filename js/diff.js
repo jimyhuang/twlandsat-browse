@@ -43,7 +43,7 @@ jQuery(document).ready(function($){
     var obj;
     // create base params
     var attribution = '<a href="http://landsat.gsfc.nasa.gov/">USGS/NASA Landsat</a>. Imagery <a href="http://nspo.g0v.tw">賽豬公上太空計畫</a>';
-    var maxZoom = 13;
+    var maxZoom = 12;
     var layer = name == 'before' ? l[0] : l[1];
 
     // randomm server
@@ -65,7 +65,7 @@ jQuery(document).ready(function($){
     obj = new L.map(name, {
       center: c,
       zoom: z,
-      maxZoom: 13,
+      maxZoom: 12,
       layers: defaultmap
     });
 
