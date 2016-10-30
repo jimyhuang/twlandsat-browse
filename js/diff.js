@@ -94,6 +94,10 @@ jQuery(document).ready(function($){
       }
       if (e.name=='RGB view'){
         ga('send', 'event', 'nav', 'click', 'rgb-switch');
+        (name == 'before') ? l[0] = 'rgb' : l[1] = 'rgb';
+        var hash = [];
+        hash[6] = l.join('-');
+        hashChange(hash);
       }
     });
     obj.on('overlayremove', function(e) {
