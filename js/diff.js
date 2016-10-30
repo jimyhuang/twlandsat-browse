@@ -275,8 +275,11 @@ jQuery(document).ready(function($){
             $after.append('<option value="'+key+'">'+value+'</option>');
           }
         });
-        $("#select-before").val(b).trigger('change', 'init');
-        $("#select-after").val(a).trigger('change', 'init');
+        var default_key = $before.find('option:eq(0)').val();
+        $before.val(default_key);
+        $after.val(default_key);
+        $("#select-before").trigger('change', context);
+        $("#select-after").trigger('change', context);
       }
     });
     $("#select-before, #select-after").change(function(e, context){
