@@ -254,9 +254,14 @@ jQuery(document).ready(function($){
       $(this).select();
     });
     $($area).change(function(e, context){
+      if(context != 'init'){
+        ga('send', 'event', 'area', 'change', $("#area-select option:selected").val());
+      }
+      var hash = [$area.val()];
+      hashChange(hash);
       ga('send', 'event', 'nav', 'click', 'select-change');
-      $before.find('option[value!=0]').remove();
-      $after.find('option[value!=0]').remove();
+      $before.find('option').remove();
+      $after.find('option').remove();
       if(nav[$(this).val()] !== 'undefined'){
         var maps = nav[$(this).val()];
         if(context != 'init'){
@@ -297,13 +302,6 @@ jQuery(document).ready(function($){
           mapReset();
         }
       }
-    });
-    $area.change(function(e, context){
-      if(context != 'init'){
-        ga('send', 'event', 'area', 'change', $("#area-select option:selected").val());
-      }
-      var hash = [$area.val()];
-      hashChange(hash);
     });
   }
 
