@@ -53,7 +53,7 @@ jQuery(document).ready(function($){
       //attribution: attribution,
       maxZoom: maxZoom,
     });
-    var swirnirview = L.tileLayer('http://l'+server+'.jimmyhub.net/processed/'+landsat+'/tiles-swirnir'+'/{z}/{x}/{y}.png', {
+    var swirnirview = L.tileLayer('http://l'+server+'.jimmyhub.net/processed/'+landsat+'/tiles-ndvi'+'/{z}/{x}/{y}.png', {
       tms: true,
       attribution: attribution,
       maxZoom: maxZoom,
@@ -74,17 +74,17 @@ jQuery(document).ready(function($){
     };
     var overlayMaps = {
       "RGB view": rgbview,
-      "SwirNir view": swirnirview
+      "NDVI view": swirnirview
     };
 
     obj.on('dragend', mapMove);
     L.control.layers(baseLayers, overlayMaps).addTo(obj);
     var legend = L.control({position: 'bottomright'});
     legend.onAdd = function () {
-      return swirnirLegend();
+      // return swirnirLegend();
     };
     obj.on('overlayadd', function(e) {
-      if (e.name=='SwirNir view'){
+      if (e.name=='NDVI view'){
         ga('send', 'event', 'nav', 'click', 'swir-switch');
         (name == 'before') ? l[0] = 'swir' : l[1] = 'swir';
         var hash = [];
