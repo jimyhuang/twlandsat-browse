@@ -1,0 +1,28 @@
+{
+  "status": "beta",
+  "name": "Landsat Taiwan Public Image",
+  "name_zh": "賽豬公上太空",
+  "description": "Provide freely-licensed satellite images about Taiwan since 1980s",
+  "description_zh": "提供台灣1980年至今內授權無虞的可見光衛星空照圖，供各界免費進行各種應用",
+  "document": "https://github.com/jimyhuang/twlandsat",
+  "homepage": " ",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jimyhuang/twlandsat-browse"
+  },
+  "licenses": [
+    {
+      "type": "GNU GPLv3"
+    }
+  ],
+  "keywords": [
+    "satellite images",
+    "Taiwan",
+  ],
+  "audience": [
+    "public"
+  ],
+"thumbnail": "https://raw.githubusercontent.com/slc-git/twlandsat-browse/1e229893c4a1e1da3b771c9243a70fd2ab065141/landsat-tw.png"
+}
+
+ 
